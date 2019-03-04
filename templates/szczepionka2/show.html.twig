@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepionka2{% endblock %}
+
+{% block body %}
+    <h1>Szczepionka2</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ szczepionka2.id }}</td>
+            </tr>
+            <tr>
+                <th>Nazwa</th>
+                <td>{{ szczepionka2.nazwa }}</td>
+            </tr>
+            <tr>
+                <th>Producent</th>
+                <td>{{ szczepionka2.producent }}</td>
+            </tr>
+            <tr>
+                <th>WiekMin</th>
+                <td>{{ szczepionka2.wiekMin }}</td>
+            </tr>
+            <tr>
+                <th>WiekMax</th>
+                <td>{{ szczepionka2.wiekMax }}</td>
+            </tr>
+            <tr>
+                <th>CzyObowiazkowa</th>
+                <td>{{ szczepionka2.czyObowiazkowa ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Zastepuje</th>
+                <td>{{ szczepionka2.zastepuje }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepionka2_index') }}">back to list</a>
+
+    <a href="{{ path('szczepionka2_edit', {'id': szczepionka2.id}) }}">edit</a>
+
+    {{ include('szczepionka2/_delete_form.html.twig') }}
+{% endblock %}

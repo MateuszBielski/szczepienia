@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepionka2 index{% endblock %}
+
+{% block body %}
+    <h1>Szczepionka2 index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa</th>
+                <th>Producent</th>
+                <th>WiekMin</th>
+                <th>WiekMax</th>
+                <th>CzyObowiazkowa</th>
+                <th>Zastepuje</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for szczepionka2 in szczepionka2s %}
+            <tr>
+                <td>{{ szczepionka2.id }}</td>
+                <td>{{ szczepionka2.nazwa }}</td>
+                <td>{{ szczepionka2.producent }}</td>
+                <td>{{ szczepionka2.wiekMin }}</td>
+                <td>{{ szczepionka2.wiekMax }}</td>
+                <td>{{ szczepionka2.czyObowiazkowa ? 'Yes' : 'No' }}</td>
+                <td>{{ szczepionka2.zastepuje }}</td>
+                <td>
+                    <a href="{{ path('szczepionka2_show', {'id': szczepionka2.id}) }}">show</a>
+                    <a href="{{ path('szczepionka2_edit', {'id': szczepionka2.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepionka2_new') }}">Create new</a>
+{% endblock %}
