@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Grupa;
+use App\Entity\Uzytkownik;
 use App\Form\Grupa1Type;
 use App\Repository\GrupaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,12 +32,20 @@ class GrupaController extends AbstractController
     public function new(Request $request): Response
     {
         $grupa = new Grupa();
+        $uzytk1 = new Uzytkownik();
+        $uzytk1->setImie('imie1_GrContr');
+        $grupa->addUser($uzytk1);
+        $uzytk2 = new Uzytkownik();
+        $uzytk2->setImie('imie2_GrContr');
+        $grupa->addUser($uzytk2);
         $form = $this->createForm(Grupa1Type::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($grupa);
+            $entityManager->persist($uzytk1);
+            $entityManager->persist($uzytk2);
             $entityManager->flush();
 
             return $this->redirectToRoute('grupa_index');
