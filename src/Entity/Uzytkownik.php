@@ -21,7 +21,7 @@ class Uzytkownik
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $imie;
+    private $imie = 'domyslneImie';
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Grupa", mappedBy="users")
@@ -32,7 +32,7 @@ class Uzytkownik
     {
         $this->groups = new ArrayCollection();
     }
-
+   
     public function getId(): ?int
     {
         return $this->id;

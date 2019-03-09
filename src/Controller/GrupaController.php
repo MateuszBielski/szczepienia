@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Grupa;
-use App\Form\GrupaType;
+use App\Form\Grupa1Type;
 use App\Repository\GrupaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class GrupaController extends AbstractController
     public function new(Request $request): Response
     {
         $grupa = new Grupa();
-        $form = $this->createForm(GrupaType::class, $grupa);
+        $form = $this->createForm(Grupa1Type::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class GrupaController extends AbstractController
      */
     public function edit(Request $request, Grupa $grupa): Response
     {
-        $form = $this->createForm(GrupaType::class, $grupa);
+        $form = $this->createForm(Grupa1Type::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
