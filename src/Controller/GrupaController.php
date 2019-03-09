@@ -44,8 +44,6 @@ class GrupaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($grupa);
-            //$entityManager->persist($uzytk1);
-            //$entityManager->persist($uzytk2);
             $entityManager->flush();
 
             return $this->redirectToRoute('grupa_index');

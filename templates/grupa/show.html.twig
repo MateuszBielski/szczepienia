@@ -15,6 +15,12 @@
                 <th>Nazwa</th>
                 <td>{{ grupa.nazwa }}</td>
             </tr>
+            <tr>
+                <th>Użytkownicy</th>
+                {% for uzytkownik in grupa.users %}
+                    <td>{{ uzytkownik.imie }}</td>
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
 
