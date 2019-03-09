@@ -53,6 +53,7 @@ class Szczepionka2Controller extends AbstractController
      */
     public function show(Szczepionka2 $szczepionka2): Response
     {
+        www;
         return $this->render('szczepionka2/show.html.twig', [
             'szczepionka2' => $szczepionka2,
         ]);

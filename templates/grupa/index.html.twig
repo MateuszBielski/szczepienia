@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Grupa index{% endblock %}
+
+{% block body %}
+    <h1>Grupa index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grupa in grupas %}
+            <tr>
+                <td>{{ grupa.id }}</td>
+                <td>{{ grupa.nazwa }}</td>
+                <td>
+                    <a href="{{ path('grupa_show', {'id': grupa.id}) }}">show</a>
+                    <a href="{{ path('grupa_edit', {'id': grupa.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grupa_new') }}">Create new</a>
+{% endblock %}

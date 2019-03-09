@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Uzytkownik index{% endblock %}
+
+{% block body %}
+    <h1>Uzytkownik index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for uzytkownik in uzytkowniks %}
+            <tr>
+                <td>{{ uzytkownik.id }}</td>
+                <td>{{ uzytkownik.imie }}</td>
+                <td>
+                    <a href="{{ path('uzytkownik_show', {'id': uzytkownik.id}) }}">show</a>
+                    <a href="{{ path('uzytkownik_edit', {'id': uzytkownik.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('uzytkownik_new') }}">Create new</a>
+{% endblock %}
