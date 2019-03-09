@@ -18,6 +18,7 @@ class Grupa1Type extends AbstractType
         $builder->add('users', CollectionType::class, [
             'entry_type' => UzytkownikType::class,
             'entry_options' => ['label' => false],
+            'allow_add' => true,
         ]);
     }
 

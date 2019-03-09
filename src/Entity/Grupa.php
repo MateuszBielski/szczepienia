@@ -24,7 +24,7 @@ class Grupa
     private $nazwa;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Uzytkownik", inversedBy="groups")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Uzytkownik", cascade={"persist"}, inversedBy="groups")
      */
     private $users;
 
