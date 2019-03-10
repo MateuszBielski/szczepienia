@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Uzytkownik;
+use App\Form\UzytkownikCtType;
 use App\Form\UzytkownikType;
 use App\Repository\UzytkownikRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +32,7 @@ class UzytkownikController extends AbstractController
     public function new(Request $request): Response
     {
         $uzytkownik = new Uzytkownik();
-        $form = $this->createForm(UzytkownikType::class, $uzytkownik);
+        $form = $this->createForm(UzytkownikCtType::class, $uzytkownik);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

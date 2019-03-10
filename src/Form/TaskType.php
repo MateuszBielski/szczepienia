@@ -2,26 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Uzytkownik;
-use App\Entity\Grupa;
+use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class UzytkownikType extends AbstractType
+class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imie')
-            ;
+            ->add('description');
+        $builder->add('tags', CollectionType::class, [
+            'entry_type' => TagType::class,
+            'entry_options' => ['label' => false],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Uzytkownik::class,
+            'data_class' => Task::class,
         ]);
     }
 }

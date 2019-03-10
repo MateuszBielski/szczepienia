@@ -15,6 +15,12 @@
                 <th>Imie</th>
                 <td>{{ uzytkownik.imie }}</td>
             </tr>
+            <tr>
+                <th>Grupy</th>
+                {% for grupa in uzytkownik.groups %}
+                    <td>{{ grupa.nazwa }}</td>
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
 

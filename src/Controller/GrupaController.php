@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Grupa;
 use App\Entity\Uzytkownik;
-use App\Form\Grupa1Type;
+use App\Form\GrupaCtType;
+use App\Form\GrupaEtType;
+use App\Form\GrupaType;
 use App\Repository\GrupaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +40,7 @@ class GrupaController extends AbstractController
         $uzytk2 = new Uzytkownik();
         $uzytk2->setImie('imie2_GrContr');
         $grupa->addUser($uzytk2);
-        $form = $this->createForm(Grupa1Type::class, $grupa);
+        $form = $this->createForm(GrupaCtType::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,7 +72,7 @@ class GrupaController extends AbstractController
      */
     public function edit(Request $request, Grupa $grupa): Response
     {
-        $form = $this->createForm(Grupa1Type::class, $grupa);
+        $form = $this->createForm(GrupaEtType::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
