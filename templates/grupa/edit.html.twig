@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Grupa{% endblock %}
-
+{% block scripts %}
+            <script type="text/javascript" src="../../js/jquery-2.1.3.min.js"></script>
+            <script type="text/javascript" src="../../js/jquery-ui.js"></script>
+            <script type="text/javascript" src="../../js/dodUzytk.js"></script>
+{% endblock %}
 {% block body %}
     <h1>Edit Grupa</h1>
 
-    {{ include('grupa/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('grupa/_formLista.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('grupa_index') }}">back to list</a>
 

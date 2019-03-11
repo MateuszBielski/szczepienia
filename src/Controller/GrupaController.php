@@ -34,12 +34,6 @@ class GrupaController extends AbstractController
     public function new(Request $request): Response
     {
         $grupa = new Grupa();
-        $uzytk1 = new Uzytkownik();
-        $uzytk1->setImie('imie1_GrContr');
-        $grupa->addUser($uzytk1);
-        $uzytk2 = new Uzytkownik();
-        $uzytk2->setImie('imie2_GrContr');
-        $grupa->addUser($uzytk2);
         $form = $this->createForm(GrupaCtType::class, $grupa);
         $form->handleRequest($request);
 
@@ -72,7 +66,7 @@ class GrupaController extends AbstractController
      */
     public function edit(Request $request, Grupa $grupa): Response
     {
-        $form = $this->createForm(GrupaEtType::class, $grupa);
+        $form = $this->createForm(GrupaCtType::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

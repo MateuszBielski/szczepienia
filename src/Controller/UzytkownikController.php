@@ -64,7 +64,7 @@ class UzytkownikController extends AbstractController
      */
     public function edit(Request $request, Uzytkownik $uzytkownik): Response
     {
-        $form = $this->createForm(UzytkownikType::class, $uzytkownik);
+        $form = $this->createForm(UzytkownikCtType::class, $uzytkownik);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
