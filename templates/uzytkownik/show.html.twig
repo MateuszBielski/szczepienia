@@ -21,6 +21,12 @@
                     <td>{{ grupa.nazwa }}</td>
                 {% endfor %}
             </tr>
+            <tr>
+                <th>Telefony</th>
+                {% for tel in uzytkownik.telefons %}
+                    <td>{{ tel.numer }}</td>
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
 

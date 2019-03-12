@@ -28,9 +28,15 @@ class Uzytkownik
      */
     private $groups;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Telefon", mappedBy="wlasciciel", orphanRemoval=true)
+     */
+    private $telefons;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+        $this->telefons = new ArrayCollection();
     }
    
     public function getId(): ?int
@@ -73,6 +79,52 @@ class Uzytkownik
         if ($this->groups->contains($group)) {
             $this->groups->removeElement($group);
             $group->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Telefon[]
+     */
+    public function getTelefons(): Collection
+    {
+        return $this->telefons;
+    }
+    //umożliwia użycie formularza z pojedyńczym polem EntiyType, które generuje pojedyńczy egzemplarz telefon, a obsługa wymaga najwyraźniej metody:
+    //setTelefons
+    
+    public function setTelefons(Telefon $telefon): self
+    {
+        $this->addTelefon($telefon);
+        return $this;
+    }
+     
+    /*poniższe nie zaspokaja obsługi formularza */
+    public function setTelefon(Telefon $telefon): self
+    {
+        $this->addTelefon($telefon);
+        return $this;
+    }
+
+    public function addTelefon(Telefon $telefon): self
+    {
+        if (!$this->telefons->contains($telefon)) {
+            $this->telefons[] = $telefon;
+            $telefon->setWlasciciel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTelefon(Telefon $telefon): self
+    {
+        if ($this->telefons->contains($telefon)) {
+            $this->telefons->removeElement($telefon);
+            // set the owning side to null (unless already changed)
+            if ($telefon->getWlasciciel() === $this) {
+                $telefon->setWlasciciel(null);
+            }
         }
 
         return $this;

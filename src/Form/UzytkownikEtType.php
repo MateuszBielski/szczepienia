@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Uzytkownik;
-use App\Entity\Grupa;
+use App\Entity\Telefon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,12 +16,13 @@ class UzytkownikEtType extends AbstractType
         $builder
             ->add('imie');
             
-        $builder->add('groups', EntityType::class, [
-          'class' => Grupa::class,
-          'choice_label' => function(Grupa $gr) {
-                    return sprintf('(%d) %s', $gr->getId(), $gr->getNazwa());
-                },
-          'placeholder' => 'Grupy nie ma na liście',
+        $builder->add('telefons', EntityType::class, [
+          'class' => Telefon::class,//?TelefonType - sprawdzić
+          'choice_label' => 'numer',
+            /*'choice_label' => function(Telefon $gr) {
+                return sprintf('(%d) %s', $gr->getId(), $gr->getNazwa());
+            },*/
+          //'placeholder' => 'Grupy nie ma na liście',
           //'expanded' => true,
           //'multiple' => true,
         ]);
