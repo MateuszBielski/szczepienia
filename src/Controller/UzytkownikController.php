@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Uzytkownik;
-use App\Form\UzytkownikCtType;
+use App\Form\UzytkownikEtType;
 use App\Form\UzytkownikType;
 use App\Repository\UzytkownikRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +64,7 @@ class UzytkownikController extends AbstractController
      */
     public function edit(Request $request, Uzytkownik $uzytkownik): Response
     {
-        $form = $this->createForm(UzytkownikCtType::class, $uzytkownik);
+        $form = $this->createForm(UzytkownikEtType::class, $uzytkownik);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
