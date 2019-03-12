@@ -63,6 +63,11 @@ class Uzytkownik
     {
         return $this->groups;
     }
+    public function setGroups(Grupa $grupa): self
+    {
+        $this->addGroup($grupa);
+        return $this;
+    }
 
     public function addGroup(Grupa $group): self
     {
