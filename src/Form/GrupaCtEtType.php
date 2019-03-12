@@ -17,7 +17,12 @@ class GrupaCtEtType extends AbstractType
         $builder
             ->add('nazwa');
             //->add('users')
-        $builder->add('users',UzytkownikType::class);
+        $builder->add('groups', CollectionType::class, [
+          'entry_type' => GrupaEtType::class,
+          'allow_add' => true,
+          'allow_delete' =>true,
+          //'prototype' => true,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

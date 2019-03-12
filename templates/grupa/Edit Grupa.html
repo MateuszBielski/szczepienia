@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Grupa</title>
+                            <script type="text/javascript" src="../../js/jquery-2.1.3.min.js"></script>
+            <script type="text/javascript" src="../../js/jquery-ui.js"></script>
+            <script type="text/javascript" src="../../js/dodUzytk.js"></script>
+    </head>
+    <body>
+            <h1>Edit Grupa</h1>
+
+    <form name="grupa_ct" method="post">
+    <div><label for="grupa_ct_nazwa" class="required">Nazwa</label><input type="text" id="grupa_ct_nazwa" name="grupa_ct[nazwa]" required="required" maxlength="255" value="gr2uż3 i uż4" /></div>
+    <ul class="tags" data-prototype="&lt;div&#x20;id&#x3D;&quot;grupa_ct_users___name__&quot;&gt;&lt;div&gt;&lt;label&#x20;for&#x3D;&quot;grupa_ct_users___name___imie&quot;&#x20;class&#x3D;&quot;required&quot;&gt;Imie&lt;&#x2F;label&gt;&lt;input&#x20;type&#x3D;&quot;text&quot;&#x20;id&#x3D;&quot;grupa_ct_users___name___imie&quot;&#x20;name&#x3D;&quot;grupa_ct&#x5B;users&#x5D;&#x5B;__name__&#x5D;&#x5B;imie&#x5D;&quot;&#x20;required&#x3D;&quot;required&quot;&#x20;maxlength&#x3D;&quot;255&quot;&#x20;&#x2F;&gt;&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;">
+    <ul class="tags" data-prototype="&lt;div&#x20;id&#x3D;&quot;grupa_ct_users___name__&quot;&gt;&lt;div&gt;&lt;label&#x20;for&#x3D;&quot;grupa_ct_users___name___imie&quot;&#x20;class&#x3D;&quot;required&quot;&gt;Imie&lt;&#x2F;label&gt;&lt;input&#x20;type&#x3D;&quot;text&quot;&#x20;id&#x3D;&quot;grupa_ct_users___name___imie&quot;&#x20;name&#x3D;&quot;grupa_ct&#x5B;users&#x5D;&#x5B;__name__&#x5D;&#x5B;imie&#x5D;&quot;&#x20;required&#x3D;&quot;required&quot;&#x20;maxlength&#x3D;&quot;255&quot;&#x20;&#x2F;&gt;&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;">
+                    <li><div><label for="grupa_ct_users_0_imie" class="required">Imie</label><input type="text" id="grupa_ct_users_0_imie" name="grupa_ct[users][0][imie]" required="required" maxlength="255" value="heniek" /></div></li>
+                    <li><div><label for="grupa_ct_users_1_imie" class="required">Imie</label><input type="text" id="grupa_ct_users_1_imie" name="grupa_ct[users][1][imie]" required="required" maxlength="255" value="imie3_Gr2" /></div></li>
+                    <li><div><label for="grupa_ct_users_2_imie" class="required">Imie</label><input type="text" id="grupa_ct_users_2_imie" name="grupa_ct[users][2][imie]" required="required" maxlength="255" value="imie4_Gr2" /></div></li>
+            </ul>
+    <button class="btn">Update</button>
+<input type="hidden" id="grupa_ct__token" name="grupa_ct[_token]" value="4vtApTnOk-sWrMJkUdsm7FG5qThri3Ht6GfSc6xo1VQ" /></form>
+
+    <a href="/grupa/">back to list</a>
+
+    <form method="post" action="/grupa/2" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="ZU1quZB2kbC_RtdsTH_kdOI4yuUbOlyCRXCHOnCLhUc">
+    <button class="btn">Delete</button>
+</form>
+
+            </body>
+</html>

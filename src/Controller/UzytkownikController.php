@@ -32,7 +32,7 @@ class UzytkownikController extends AbstractController
     public function new(Request $request): Response
     {
         $uzytkownik = new Uzytkownik();
-        $form = $this->createForm(UzytkownikCtType::class, $uzytkownik);
+        $form = $this->createForm(UzytkownikEtType::class, $uzytkownik);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

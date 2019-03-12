@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Grupa</title>
+                            <script type="text/javascript" src="../../js/jquery-2.1.3.min.js"></script>
+            <script type="text/javascript" src="../../js/jquery-ui.js"></script>
+            <script type="text/javascript" src="../../js/dodUzytk.js"></script>
+    </head>
+    <body>
+            <h1>Edit Grupa</h1>
+
+    <form name="grupa_et" method="post">
+    <div><label for="grupa_et_nazwa" class="required">Nazwa</label><input type="text" id="grupa_et_nazwa" name="grupa_et[nazwa]" required="required" maxlength="255" value="gr2uż3 i uż4" /></div>
+    <ul class="tags" >
+    <!--data-prototype=""
+    -->
+                    </ul>
+    <button class="btn">Update</button>
+<div><label for="grupa_et_users" class="required">Users</label><select id="grupa_et_users" name="grupa_et[users]"><option value="1">józef</option><option value="2">heniek</option><option value="3">jurek</option><option value="4">imie1_Gr1</option><option value="5">imie2_Gr1</option><option value="6">imie3_Gr2</option><option value="7">imie4_Gr2</option><option value="8">imie1_GrContr</option><option value="9">imie5_GrContr</option><option value="10">imie1_GrContr</option><option value="11">PozostIm1_poUs</option><option value="12">PozostIm2_poUs</option><option value="13">IdodaneJs4</option><option value="14">imie1KontrolerBezUżytkowników</option><option value="15">imie2KontrolerBezUżytkowników</option><option value="16">imie3KontrolerBezUżytkowników</option></select></div><input type="hidden" id="grupa_et__token" name="grupa_et[_token]" value="C_hJLBJDkniTYej5befUFizsFdOokhNVnuorKBeNuC4" /></form>
+
+    <a href="/grupa/">back to list</a>
+
+    <form method="post" action="/grupa/2" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="eaVGRh1FQ9T5qgmoezUFx_jzEhbbvWYWHaPbM4r3xfE">
+    <button class="btn">Delete</button>
+</form>
+
+            </body>
+</html>

@@ -20,9 +20,6 @@ class GrupaEtType extends AbstractType
           'class' => Uzytkownik::class,
           'choice_label' => 'imie',
         ]);
-        //poniże nie chce działać
-        //add('groups',EntityType::class,['class' => Uzytkownik::class,
-        //    'choice_label' => 'nazwa',
     }
 
     public function configureOptions(OptionsResolver $resolver)

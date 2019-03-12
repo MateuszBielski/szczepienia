@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GrupaRepository;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GrupaRepository")
@@ -50,6 +51,12 @@ class Grupa
         return $this;
     }
 
+    /*poniższe jest próbą dla formularza GrupaCtEtType, ale nie działa, bo nie można uzyskać dostępu do repository
+    public function getGroups(): ArrayCollection
+    {
+        $repo = $this->getDoctrine()->getRepository(Grupa::class);
+        return $repo->findAll();
+    }*/
     /**
      * @return Collection|Uzytkownik[]
      */
