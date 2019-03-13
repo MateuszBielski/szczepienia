@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {{ form_row(form.nazwa) }}
-    <ul class="tags" >
-    <!--data-prototype="{# form_widget(form.users.vars.prototype)|e('html_attr') #}"
+    <ul class="tags" data-prototype="{{ form_widget(form.users.vars.prototype)|e('html_attr') }}">
+    <!--
     -->
         {# iterate over each existing tag and render its only field: name #}
         {% for uzytkownik in form.users %}
