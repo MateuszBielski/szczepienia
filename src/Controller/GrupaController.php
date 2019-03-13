@@ -67,7 +67,7 @@ class GrupaController extends AbstractController
      */
     public function edit(Request $request, Grupa $grupa): Response
     {
-        $form = $this->createForm(GrupaCtEtType::class, $grupa);
+        $form = $this->createForm(GrupaCtType::class, $grupa);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

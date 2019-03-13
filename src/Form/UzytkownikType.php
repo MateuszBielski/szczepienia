@@ -14,7 +14,10 @@ class UzytkownikType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imie')
+            ->add('imie',EntityType::class,[
+            'class' => Uzytkownik::class,
+            'choice_label' => 'imie',
+            ])
             ;
     }
 
