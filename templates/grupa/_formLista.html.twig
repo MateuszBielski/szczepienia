@@ -5,7 +5,7 @@
     -->
         {# iterate over each existing tag and render its only field: name #}
         {% for uzytkownik in form.users %}
-            <li>{{ form_row(uzytkownik.imie) }}</li>
+            <li>{{ form_row(uzytkownik.imieDoZmiany) }}</li>
         {% endfor %}
     </ul>
     <button class="btn">{{ button_label|default('Save') }}</button>

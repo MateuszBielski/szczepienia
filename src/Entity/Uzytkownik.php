@@ -33,6 +33,8 @@ class Uzytkownik
      */
     private $telefons;
 
+    private $imieDoZmiany;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
@@ -55,7 +57,19 @@ class Uzytkownik
 
         return $this;
     }
+    
+    
+    public function getImieDoZmiany(): ?string
+    {
+        return $this->imie;
+    }
 
+    public function setImieDoZmiany(Uzytkownik $uzytk): self
+    {
+        $this->imie = $uzytk->imie;
+
+        return $this;
+    }
     /**
      * @return Collection|Grupa[]
      */
@@ -134,4 +148,6 @@ class Uzytkownik
 
         return $this;
     }
+
+   
 }

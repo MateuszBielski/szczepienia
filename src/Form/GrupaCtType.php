@@ -18,7 +18,7 @@ class GrupaCtType extends AbstractType
             ->add('nazwa');
             //->add('users')
         $builder->add('users', CollectionType::class, [
-          'entry_type' => UzytkownikType::class,
+          'entry_type' => UzytkWyborIstniejType::class,
           'entry_options' => ['label' => false],
           'allow_add' => true,
           'allow_delete' =>true,

@@ -9,12 +9,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UzytkownikType extends AbstractType
+class UzytkWyborIstniejType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imie',EntityType::class,[
+            ->add('imieDoZmiany',EntityType::class,[
             'class' => Uzytkownik::class,
             'choice_label' => 'imie',
             ])
