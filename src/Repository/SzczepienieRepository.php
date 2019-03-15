@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\SzczepKtoreChoroby;
+use App\Entity\Szczepienie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method SzczepKtoreChoroby|null find($id, $lockMode = null, $lockVersion = null)
- * @method SzczepKtoreChoroby|null findOneBy(array $criteria, array $orderBy = null)
- * @method SzczepKtoreChoroby[]    findAll()
- * @method SzczepKtoreChoroby[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Szczepienie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Szczepienie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Szczepienie[]    findAll()
+ * @method Szczepienie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SzczepKtoreChorobyRepository extends ServiceEntityRepository
+class SzczepienieRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, SzczepKtoreChoroby::class);
+        parent::__construct($registry, Szczepienie::class);
     }
 
     // /**
-    //  * @return SzczepKtoreChoroby[] Returns an array of SzczepKtoreChoroby objects
+    //  * @return Szczepienie[] Returns an array of Szczepienie objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SzczepKtoreChorobyRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?SzczepKtoreChoroby
+    public function findOneBySomeField($value): ?Szczepienie
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Szczepionka{% endblock %}
+
+{% block body %}
+    <h1>Edit Szczepionka</h1>
+
+    {{ include('szczepionka/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('szczepionka_index') }}">back to list</a>
+
+    {{ include('szczepionka/_delete_form.html.twig') }}
+{% endblock %}

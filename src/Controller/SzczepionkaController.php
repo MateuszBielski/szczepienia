@@ -2,55 +2,95 @@
 
 namespace App\Controller;
 
+use App\Entity\Szczepionka;
+use App\Form\SzczepionkaType;
+use App\Repository\SzczepionkaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Routing\Annotation\Route;
 
-use App\Entity\Szczepionka;
-
+/**
+ * @Route("/szczepionka")
+ */
 class SzczepionkaController extends AbstractController
 {
     /**
-     * @Route("/szczepionka", name="szczepionka")
+     * @Route("/", name="szczepionka_index", methods={"GET"})
      */
-    public function index()
+    public function index(SzczepionkaRepository $szczepionkaRepository): Response
     {
         return $this->render('szczepionka/index.html.twig', [
-            'controller_name' => 'SzczepionkaController',
+            'szczepionkas' => $szczepionkaRepository->findAll(),
         ]);
     }
+
     /**
-     * @Route("/szczepionka/nowa",name="szczepionkanowa")
+     * @Route("/new", name="szczepionka_new", methods={"GET","POST"})
      */
-     public function nowa(Request $request)
-     {
-         $nowaSzczepionka = new Szczepionka();
-         $nowaSzczepionka->setCzyZywa(false);
-         $nowaSzczepionka->setCzyObowiazkowa(true);
-         //$nowaSzczepionka->setZastepujeSzczepionke();
-         $nowaSzczepionka->setWiekMin(12);
-         $nowaSzczepionka->setWiekMax(65);
-         $nowaSzczepionka->setNazwa('nazwa handlowa');
-         $nowaSzczepionka->setProducent('mieszalnia osiedlowa');
-         //$nowaSzczepionka->setSzczepKtoreChorobies;
-         
-         $formularz  = $this->createFormBuilder($nowaSzczepionka)
-            ->add('nazwa',TextType::class)
-            ->add('producent',TextType::class)
-            ->add('wiekMin',IntegerType::class,['label' => 'Wiek minimalny'])
-            ->add('wiekMax',IntegerType::class,['label' => 'Wiek maksymalny'])
-            ->add('czyObowiazkowa',ChoiceType::class,['choices' => ['tak' => true, 'nie' => false], 'label' => 'czy obowiązkowa'])
-            ->add('save',SubmitType::class,['label'=> 'Dodaj'])
-            ->getForm();
-        
-        //$formularz->handleRequest($request);
-        
-        return $this->render('szczepionka/nowa.html.twig',
-        ['formNowaSzczepiona' => $formularz->createView(),]);
-     }
+    public function new(Request $request): Response
+    {
+        $szczepionka = new Szczepionka();
+        $form = $this->createForm(SzczepionkaType::class, $szczepionka);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($szczepionka);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('szczepionka_index');
+        }
+
+        return $this->render('szczepionka/new.html.twig', [
+            'szczepionka' => $szczepionka,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="szczepionka_show", methods={"GET"})
+     */
+    public function show(Szczepionka $szczepionka): Response
+    {
+        return $this->render('szczepionka/show.html.twig', [
+            'szczepionka' => $szczepionka,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="szczepionka_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Szczepionka $szczepionka): Response
+    {
+        $form = $this->createForm(SzczepionkaType::class, $szczepionka);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('szczepionka_index', [
+                'id' => $szczepionka->getId(),
+            ]);
+        }
+
+        return $this->render('szczepionka/edit.html.twig', [
+            'szczepionka' => $szczepionka,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="szczepionka_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Szczepionka $szczepionka): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$szczepionka->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($szczepionka);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('szczepionka_index');
+    }
 }

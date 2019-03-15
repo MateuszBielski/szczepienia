@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Szczepionka{% endblock %}
+
+{% block body %}
+    <h1>Create new Szczepionka</h1>
+
+    {{ include('szczepionka/_form.html.twig') }}
+
+    <a href="{{ path('szczepionka_index') }}">back to list</a>
+{% endblock %}

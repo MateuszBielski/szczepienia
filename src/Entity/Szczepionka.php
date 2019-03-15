@@ -36,17 +36,17 @@ class Szczepionka
     /**
      * @ORM\Column(type="integer")
      */
-    private $wiekMin;
+    private $wiekMin = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $wiekMax;
+    private $wiekMax = 65;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nazwa;
+    private $nazwa = 'n_szczepionka';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,14 +54,23 @@ class Szczepionka
     private $producent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SzczepKtoreChoroby", mappedBy="id_szczepionka", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Choroba")
      */
-    private $szczepKtoreChorobies;
+    private $przeciw;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Schemat", mappedBy="szczepionka")
+     */
+    private $schemat;
 
     public function __construct()
     {
-        $this->szczepKtoreChorobies = new ArrayCollection();
+        $this->przeciw = new ArrayCollection();
+        $this->schemat = new ArrayCollection();
     }
+
+    
+
 
     public function getId(): ?int
     {
@@ -152,34 +161,66 @@ class Szczepionka
         return $this;
     }
 
-    /**
-     * @return Collection|SzczepKtoreChoroby[]
-     */
-    public function getSzczepKtoreChorobies(): Collection
+    public function setPrzeciw(Choroba $choroba): self
     {
-        return $this->szczepKtoreChorobies;
+        return $this->addPrzeciw($choroba);
+    }
+    /**
+     * @return Collection|Choroba[]
+     */
+    public function getPrzeciw(): Collection
+    {
+        return $this->przeciw;
     }
 
-    public function addSzczepKtoreChoroby(SzczepKtoreChoroby $szczepKtoreChoroby): self
+    public function addPrzeciw(Choroba $przeciw): self
     {
-        if (!$this->szczepKtoreChorobies->contains($szczepKtoreChoroby)) {
-            $this->szczepKtoreChorobies[] = $szczepKtoreChoroby;
-            $szczepKtoreChoroby->setIdSzczepionka($this);
+        if (!$this->przeciw->contains($przeciw)) {
+            $this->przeciw[] = $przeciw;
         }
 
         return $this;
     }
 
-    public function removeSzczepKtoreChoroby(SzczepKtoreChoroby $szczepKtoreChoroby): self
+    public function removePrzeciw(Choroba $przeciw): self
     {
-        if ($this->szczepKtoreChorobies->contains($szczepKtoreChoroby)) {
-            $this->szczepKtoreChorobies->removeElement($szczepKtoreChoroby);
+        if ($this->przeciw->contains($przeciw)) {
+            $this->przeciw->removeElement($przeciw);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schemat[]
+     */
+    public function getSchemat(): Collection
+    {
+        return $this->schemat;
+    }
+
+    public function addSchemat(Schemat $schemat): self
+    {
+        if (!$this->schemat->contains($schemat)) {
+            $this->schemat[] = $schemat;
+            $schemat->setSzczepionka($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchemat(Schemat $schemat): self
+    {
+        if ($this->schemat->contains($schemat)) {
+            $this->schemat->removeElement($schemat);
             // set the owning side to null (unless already changed)
-            if ($szczepKtoreChoroby->getIdSzczepionka() === $this) {
-                $szczepKtoreChoroby->setIdSzczepionka(null);
+            if ($schemat->getSzczepionka() === $this) {
+                $schemat->setSzczepionka(null);
             }
         }
 
         return $this;
     }
+
+    
 }

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choroba index{% endblock %}
+
+{% block body %}
+    <h1>Choroba index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for choroba in chorobas %}
+            <tr>
+                <td>{{ choroba.id }}</td>
+                <td>{{ choroba.nazwa }}</td>
+                <td>
+                    <a href="{{ path('choroba_show', {'id': choroba.id}) }}">show</a>
+                    <a href="{{ path('choroba_edit', {'id': choroba.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('choroba_new') }}">Dodaj nową</a>
+{% endblock %}

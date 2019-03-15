@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Warunek{% endblock %}
+
+{% block body %}
+    <h1>Create new Warunek</h1>
+
+    {{ include('warunek/_form.html.twig') }}
+
+    <a href="{{ path('warunek_index') }}">back to list</a>
+{% endblock %}
