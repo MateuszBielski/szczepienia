@@ -39,7 +39,9 @@ class SzczepionkaCtType extends AbstractType
               'entry_type' => EntityType::class,
               'entry_options' => [
                 'class' => Choroba::class,
-                'choice_label' => 'nazwa'],
+                'choice_label' => 'nazwa',
+                //'attr' => ['class' => 'klasaPrzeciw'],
+                ],
             'allow_add' => true,
             'allow_delete' =>true,
             'by_reference' =>true,

@@ -7,38 +7,50 @@
 
     <table class="table">
         <tbody>
-            <tr>
+            {# <tr>
                 <th>Id</th>
                 <td>{{ szczepionka.id }}</td>
-            </tr>
-            <tr>
-                <th>CzyZywa</th>
-                <td>{{ szczepionka.czyZywa ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CzyObowiazkowa</th>
-                <td>{{ szczepionka.czyObowiazkowa ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>ZastepujeSzczepionke</th>
-                <td>{{ szczepionka.zastepujeSzczepionke }}</td>
-            </tr>
-            <tr>
-                <th>WiekMin</th>
-                <td>{{ szczepionka.wiekMin }}</td>
-            </tr>
-            <tr>
-                <th>WiekMax</th>
-                <td>{{ szczepionka.wiekMax }}</td>
-            </tr>
+            </tr> #}
             <tr>
                 <th>Nazwa</th>
                 <td>{{ szczepionka.nazwa }}</td>
             </tr>
             <tr>
+                <th>Przeciw chorobom: </th>
+                <td>
+                {% for choroba in szczepionka.przeciw %}
+                    {{ choroba.nazwa }}
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ szczepionka.czyZywa ? 'Żywa' : 'Martwa' }}</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>{{ szczepionka.czyObowiazkowa ? 'Obowiązkowa' : 'Nieobowiązkowa' }}</th>
+                <td></td>
+            </tr>
+            {% if szczepionka.zastepujeSzczepionke %}
+                <tr>
+                    <th>ZastepujeSzczepionke</th>
+                    <td>{{ szczepionka.zastepujeSzczepionke }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Wiek minimalny</th>
+                <td>{{ szczepionka.wiekMin }}</td>
+            </tr>
+            <tr>
+                <th>Wiek maksymalny</th>
+                <td>{{ szczepionka.wiekMax }}</td>
+            </tr>
+            
+            <tr>
                 <th>Producent</th>
                 <td>{{ szczepionka.producent }}</td>
             </tr>
+            
         </tbody>
     </table>
 

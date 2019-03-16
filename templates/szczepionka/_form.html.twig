@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {# { form_widget(form) } #}
+    {% for pole in form %}
+        {% if pole == form.przeciw %}
+            <ul class="ul_klasaPrzeciw" data-prototype="{{ form_widget(form.przeciw.vars.prototype)|e('html_attr') }}">
+            {% for choroba in pole%}
+                <li>{{ form_row(choroba) }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+           {{ form_row(pole) }}
+        {% endif %}
+    {% endfor %}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

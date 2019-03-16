@@ -32,7 +32,7 @@ class SzczepionkaController extends AbstractController
     public function new(Request $request): Response
     {
         $szczepionka = new Szczepionka();
-        $form = $this->createForm(SzczepionkaType::class, $szczepionka);
+        $form = $this->createForm(SzczepionkaCtType::class, $szczepionka);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

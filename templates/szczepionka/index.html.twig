@@ -9,11 +9,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>CzyZywa</th>
-                <th>CzyObowiazkowa</th>
-                <th>ZastepujeSzczepionke</th>
-                <th>WiekMin</th>
-                <th>WiekMax</th>
                 <th>Nazwa</th>
                 <th>Producent</th>
                 <th>actions</th>
@@ -23,21 +18,16 @@
         {% for szczepionka in szczepionkas %}
             <tr>
                 <td>{{ szczepionka.id }}</td>
-                <td>{{ szczepionka.czyZywa ? 'Yes' : 'No' }}</td>
-                <td>{{ szczepionka.czyObowiazkowa ? 'Yes' : 'No' }}</td>
-                <td>{{ szczepionka.zastepujeSzczepionke }}</td>
-                <td>{{ szczepionka.wiekMin }}</td>
-                <td>{{ szczepionka.wiekMax }}</td>
                 <td>{{ szczepionka.nazwa }}</td>
                 <td>{{ szczepionka.producent }}</td>
                 <td>
-                    <a href="{{ path('szczepionka_show', {'id': szczepionka.id}) }}">show</a>
-                    <a href="{{ path('szczepionka_edit', {'id': szczepionka.id}) }}">edit</a>
+                    <a href="{{ path('szczepionka_show', {'id': szczepionka.id}) }}">pokaż</a>
+                    <a href="{{ path('szczepionka_edit', {'id': szczepionka.id}) }}">edytuj</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
