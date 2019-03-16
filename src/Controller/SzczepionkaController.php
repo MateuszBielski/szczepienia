@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Szczepionka;
 use App\Form\SzczepionkaType;
+use App\Form\SzczepionkaCtType;
 use App\Repository\SzczepionkaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ class SzczepionkaController extends AbstractController
      */
     public function edit(Request $request, Szczepionka $szczepionka): Response
     {
-        $form = $this->createForm(SzczepionkaType::class, $szczepionka);
+        $form = $this->createForm(SzczepionkaCtType::class, $szczepionka);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

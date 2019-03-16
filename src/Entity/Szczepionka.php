@@ -54,7 +54,7 @@ class Szczepionka
     private $producent;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Choroba")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Choroba", cascade={"persist"})
      */
     private $przeciw;
 
