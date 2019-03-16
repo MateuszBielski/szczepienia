@@ -44,7 +44,7 @@ final class mapChorobaNazwa implements DataMapperInterface
         // as data is passed by reference, overriding it will change it in
         // the form object as well
         // beware of type inconsistency, see caution below
-        $data = new Choroba();
+        //$data = new Choroba();
         $data->setNazwa($forms['nazwa']->getData()->getNazwa());
         /*
          $data = new Color(
