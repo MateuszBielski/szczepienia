@@ -51,6 +51,16 @@
                 <td>{{ szczepionka.producent }}</td>
             </tr>
             
+            {% for schemat in szczepionka.schematy %}
+                <tr>
+                <th><a href="{{ path('schemat_show', {'id': schemat.id})  }}">pokaż schemat</a></th>
+                </tr>
+            {% else %}
+                <tr>
+                <th>Dodaj schemat podawania</th>
+                </tr>
+            {% endfor %}
+            
         </tbody>
     </table>
 

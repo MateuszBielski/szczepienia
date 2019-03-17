@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Schemat{% endblock %}
+
+{% block body %}
+    <h1>Create new Schemat</h1>
+
+    {{ include('schemat/_form.html.twig') }}
+
+    <a href="{{ path('schemat_index') }}">back to list</a>
+{% endblock %}

@@ -49,12 +49,16 @@ class ChorobaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="choroba_show", methods={"GET"})
+     * @Route("/{id}", name="choroba_show", methods={"GET","POST"})
      */
-    public function show(Choroba $choroba): Response
+    public function show(Request $request, Choroba $choroba): Response
     {
+        //$path = $request->getUri(); //miało odczytać stronę skąd przyszliśmy ,ale daje bieżącą
+        
         return $this->render('choroba/show.html.twig', [
             'choroba' => $choroba,
+            'sciezka' => $request->headers->get('referer'),
+            'request'
         ]);
     }
 

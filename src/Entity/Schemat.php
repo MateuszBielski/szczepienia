@@ -19,12 +19,6 @@ class Schemat
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Szczepionka", inversedBy="warunek")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $szczepionka;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Warunek", mappedBy="schemat")
      */
     private $warunek;
@@ -33,6 +27,12 @@ class Schemat
      * @ORM\OneToMany(targetEntity="App\Entity\Dawka", mappedBy="schemat", orphanRemoval=true)
      */
     private $dawki;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Szczepionka", inversedBy="schematy")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $podawania;
 
     public function __construct()
     {
@@ -45,17 +45,6 @@ class Schemat
         return $this->id;
     }
 
-    public function getSzczepionka(): ?Szczepionka
-    {
-        return $this->szczepionka;
-    }
-
-    public function setSzczepionka(?Szczepionka $szczepionka): self
-    {
-        $this->szczepionka = $szczepionka;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Warunek[]
@@ -115,6 +104,18 @@ class Schemat
                 $dawki->setSchemat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPodawania(): ?Szczepionka
+    {
+        return $this->podawania;
+    }
+
+    public function setPodawania(?Szczepionka $podawania): self
+    {
+        $this->podawania = $podawania;
 
         return $this;
     }

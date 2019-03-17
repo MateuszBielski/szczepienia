@@ -58,15 +58,17 @@ class Szczepionka
      */
     private $przeciw;
 
+    
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Schemat", mappedBy="szczepionka")
+     * @ORM\OneToMany(targetEntity="App\Entity\Schemat", mappedBy="podawania", orphanRemoval=true)
      */
-    private $schemat;
+    private $schematy;
 
     public function __construct()
     {
         $this->przeciw = new ArrayCollection();
         $this->schemat = new ArrayCollection();
+        $this->schematy = new ArrayCollection();
     }
 
     
@@ -216,6 +218,37 @@ class Szczepionka
             // set the owning side to null (unless already changed)
             if ($schemat->getSzczepionka() === $this) {
                 $schemat->setSzczepionka(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schemat[]
+     */
+    public function getSchematy(): Collection
+    {
+        return $this->schematy;
+    }
+
+    public function addSchematy(Schemat $schematy): self
+    {
+        if (!$this->schematy->contains($schematy)) {
+            $this->schematy[] = $schematy;
+            $schematy->setPodawania($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchematy(Schemat $schematy): self
+    {
+        if ($this->schematy->contains($schematy)) {
+            $this->schematy->removeElement($schematy);
+            // set the owning side to null (unless already changed)
+            if ($schematy->getPodawania() === $this) {
+                $schematy->setPodawania(null);
             }
         }
 
