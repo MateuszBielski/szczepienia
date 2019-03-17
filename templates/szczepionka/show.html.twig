@@ -19,7 +19,7 @@
                 <th>Przeciw chorobom: </th>
                 <td>
                 {% for choroba in szczepionka.przeciw %}
-                    {{ choroba.nazwa }}
+                    <a href="{{ path('choroba_show', {'id': choroba.id}) }}">{{ choroba.nazwa }} </a>
                 {% endfor %}
                 </td>
             </tr>
