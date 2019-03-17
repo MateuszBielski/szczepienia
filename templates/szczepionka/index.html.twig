@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Nazwa</th>
                 <th>Producent</th>
+                <th>Schemat podawania</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ szczepionka.id }}</td>
                 <td>{{ szczepionka.nazwa }}</td>
                 <td>{{ szczepionka.producent }}</td>
+                <td>{{ szczepionka.schematy|length }}</td>
                 <td>
                     <a href="{{ path('szczepionka_show', {'id': szczepionka.id}) }}">pokaż</a>
                     <a href="{{ path('szczepionka_edit', {'id': szczepionka.id}) }}">edytuj</a>

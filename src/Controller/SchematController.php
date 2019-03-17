@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Schemat;
+use App\Entity\Szczepionka;
 use App\Form\SchematType;
 use App\Repository\SchematRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,12 @@ class SchematController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="schemat_new", methods={"GET","POST"})
+     * @Route("/new{id}", name="schemat_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Szczepionka $szczepionka): Response
     {
         $schemat = new Schemat();
+        $schemat->setPodawania($szczepionka);
         $form = $this->createForm(SchematType::class, $schemat);
         $form->handleRequest($request);
 

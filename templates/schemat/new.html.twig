@@ -6,6 +6,7 @@
     <h1>Create new Schemat</h1>
 
     {{ include('schemat/_form.html.twig') }}
-
-    <a href="{{ path('schemat_index') }}">back to list</a>
+    <a href="{{ path('szczepionka_show', {'id': schemat.podawania.id}) }}">powrót do szczepionki</a>
+    <br>
+    <a href="{{ path('schemat_index') }}">lista schematów</a>
 {% endblock %}

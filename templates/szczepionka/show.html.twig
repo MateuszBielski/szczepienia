@@ -57,7 +57,7 @@
                 </tr>
             {% else %}
                 <tr>
-                <th>Dodaj schemat podawania</th>
+                <th><a href="{{ path('dodaj_schemat', {'id': szczepionka.id}) }}">Dodaj schemat podawania</a></th>
                 </tr>
             {% endfor %}
             

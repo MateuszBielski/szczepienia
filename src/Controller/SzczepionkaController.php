@@ -94,4 +94,13 @@ class SzczepionkaController extends AbstractController
 
         return $this->redirectToRoute('szczepionka_index');
     }
+    
+    
+    /**
+     * @Route("/{id}/dodajSchemat", name="dodaj_schemat", methods={"GET","POST"})
+     */
+    public function dodajSchemat(Request $request, Szczepionka $szczepionka): Response
+    {
+        return $this->redirectToRoute('schemat_new',['id'=> $szczepionka->getId()]);
+    }
 }
