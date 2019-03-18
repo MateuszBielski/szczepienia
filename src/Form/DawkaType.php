@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Dawka;
+use App\Entity\Schemat;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +18,10 @@ class DawkaType extends AbstractType
             ->add('ktora')
             ->add('odstepMin',null,['label' => 'minimalny'])//
             ->add('odstepMax',null,['label' => 'maksymalny'])
-            ->add('schemat',TextType::class,['data' => 'abcdef',])
+            //->add('schemat',TextType::class,['data' => 'abcdef',])
+            //->add('schemat',EntityType::class,['class' => Schemat::class,
+            //'choice_label' => 'id',//zmienić na funkcję (nazwa + choroby + producent)
+            //])
         ;
     }
 

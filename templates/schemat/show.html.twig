@@ -11,6 +11,15 @@
                 <th>Id</th>
                 <td>{{ schemat.id }}</td>
             </tr>
+            {% for dawka in schemat.dawki %}
+            <tr>
+                <th>dawka {{ dawka.id }}</th><td>odstęp minimalny {{ dawka.odstepMin }}</td><td>odstęp maksymalny {{ dawka.odstepMax }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <th>Dawki nieokreślone</th>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 
@@ -18,6 +27,7 @@
 
     <a href="{{ path('schemat_edit', {'id': schemat.id}) }}">edit</a>
     <a href="{{ app.request.headers.get('referer') }}">powrót</a>
+    <br><a href="{{ path ('szczepionka_show', {'id': schemat.podawania.id}) }}">moja szczepionka ({{ schemat.podawania.nazwa }})</a>
 
     {{ include('schemat/_delete_form.html.twig') }}
 {% endblock %}

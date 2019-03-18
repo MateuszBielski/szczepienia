@@ -119,4 +119,11 @@ class Schemat
 
         return $this;
     }
+    public function DlaMoichDawekUstawMnie()
+    {
+        foreach($this->dawki->getIterator() as $i => $dawka)
+        {
+            $dawka->setSchemat($this);
+        }
+    }
 }

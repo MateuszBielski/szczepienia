@@ -36,6 +36,12 @@ class Dawka
      * @ORM\JoinColumn(nullable=false)
      */
     private $schemat;
+    
+    /*
+    public function __construct(Schemat $schemat)
+    {
+        $this->schemat = $schemat;
+    }*/
 
     public function getId(): ?int
     {

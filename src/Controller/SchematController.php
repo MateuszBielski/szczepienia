@@ -37,11 +37,12 @@ class SchematController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $schemat->DlaMoichDawekUstawMnie();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($schemat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('schemat_index');
+            return $this->redirectToRoute('schemat_show',['id'=> $schemat->getId()]);
         }
 
         return $this->render('schemat/new.html.twig', [
@@ -69,6 +70,7 @@ class SchematController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $schemat->DlaMoichDawekUstawMnie();
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('schemat_index', [
