@@ -26,7 +26,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
     addTagFormDeleteLink($newFormLi);
 }
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<button type="button">usuń chorobę</button>');
+    var $removeFormButton = $('<button type="button">-</button>');
     $tagFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
@@ -38,12 +38,12 @@ function addTagFormDeleteLink($tagFormLi) {
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="add_tag_link">Dodaj chorobę</button>');
+var $addTagButton = $('<button type="button" class="add_tag_link">+</button>');
 var $newLinkLi = $('<li></li>').append($addTagButton);
 
 jQuery(document).ready(function() {
 // Get the ul that holds the collection of tags
-$collectionHolder = $('ul.ul_klasaPrzeciw');
+$collectionHolder = $('ul.ul_DodajUsun');
 
  // add a delete link to all of the existing tag form li elements
 $collectionHolder.find('li').each(function() {

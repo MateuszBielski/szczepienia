@@ -2,7 +2,7 @@
     {# { form_widget(form) } #}
     {% for pole in form %}
         {% if pole == form.przeciw %}
-            <ul class="ul_klasaPrzeciw" data-prototype="{{ form_widget(form.przeciw.vars.prototype)|e('html_attr') }}">
+            <ul class="ul_DodajUsun" data-prototype="{{ form_widget(form.przeciw.vars.prototype)|e('html_attr') }}">
             {% for choroba in pole%}
                 <li>{{ form_row(choroba) }}</li>
             {% endfor %}

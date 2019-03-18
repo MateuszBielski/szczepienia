@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dawka index{% endblock %}
+
+{% block body %}
+    <h1>Dawka index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ktora</th>
+                <th>OdstepMin</th>
+                <th>OdstepMax</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dawka in dawkas %}
+            <tr>
+                <td>{{ dawka.id }}</td>
+                <td>{{ dawka.ktora }}</td>
+                <td>{{ dawka.odstepMin }}</td>
+                <td>{{ dawka.odstepMax }}</td>
+                <td>
+                    <a href="{{ path('dawka_show', {'id': dawka.id}) }}">show</a>
+                    <a href="{{ path('dawka_edit', {'id': dawka.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('dawka_new') }}">Create new</a>
+{% endblock %}

@@ -24,7 +24,7 @@ class Schemat
     private $warunek;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dawka", mappedBy="schemat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Dawka",cascade="persist", mappedBy="schemat", orphanRemoval=true)
      */
     private $dawki;
 

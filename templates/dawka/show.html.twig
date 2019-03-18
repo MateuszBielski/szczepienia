@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dawka{% endblock %}
+
+{% block body %}
+    <h1>Dawka</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dawka.id }}</td>
+            </tr>
+            <tr>
+                <th>Ktora</th>
+                <td>{{ dawka.ktora }}</td>
+            </tr>
+            <tr>
+                <th>OdstepMin</th>
+                <td>{{ dawka.odstepMin }}</td>
+            </tr>
+            <tr>
+                <th>OdstepMax</th>
+                <td>{{ dawka.odstepMax }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('dawka_index') }}">back to list</a>
+
+    <a href="{{ path('dawka_edit', {'id': dawka.id}) }}">edit</a>
+
+    {{ include('dawka/_delete_form.html.twig') }}
+{% endblock %}
