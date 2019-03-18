@@ -26,7 +26,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
     addTagFormDeleteLink($newFormLi);
 }
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<button type="button">usuń chorobę</button>');
+    var $removeFormButton = $('<button type="button">zrezygnuj z dawki</button>');
     $tagFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
@@ -38,7 +38,7 @@ function addTagFormDeleteLink($tagFormLi) {
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="add_tag_link">dodaj chorobę</button>');
+var $addTagButton = $('<button type="button" class="add_tag_link">kolejna dawka</button>');
 var $newLinkLi = $('<li></li>').append($addTagButton);
 
 jQuery(document).ready(function() {

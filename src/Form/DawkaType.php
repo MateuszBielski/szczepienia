@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Dawka;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,7 @@ class DawkaType extends AbstractType
             ->add('ktora')
             ->add('odstepMin',null,['label' => 'minimalny'])//
             ->add('odstepMax',null,['label' => 'maksymalny'])
+            ->add('schemat',TextType::class,['data' => 'abcdef',])
         ;
     }
 
