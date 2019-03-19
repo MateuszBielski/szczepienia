@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Osoba;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,25 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SzczepiacyRepository")
  */
-class Szczepiacy
+class Szczepiacy extends Osoba
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $nazwisko;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $imie;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Szczepienie", mappedBy="szczepiacy")
      */
@@ -36,39 +19,6 @@ class Szczepiacy
     public function __construct()
     {
         $this->mojeSzczepienia = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getImieInazwisko(): ?string
-    {
-        return sprintf('%s %s', $this->imie, $this->nazwisko);
-    }
-    public function getNazwisko(): ?string
-    {
-        return $this->nazwisko;
-    }
-
-    public function setNazwisko(?string $nazwisko): self
-    {
-        $this->nazwisko = $nazwisko;
-
-        return $this;
-    }
-
-    public function getImie(): ?string
-    {
-        return $this->imie;
-    }
-
-    public function setImie(string $imie): self
-    {
-        $this->imie = $imie;
-
-        return $this;
     }
 
     /**
