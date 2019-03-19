@@ -37,7 +37,7 @@ class SchematController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $schemat->DlaMoichDawekUstawMnie();
+            $schemat->DlaMoichDawekUstawMnieIponumeruj();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($schemat);
             $entityManager->flush();
@@ -70,7 +70,7 @@ class SchematController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $schemat->DlaMoichDawekUstawMnie();
+            $schemat->DlaMoichDawekUstawMnieIponumeruj();
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('schemat_index', [

@@ -47,6 +47,11 @@ class Pacjent
     {
         return $this->id;
     }
+    
+    public function getImieInazwisko(): ?string
+    {
+        return sprintf('%s %s', $this->imie, $this->nazwisko);
+    }
 
     public function getNazwisko(): ?string
     {

@@ -34,6 +34,11 @@ class Szczepienie
      */
     private $coPodano;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dataZabiegu;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +76,18 @@ class Szczepienie
     public function setCoPodano(?Dawka $coPodano): self
     {
         $this->coPodano = $coPodano;
+
+        return $this;
+    }
+
+    public function getDataZabiegu(): ?\DateTimeInterface
+    {
+        return $this->dataZabiegu;
+    }
+
+    public function setDataZabiegu(\DateTimeInterface $dataZabiegu): self
+    {
+        $this->dataZabiegu = $dataZabiegu;
 
         return $this;
     }

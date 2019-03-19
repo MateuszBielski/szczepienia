@@ -119,10 +119,12 @@ class Schemat
 
         return $this;
     }
-    public function DlaMoichDawekUstawMnie()
+    public function DlaMoichDawekUstawMnieIponumeruj()
     {
+        $numer = 1;
         foreach($this->dawki->getIterator() as $i => $dawka)
         {
+            $dawka->setKtora($numer++);
             $dawka->setSchemat($this);
         }
     }

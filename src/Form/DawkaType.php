@@ -15,7 +15,6 @@ class DawkaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ktora')
             ->add('odstepMin',null,['label' => 'minimalny'])//
             ->add('odstepMax',null,['label' => 'maksymalny'])
             //->add('schemat',TextType::class,['data' => 'abcdef',])
