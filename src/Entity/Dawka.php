@@ -43,6 +43,12 @@ class Dawka
         $this->schemat = $schemat;
     }*/
 
+    public function getSkroconeCechyMojeImojejSzczepionki(): ?string
+    {
+        $sc_nazwa = $this->schemat->getPodawania()->getNazwa();
+        //return sprintf('%s %d %s %s','dawka nr ',$this->ktora, ' szczepionki: ', $sc_nazwa);
+        return sprintf('%d',$this->odstepMax);
+    }
     public function getId(): ?int
     {
         return $this->id;

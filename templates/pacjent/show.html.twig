@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacjent{% endblock %}
+
+{% block body %}
+    <h1>Pacjent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pacjent.id }}</td>
+            </tr>
+            <tr>
+                <th>Imie</th>
+                <td>{{ pacjent.imie }}</td>
+            </tr>
+            <tr>
+                <th>Nazwisko</th>
+                <td>{{ pacjent.nazwisko }}</td>
+            </tr>
+            <tr>
+                <th>Pesel</th>
+                <td>{{ pacjent.pesel }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pacjent_index') }}">back to list</a>
+
+    <a href="{{ path('pacjent_edit', {'id': pacjent.id}) }}">edit</a>
+
+    {{ include('pacjent/_delete_form.html.twig') }}
+{% endblock %}

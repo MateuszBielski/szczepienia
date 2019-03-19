@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Szczepiacy{% endblock %}
+
+{% block body %}
+    <h1>Edit Szczepiacy</h1>
+
+    {{ include('szczepiacy/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('szczepiacy_index') }}">back to list</a>
+
+    {{ include('szczepiacy/_delete_form.html.twig') }}
+{% endblock %}

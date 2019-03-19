@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepienie{% endblock %}
+
+{% block body %}
+    <h1>Szczepienie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ szczepienie.id }}</td>
+            </tr>
+            <tr>
+                <th>DataZabiegu</th>
+                <td>{{ szczepienie.dataZabiegu ? szczepienie.dataZabiegu|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepienie_index') }}">back to list</a>
+
+    <a href="{{ path('szczepienie_edit', {'id': szczepienie.id}) }}">edit</a>
+
+    {{ include('szczepienie/_delete_form.html.twig') }}
+{% endblock %}
