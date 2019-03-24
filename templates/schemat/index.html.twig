@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Nazwa szczepionki</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
         {% for schemat in schemats %}
             <tr>
                 <td>{{ schemat.id }}</td>
+                <td>{{ schemat.podawania.nazwa }}</td>
                 <td>
                     <a href="{{ path('schemat_show', {'id': schemat.id}) }}">show</a>
                     <a href="{{ path('schemat_edit', {'id': schemat.id}) }}">edit</a>
