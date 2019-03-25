@@ -20,19 +20,6 @@ class SchematType extends AbstractType
             'class' => Szczepionka::class,
             'choice_label' => 'nazwa',//zmienić na funkcję (nazwa + choroby + producent)
             ])
-            /*
-            ->add('dawki',CollectionType::class, [
-              'entry_type' => EntityType::class,
-              'entry_options' => [
-                'class' => Dawka::class,
-                'choice_label' => 'id',
-                //'attr' => ['class' => 'klasaPrzeciw'],
-                ],
-            'allow_add' => true,
-            'allow_delete' =>true,
-            'by_reference' =>true,
-            ])
-             */
             ->add('dawki',CollectionType::class,[
             'entry_type' => DawkaType::class,
             'allow_add' => true,

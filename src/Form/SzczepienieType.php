@@ -6,6 +6,8 @@ use App\Entity\Szczepienie;
 use App\Entity\Pacjent;
 use App\Entity\Szczepiacy;
 use App\Entity\Dawka;
+use App\Entity\Szczepionka;
+use App\Repository\SzczepionkaRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,11 +25,14 @@ class SzczepienieType extends AbstractType
             ->add('szczepiacy',EntityType::class,[
             'class' => Szczepiacy::class, 
             'choice_label' => function(Szczepiacy $sc){return $sc->getImieInazwisko();} ])
+            /*
             ->add('coPodano',EntityType::class,[
             'class' => Dawka::class,
-            'choice_label' => function(Dawka $dw){return $dw->getSkroconeCechyMojeImojejSzczepionki();}
-            //'choice_label' => function(Dawka $dw){return $dw->getNazwaSzczepionki();}
-            ])
+            //'choice_label' => function(Dawka $dw){return $dw->getSkroconeCechyMojeImojejSzczepionki();}
+            'choice_label' => function(Dawka $dw){return $dw->getNazwaSzczepionki();}
+            
+            ])*/
+            ->add('coPodano',DawkaType::class,['label' => false])
         ;
     }
 
