@@ -10,6 +10,6 @@
     <h1>Create new Szczepionka</h1>
 
     {{ include('szczepionka/_form.html.twig') }}
-
+    <a href="{{ path('choroba_new') }}">Dodaj Chorobę</a><br>
     <a href="{{ path('szczepionka_index') }}">back to list</a>
 {% endblock %}

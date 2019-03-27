@@ -32,7 +32,7 @@ class SzczepienieType extends AbstractType
             'choice_label' => function(Dawka $dw){return $dw->getNazwaSzczepionki();}
             
             ])*/
-            ->add('coPodano',DawkaType::class,['label' => false])
+            ->add('coPodano',DawkaSzczepionkaType::class,['label' => false])
         ;
     }
 
