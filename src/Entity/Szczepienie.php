@@ -38,7 +38,10 @@ class Szczepienie
      * @ORM\Column(type="date")
      */
     private $dataZabiegu;
+    
+    private $rodzajSzczepionkiTymczasowy;
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,17 @@ class Szczepienie
     {
         $this->dataZabiegu = $dataZabiegu;
 
+        return $this;
+    }
+    
+    public function getRodzajSzczepionki(): ?Szczepionka
+    {
+        $this->rodzajSzczepionkiTymczasowy = $this->coPodano->getSchemat()->getPodawania();
+        return $this->rodzajSzczepionkiTymczasowy;
+    }
+    public function setRodzajSzczepionki(?Szczepionka $szczepionka): self
+    {
+        $this->rodzajSzczepionkiTymczasowy = $szczepionka;
         return $this;
     }
 }

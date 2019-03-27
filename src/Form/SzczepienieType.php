@@ -25,14 +25,12 @@ class SzczepienieType extends AbstractType
             ->add('szczepiacy',EntityType::class,[
             'class' => Szczepiacy::class, 
             'choice_label' => function(Szczepiacy $sc){return $sc->getImieInazwisko();} ])
-            /*
-            ->add('coPodano',EntityType::class,[
-            'class' => Dawka::class,
-            //'choice_label' => function(Dawka $dw){return $dw->getSkroconeCechyMojeImojejSzczepionki();}
-            'choice_label' => function(Dawka $dw){return $dw->getNazwaSzczepionki();}
             
-            ])*/
-            ->add('coPodano',DawkaSzczepionkaType::class,['label' => false])
+            ->add('rodzajSzczepionki',EntityType::class,[
+            'class' => Szczepionka::class,
+            'choice_label' => 'nazwa'
+            ])
+            //->add('coPodano',DawkaSzczepionkaType::class,['label' => false])
         ;
     }
 
