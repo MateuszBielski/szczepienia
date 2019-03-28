@@ -54,6 +54,11 @@ class Dawka
     {
         return $this->schemat->getPodawania()->getNazwa();
     }
+    
+    public function getSzczepionka(): ?Szczepionka
+    {
+        return $this->schemat->getPodawania();
+    }
     public function getId(): ?int
     {
         return $this->id;

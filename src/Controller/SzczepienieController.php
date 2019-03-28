@@ -35,7 +35,6 @@ class SzczepienieController extends AbstractController
         $szczepienie = new Szczepienie();
         $szczepienie->setCoPodano($this->zaproponujDawke());
         $szczepienie->setDataZabiegu(new \DateTime);
-        $
         $form = $this->createForm(SzczepienieType::class, $szczepienie);
         $form->handleRequest($request);
 
@@ -100,9 +99,9 @@ class SzczepienieController extends AbstractController
     }
     public function zaproponujDawke(): Dawka
     {
-        $dawka = new Dawka();
         $szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
-        $schemat = $this->getDoctrine()->getRepository(Schemat::class)->
-        return 
+        $dawka = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaPierwszaZlisty);
+        
+        return $dawka;
     }
 }

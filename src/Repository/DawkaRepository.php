@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Dawka;
+use App\Entity\Szczepionka;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -47,4 +48,26 @@ class DawkaRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function znajdzWgSzczepionki(Szczepionka $szczep)
+    {
+                /*return $this->createQueryBuilder('cat')
+            ->andWhere('cat.name LIKE :searchTerm
+                OR cat.iconKey LIKE :searchTerm
+                OR fc.fortune LIKE :searchTerm')
+            ->leftJoin('cat.fortuneCookies', 'fc')
+            ->setParameter('searchTerm', '%'.$term.'%')
+            ->getQuery()
+            ->execute();*/
+        
+        return $this->createQueryBuilder('daw')
+            ->andWhere('ska.id = :id')
+            ->leftJoin('daw.schemat', 'sch')
+            ->leftJoin('sch.podawania', 'ska')
+            ->setParameter('id', $szczep->getId())
+            ->orderBy('daw.id','ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

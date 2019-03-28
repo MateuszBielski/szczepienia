@@ -32,6 +32,38 @@ class SzczepienieType extends AbstractType
             ])
             //->add('coPodano',DawkaSzczepionkaType::class,['label' => false])
         ;
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event)
+            {
+                $form = $event->getForm();
+                
+                $dawka = $event->getData();
+                
+                $szczepionka = $dawka->getSzczepionka();
+            }
+            )
+        
+        
+        
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+
+                $sport = $data->getSport();
+                $positions = null === $sport ? [] : $sport->getAvailablePositions();
+
+                $form->add('position', EntityType::class, [
+                    'class' => 'App\Entity\Position',
+                    'placeholder' => '',
+                    'choices' => $positions,
+                ]);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

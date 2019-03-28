@@ -52,6 +52,7 @@ class SzczepionkaRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->orderBy('s.id','ASC')
             ->getQuery()
+            ->setMaxResults(1)
             ->getOneOrNullResult()
             ;
     }
