@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Szczepienie;
+use App\Entity\Szczepionka;
+use App\Entity\Dawka;
 use App\Form\SzczepienieType;
 use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +33,9 @@ class SzczepienieController extends AbstractController
     public function new(Request $request): Response
     {
         $szczepienie = new Szczepienie();
+        $szczepienie->setCoPodano($this->zaproponujDawke());
         $szczepienie->setDataZabiegu(new \DateTime);
+        $
         $form = $this->createForm(SzczepienieType::class, $szczepienie);
         $form->handleRequest($request);
 
@@ -93,5 +97,12 @@ class SzczepienieController extends AbstractController
         }
 
         return $this->redirectToRoute('szczepienie_index');
+    }
+    public function zaproponujDawke(): Dawka
+    {
+        $dawka = new Dawka();
+        $szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
+        $schemat = $this->getDoctrine()->getRepository(Schemat::class)->
+        return 
     }
 }

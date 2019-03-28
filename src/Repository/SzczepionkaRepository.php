@@ -47,4 +47,12 @@ class SzczepionkaRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function znajdzPierwszaZlisty(): ?Szczepionka
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.id','ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

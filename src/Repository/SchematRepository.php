@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Schemat;
+use App\Entity\Szczepionka;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -47,4 +48,22 @@ class SchematRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function znajdzIleDlaSzczepionki(integer $ile, Szczepionka $szczep)
+    {
+                /*return $this->createQueryBuilder('cat')
+            ->andWhere('cat.name LIKE :searchTerm
+                OR cat.iconKey LIKE :searchTerm
+                OR fc.fortune LIKE :searchTerm')
+            ->leftJoin('cat.fortuneCookies', 'fc')
+            ->setParameter('searchTerm', '%'.$term.'%')
+            ->getQuery()
+            ->execute();*/
+        
+        return $this->createQueryBuilder('sch')
+            ->andWhere('ska.id = :id')
+            ->leftJoin('sch.podawania', 'ska')
+            ->setParameter('id', $szczep->getId())
+            ->getQuery()
+            ->execute();
+    }
 }
