@@ -67,7 +67,7 @@ class Szczepionka
     public function __construct()
     {
         $this->przeciw = new ArrayCollection();
-        $this->schemat = new ArrayCollection();
+        //$this->schemat = new ArrayCollection();
         $this->schematy = new ArrayCollection();
     }
 
@@ -196,11 +196,13 @@ class Szczepionka
     /**
      * @return Collection|Schemat[]
      */
+    /*
     public function getSchemat(): Collection
     {
         return $this->schemat;
     }
 
+    
     public function addSchemat(Schemat $schemat): self
     {
         if (!$this->schemat->contains($schemat)) {
@@ -223,6 +225,7 @@ class Szczepionka
 
         return $this;
     }
+    */
 
     /**
      * @return Collection|Schemat[]
@@ -254,6 +257,15 @@ class Szczepionka
 
         return $this;
     }
-
+    public function getDostepneDawki(): Collection
+    {
+        $wynik = new ArrayCollection();
+        foreach($this->schematy as $schem){
+            foreach($schem->getDawki() as $dawka){
+                $wynik[] = $dawka;
+            } 
+        }
+        return $wynik;
+    }
     
 }
