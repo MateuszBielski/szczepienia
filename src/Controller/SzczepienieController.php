@@ -6,7 +6,7 @@ use App\Entity\Szczepienie;
 use App\Entity\Szczepionka;
 use App\Entity\Dawka;
 use App\Form\SzczepienieType;
-use App\Form\SzczepienieCoPodanoType;
+use App\Form\CopodanoType;
 use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,12 +41,12 @@ class SzczepienieController extends AbstractController
         $dataZab = new \DateTime;
         $szczepienie->setDataZabiegu($dataZab);
         
-        $form = $this->createForm(SzczepienieType::class, $szczepienie);
-        $formCoPodano = $this->createForm(SzczepienieCoPodanoType::class, $szczepienie);
+        $form = $this->createForm(CopodanoType::class, $szczepienie);
+        //$formCoPodano = $this->createForm(SzczepienieCoPodanoType::class, $szczepienie);
         $form->handleRequest($request);
-        $formCoPodano->handleRequest($request);
+        //$formCoPodano->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $formCoPodano->isSubmitted() && $formCoPodano->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() ) { //&& $formCoPodano->isSubmitted() && $formCoPodano->isValid()
             //$logger = new Logger('SzczepienieController');
             //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
             //$logger->warning('szczep data zabiegu'.$szczepienie->getDataZabiegu()->format('d-m-Y'));
@@ -61,7 +61,7 @@ class SzczepienieController extends AbstractController
         return $this->render('szczepienie/new.html.twig', [
             'szczepienie' => $szczepienie,
             'form' => $form->createView(),
-            'formCoPodano' => $formCoPodano->createView(),
+            //'formCoPodano' => $formCoPodano->createView(),
         ]);
     }
 

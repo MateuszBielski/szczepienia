@@ -105,4 +105,8 @@ class Szczepienie
         $this->rodzajSzczepionkiTymczasowy = $szczepionka;
         return $this;
     }
+    public function getDatZabpacjentszczepiacy(): self
+    {
+        return $this;
+    }
 }

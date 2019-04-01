@@ -1,10 +1,10 @@
 {{ form_start(form) }}
     {# { form_widget(form) } #}
-    {{ form_row(form.dataZabiegu) }}
+    {# { form_row(form.datZabpacjentszczepiacy.dataZabiegu) } #}
     {{ form_row(form.pacjent) }}
     {{ form_row(form.szczepiacy) }}
-    {{ form_row(formCoPodano.rodzajSzczepionki) }}
-    {{ form_row(formCoPodano.coPodano) }}
+    {{ form_row(form.rodzajSzczepionki) }}
+    {{ form_row(form.coPodano) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
     
 {{ form_end(form) }}

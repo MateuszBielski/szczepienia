@@ -34,6 +34,12 @@ class CopodanoType extends AbstractType
             //$logger->warning('Przed builder ^_^ ');
             
             $builder
+            ->add('pacjent',EntityType::class,[
+            'class' => Pacjent::class, 
+            'choice_label' => function(Pacjent $pc){return $pc->getImieInazwisko();} ])
+            ->add('szczepiacy',EntityType::class,[
+            'class' => Szczepiacy::class, 
+            'choice_label' => function(Szczepiacy $sc){return $sc->getImieInazwisko();} ])
             ->add('rodzajSzczepionki',EntityType::class,[
             'class' => Szczepionka::class,
             'choice_label' => 'nazwa'

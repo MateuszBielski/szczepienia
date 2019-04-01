@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
     //var $przycisk = $('#przycisk');
-    var $rodzSzczepionki = $('#szczepienie_co_podano_rodzajSzczepionki');//
+    var $rodzSzczepionki = $('#copodano_rodzajSzczepionki');//
     
     $rodzSzczepionki.change(function() {
         console.log($rodzSzczepionki.val());
@@ -15,9 +15,9 @@ jQuery(document).ready(function() {
         data : data,
         success: function(html_odp) {
           // Replace current position field ...
-          $('#szczepienie_co_podano_coPodano').replaceWith(
+          $('#copodano_coPodano').replaceWith(
             // ... with the returned one from the AJAX response.
-            $(html_odp).find('#szczepienie_co_podano_coPodano')
+            $(html_odp).find('#copodano_coPodano')
           );
           //$('#kontener').text($rodzSzczepionki.val()); 
           //$('#kontener').html(html_odp);
