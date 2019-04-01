@@ -56,4 +56,13 @@ class SzczepionkaRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+    public function znajdzOstatniaZlisty(): ?Szczepionka
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.id','DESC')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
 }

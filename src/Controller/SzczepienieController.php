@@ -42,7 +42,7 @@ class SzczepienieController extends AbstractController
         $szczepienie->setDataZabiegu($dataZab);
         
         $form = $this->createForm(CopodanoType::class, $szczepienie);
-        //$formCoPodano = $this->createForm(SzczepienieCoPodanoType::class, $szczepienie);
+        //$form = $this->createForm(SzczepienieCoPodanoType::class, $szczepienie);
         $form->handleRequest($request);
         //$formCoPodano->handleRequest($request);
 
@@ -50,7 +50,9 @@ class SzczepienieController extends AbstractController
             //$logger = new Logger('SzczepienieController');
             //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
             //$logger->warning('szczep data zabiegu'.$szczepienie->getDataZabiegu()->format('d-m-Y'));
-                
+            $dataOdczytana = $form->get('dataZabiegu')->getData();
+            $szczepienie->setDataZabiegu($dataOdczytana);
+            //$szczepienie->setPacjent($form->get('pacjent')->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($szczepienie);
             $entityManager->flush();
@@ -80,7 +82,7 @@ class SzczepienieController extends AbstractController
      */
     public function edit(Request $request, Szczepienie $szczepienie): Response
     {
-        $form = $this->createForm(SzczepienieType::class, $szczepienie);
+        $form = $this->createForm(CopodanoType::class, $szczepienie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,8 +114,9 @@ class SzczepienieController extends AbstractController
     }
     public function zaproponujDawke(): Dawka
     {
-        $szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
-        $dawka = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaPierwszaZlisty);
+        //$szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
+        $szczepionkaOstatniaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzOstatniaZlisty();
+        $dawka = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
         
         return $dawka;
     }
