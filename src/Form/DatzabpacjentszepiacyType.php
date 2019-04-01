@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
-use App\Form\DatzabpacjentszczepiacyType;
-use App\Form\CopodanoType;
+use App\Entity\Szczepienie;
+use App\Entity\Pacjent;
+use App\Entity\Szczepiacy;
+//use App\Entity\Dawka;
+//use App\Entity\Szczepionka;
+//use App\Repository\SzczepionkaRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +20,11 @@ use Symfony\Component\Form\FormEvents;
 
 
 
-class SzczepienieType extends AbstractType
+class DatzabpacjentszczepiacyType extends AbstractType
 {
+    private $szczepienie;
+    
+    
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
