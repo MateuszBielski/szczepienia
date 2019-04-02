@@ -25,6 +25,7 @@ class Pacjent extends Osoba
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Szczepienie", mappedBy="pacjent", orphanRemoval=true)
+     * @ORM\OrderBy({"dataZabiegu" = "DESC"})
      */
     private $szczepienia;
 
@@ -85,6 +86,7 @@ class Pacjent extends Osoba
     }
     public function DataUrodzeniaZpeselu()
     {
+        if(null === $this->pesel)return '';
         $peselObiekt = new NumerPesel($this->pesel);
         $peselObiekt->ObliczRokDzienMiesiac();
         $rok = $peselObiekt->Rok();

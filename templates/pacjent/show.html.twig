@@ -19,6 +19,10 @@
                 <th>Pesel</th>
                 <td>{{ pacjent.pesel }}</td>
             </tr>
+            <tr>
+                <th>Data urodzenia</th>
+                <td>{{ pacjent.DataUrodzeniaZpeselu }}</td>
+            </tr>
             {% for szczepienie in pacjent.getSzczepienia %}
             <tr>
                 <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
