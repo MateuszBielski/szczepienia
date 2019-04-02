@@ -1,4 +1,11 @@
+{% block scripts %}
+            <script type="text/javascript" src="../../js/jquery-2.1.3.min.js"></script>
+            <script type="text/javascript" src="../../js/jquery-ui.js"></script>
+            <script type="text/javascript" src="../../js/dataUrodzInputPesel.js"></script>
+{% endblock %}
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <div id="div_data_urodz">{{ pacjent.DataUrodzeniaZpeselu }}</div>
+    <br>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

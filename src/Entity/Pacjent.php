@@ -17,14 +17,11 @@ use Monolog\Handler\StreamHandler;
  */
 class Pacjent extends Osoba
 {
-    //private $logger;
     /**
      * @ORM\Column(type="string", length=11)
      * @SprawdzeniePeselu\Pesel
      */
     private $pesel;
-    
-    private $peselObiekt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Szczepienie", mappedBy="pacjent", orphanRemoval=true)
@@ -33,11 +30,10 @@ class Pacjent extends Osoba
 
     public function __construct()
     {
-        $logger = new Logger('Mateusz');
-        $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
-        $logger->warning('konstruktor');
+        //$logger = new Logger('Mateusz');
+        //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+        //$logger->warning('konstruktor');
         $this->szczepienia = new ArrayCollection();
-        $this->peselObiekt = new NumerPesel();
     }
 
     public function getPesel(): ?string
@@ -48,12 +44,12 @@ class Pacjent extends Osoba
 
     public function setPesel(string $pesel): self
     {
-        $logger = new Logger('Mateusz');
-        $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
-        $logger->warning('setPesel');
+        //$logger = new Logger('Mateusz');
+        //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+        //$logger->warning('setPesel');
         
         $this->pesel = $pesel;
-        $this->peselObiekt->setNumer($pesel);
+        
         return $this;
     }
 
@@ -89,9 +85,11 @@ class Pacjent extends Osoba
     }
     public function DataUrodzeniaZpeselu()
     {
-        $rok = substr ( $this->pesel, 0, 2 );
-        $miesiac = '';
-        $dzien = '';
+        $peselObiekt = new NumerPesel($this->pesel);
+        $peselObiekt->ObliczRokDzienMiesiac();
+        $rok = $peselObiekt->Rok();
+        $miesiac = $peselObiekt->Miesiac();
+        $dzien = $peselObiekt->Dzien();
         return sprintf('%d %s %d',$dzien,$miesiac,$rok);
     }
 }

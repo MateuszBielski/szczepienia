@@ -14,7 +14,7 @@ class PacjentType extends AbstractType
         $builder
             ->add('imie')
             ->add('nazwisko')
-            ->add('pesel')
+            ->add('pesel',null,['attr'=> ['autocomplete' => 'off',],])
         ;
     }
 

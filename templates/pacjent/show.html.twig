@@ -8,10 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ pacjent.id }}</td>
-            </tr>
-            <tr>
                 <th>Imie</th>
                 <td>{{ pacjent.imie }}</td>
             </tr>
@@ -23,6 +19,13 @@
                 <th>Pesel</th>
                 <td>{{ pacjent.pesel }}</td>
             </tr>
+            {% for szczepienie in pacjent.getSzczepienia %}
+            <tr>
+                <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
+                <td>{{ szczepienie.coPodano.getSkroconeCechyMojeImojejSzczepionki }}</td>
+                <td><a href="{{ path('szczepienie_edit',{'id': szczepienie.id}) }}">popraw</a></td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 
