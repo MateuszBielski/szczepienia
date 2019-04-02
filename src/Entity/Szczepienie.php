@@ -40,6 +40,7 @@ class Szczepienie
     private $dataZabiegu;
     
     private $rodzajSzczepionkiTymczasowy;
+    private $schematTymczasowy;
 
     
     public function getId(): ?int
@@ -105,5 +106,14 @@ class Szczepienie
         $this->rodzajSzczepionkiTymczasowy = $szczepionka;
         return $this;
     }
-   
+   public function getSchematTymczasowy(): ?Schemat
+   {
+       $this->schematTymczasowy = $this->coPodano->getSchemat();
+       return $this->schematTymczasowy;
+   }
+   public function setSchematTymczasowy(Schemat $schemat): self
+   {
+       $this->schematTymczasowy = $schemat;
+       return $this;
+   }
 }
