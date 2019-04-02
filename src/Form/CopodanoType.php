@@ -28,9 +28,9 @@ class CopodanoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
            
-            //$logger = new Logger('Mateusz');
-            //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
-            //$logger->warning('Przed builder ^_^ ');
+            $logger = new Logger('Mateusz');
+            $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+            $logger->warning('Przed builder ^_^ ');
             
             $builder
             ->add('dataZabiegu')//
