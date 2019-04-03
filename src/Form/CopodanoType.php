@@ -47,9 +47,9 @@ class CopodanoType extends AbstractType
             ])
         ;
         $formModifier = function (FormInterface $form, Szczepionka $szczepionka = null) {
-            $wybranaSzczepionka = (null === $szczepionka);
-            $mozliweDawki = $wybranaSzczepionka ? [] : $szczepionka->getDostepneDawki();
-            $mozliweSchematy = $wybranaSzczepionka ? [] : $szczepionka->getSchematy();
+            $nieWybranaSzczepionka = (null === $szczepionka);
+            $mozliweDawki = $nieWybranaSzczepionka ? [] : $szczepionka->getDostepneDawki();
+            $mozliweSchematy = $nieWybranaSzczepionka ? [] : $szczepionka->getSchematy();
             $form
                 ->add('coPodano', EntityType::class, [
                 'class' => Dawka::class,
@@ -63,6 +63,7 @@ class CopodanoType extends AbstractType
                 'label' => 'schemat',
             ])  
             ;
+            
             
         };
         
@@ -86,6 +87,24 @@ class CopodanoType extends AbstractType
             
             }
         );
+        //ustalenie dawki ze schematu
+        /*
+        $builder->get('schematTymczasowy')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event){
+                $schemat = $event->getForm()->getData();
+                $formularzGlowny = $event->getForm()->getParent();
+                $nieWybranySchemat = (null === $schemat);
+                $mozliweDawki = $nieWybranySchemat ? [] : $szczepionka->getDawki();
+                $formularzGlowny
+                    ->add('coPodano', EntityType::class, [
+                    'class' => Dawka::class,
+                    'choices' => $mozliweDawki,
+                    'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
+                ]);
+            }
+        );
+        */
          /* *******to działało w wersji bez schematu
          $builder->get('rodzajSzczepionki')->addEventListener(
             FormEvents::POST_SUBMIT,
