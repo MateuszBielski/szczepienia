@@ -37,11 +37,10 @@ class Dawka
      */
     private $schemat;
     
-    /*
-    public function __construct(Schemat $schemat)
+    public function __construct()
     {
-        $this->schemat = $schemat;
-    }*/
+        
+    }
 
     public function getSkroconeCechyMojeImojejSzczepionki(): ?string
     {

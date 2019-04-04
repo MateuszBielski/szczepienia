@@ -19,7 +19,7 @@ class Choroba
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nazwa;
+    private $nazwa = 'nowa choroba';
 
     
 

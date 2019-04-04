@@ -117,7 +117,7 @@ class SzczepienieController extends AbstractController
         //$szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
         $szczepionkaOstatniaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzOstatniaZlisty();
         $dawka = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
-        
+        if ($dawka === null) $dawka = new Dawka();
         return $dawka;
     }
 }
