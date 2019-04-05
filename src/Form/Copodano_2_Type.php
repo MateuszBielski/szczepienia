@@ -21,7 +21,7 @@ use Monolog\Handler\StreamHandler;
 
 
 
-class CopodanoType extends AbstractType
+class Copodano_2_Type extends AbstractType
 {
     private $szczepienie;
     
@@ -30,7 +30,7 @@ class CopodanoType extends AbstractType
     {
            
             $logger = new Logger('Mateusz');
-            $logger->pushHandler(new StreamHandler('/home/mateusz/php/sfprojects/szczepienia/var/log/dev.log', Logger::WARNING));
+            $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
             $logger->warning('Przed builder ^_^ ');
             
             $builder
@@ -46,41 +46,94 @@ class CopodanoType extends AbstractType
             'choice_label' => 'nazwa'
             ])
         ;
-        $dodajPoleSchemat = function  (FormInterface $formularz,Szczepionka $szczepionka = null) 
-        {
-            $mozliweSchematy = (null == $szczepionka) ? [] : $szczepionka->getSchematy();
-            $formularz->add('schematTymczasowy', EntityType::class, [
+        $formModifier = function (FormInterface $form, Szczepionka $szczepionka = null) {
+            $nieWybranaSzczepionka = (null === $szczepionka);
+            $mozliweDawki = $nieWybranaSzczepionka ? [] : $szczepionka->getDostepneDawki();
+            $mozliweSchematy = $nieWybranaSzczepionka ? [] : $szczepionka->getSchematy();
+            $form
+                ->add('coPodano', EntityType::class, [
+                'class' => Dawka::class,
+                'choices' => $mozliweDawki,
+                'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
+            ])
+              ->add('schematTymczasowy', EntityType::class, [
                 'class' => Schemat::class,
                 'choices' => $mozliweSchematy,
                 'choice_label' => 'id',
                 'label' => 'schemat',
             ])  
             ;
+            
+            
         };
+        
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($dodajPoleSchemat) {
+            function (FormEvent $event) use ($formModifier) {
                 $szczepienie = $event->getData();
-                $dodajPoleSchemat($event->getForm(), $szczepienie->getRodzajSzczepionki());
-                //$park = $event->getData()->getPark();
-                //$park_id = $park ? $park->getId() : null;
-                //$addFacilityForm($event->getForm(), $park_id);
+                $formModifier($event->getForm(), $szczepienie->getRodzajSzczepionki());
             }
         );
-         $builder->addEventListener(
+        $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleSchemat) {
-                $tablica = $event->getData();
-                $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler('/home/mateusz/php/sfprojects/szczepienia/var/log/dev.log', Logger::WARNING));
-                    $logger->warning('PRE_SUBMIT typ $szczepienie: '.var_dump($tablica));
-                $dodajPoleSchemat($event->getForm(), $szczepienie->getRodzajSzczepionki());
-                //$data = $event->getData();
+            function (FormEvent $event) use ($formModifier) {
+                $szczepienie = $event->getData();
                 //$park_id = array_key_exists('park', $data) ? $data['park'] : null;
-                //$addFacilityForm($event->getForm(), $park_id);
+                $addFacilityForm($event->getForm(), $szczepienie);
             }
         );
         
+        //ustalenie schematu
+        $builder->get('rodzajSzczepionki')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                $szczepionka = $event->getForm()->getData();
+                $formularzGlowny = $event->getForm()->getParent();
+                $formModifier($formularzGlowny, $szczepionka);
+                $logger = new Logger('Mateusz');
+                $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+                $logger->warning('ustalenie schematu');
+            
+            }
+        );
+        //ustalenie dawki ze schematu
+        /*
+        $builder->get('schematTymczasowy')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event){
+                $schemat = $event->getForm()->getData();
+                $formularzGlowny = $event->getForm()->getParent();
+                $nieWybranySchemat = (null === $schemat);
+                $mozliweDawki = $nieWybranySchemat ? [] : $szczepionka->getDawki();
+                $formularzGlowny
+                    ->add('coPodano', EntityType::class, [
+                    'class' => Dawka::class,
+                    'choices' => $mozliweDawki,
+                    'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
+                ]);
+            }
+        );
+        /*
+         /* *******to działało w wersji bez schematu
+         $builder->get('rodzajSzczepionki')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $szczepionka = $event->getForm()->getData();
+               
+                $formularzGlowny = $event->getForm()->getParent();
+                
+                $formModifier($formularzGlowny, $szczepionka);
+                //$logger = new Logger('Mateusz');
+                //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+                //$komunikat = 'brak pola zabiegu';
+                //if($formularzGlowny->has('dataZabiegu'))$komunikat = 'pole zabiegu nadal istnieje';
+                
+                //$logger->warning('get(rodzajSzczepionki)'.$komunikat);
+            }
+        );
+        */
     }
  /*    public function buildForm(FormBuilderInterface $builder, array $options)
     {

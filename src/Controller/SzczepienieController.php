@@ -21,6 +21,9 @@ use Monolog\Handler\StreamHandler;
  */
 class SzczepienieController extends AbstractController
 {
+    
+    //private $propozycjaDawki;
+
     /**
      * @Route("/", name="szczepienie_index", methods={"GET"})
      */
@@ -29,6 +32,15 @@ class SzczepienieController extends AbstractController
         return $this->render('szczepienie/index.html.twig', [
             'szczepienies' => $szczepienieRepository->findAll(),
         ]);
+    }
+    
+    public function zaproponujDawke()
+    {
+        //$szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
+        $szczepionkaOstatniaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzOstatniaZlisty();
+        //if(!count($szczepionkaOstatniaZlisty->getSchematy()))return false;
+        return  $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
+        
     }
 
     /**
@@ -112,12 +124,5 @@ class SzczepienieController extends AbstractController
 
         return $this->redirectToRoute('szczepienie_index');
     }
-    public function zaproponujDawke(): Dawka
-    {
-        //$szczepionkaPierwszaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzPierwszaZlisty();
-        $szczepionkaOstatniaZlisty = $this->getDoctrine()->getRepository(Szczepionka::class)->znajdzOstatniaZlisty();
-        $dawka = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
-        if ($dawka === null) $dawka = new Dawka();
-        return $dawka;
-    }
+    
 }
