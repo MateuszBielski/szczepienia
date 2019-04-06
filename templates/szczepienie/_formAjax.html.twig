@@ -10,9 +10,7 @@
     {{ form_row(form.szczepiacy) }}
     {{ form_row(form.rodzajSzczepionki) }}
     {{ form_row(form.schematTymczasowy) }}
-    {# if form.coPodano.length %}
         {{ form_row(form.coPodano) }}
-    {% endif #}
     <button class="btn">{{ button_label|default('Save') }}</button>
     
 {{ form_end(form) }}

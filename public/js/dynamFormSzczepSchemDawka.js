@@ -1,9 +1,9 @@
 function podmianaSelect($daneOdczytane,$miejscaZmieniane){
     console.log($daneOdczytane[0].val());
-        
+    console.log($daneOdczytane[2].val());    
         var $form = $(this).closest('form');
         var daneDoWyslania = {};
-        for (i = 0; i < $daneOdczytane.length; ++i) {
+        for (i = 0; i < $daneOdczytane.length; i++) {
             daneDoWyslania[$daneOdczytane[i].attr('name')] = $daneOdczytane[i].val();
         }
          $.ajax({
@@ -11,7 +11,7 @@ function podmianaSelect($daneOdczytane,$miejscaZmieniane){
         type:'POST',
         data : daneDoWyslania,
         success: function(html_odp) {
-         for (i = 0; i < $miejscaZmieniane.length; ++i) {
+         for (i = 0; i < $miejscaZmieniane.length; i++) {
             $($miejscaZmieniane[i]).replaceWith($(html_odp).find($miejscaZmieniane[i]));
          }   
         }

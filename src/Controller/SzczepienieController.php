@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Szczepienie;
 use App\Entity\Szczepionka;
 use App\Entity\Dawka;
+use App\Entity\Schemat;
 use App\Form\SzczepienieType;
 use App\Form\CopodanoType;
 use App\Repository\SzczepienieRepository;
@@ -53,18 +54,16 @@ class SzczepienieController extends AbstractController
         $dataZab = new \DateTime;
         $szczepienie->setDataZabiegu($dataZab);
         
-        $form = $this->createForm(CopodanoType::class, $szczepienie);
-        //$form = $this->createForm(SzczepienieCoPodanoType::class, $szczepienie);
+        $saRep = $this->getDoctrine()->getRepository(Szczepionka::class);
+        $schRep = $this->getDoctrine()->getRepository(Schemat::class);
+        $form = $this->createForm(CopodanoType::class, $szczepienie,
+                array('saRep' => $saRep,'schRep' => $schRep));
         $form->handleRequest($request);
-        //$formCoPodano->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() ) { //&& $formCoPodano->isSubmitted() && $formCoPodano->isValid()
-            //$logger = new Logger('SzczepienieController');
-            //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
-            //$logger->warning('szczep data zabiegu'.$szczepienie->getDataZabiegu()->format('d-m-Y'));
+        if ($form->isSubmitted() && $form->isValid() ) 
+        { 
             $dataOdczytana = $form->get('dataZabiegu')->getData();
             $szczepienie->setDataZabiegu($dataOdczytana);
-            //$szczepienie->setPacjent($form->get('pacjent')->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($szczepienie);
             $entityManager->flush();

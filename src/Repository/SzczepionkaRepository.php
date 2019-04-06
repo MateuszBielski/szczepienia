@@ -62,6 +62,7 @@ class SzczepionkaRepository extends ServiceEntityRepository
             ->orderBy('s.id','DESC')
             ->getQuery()
             ->setMaxResults(1)
+            ->setFirstResult(1)
             ->getOneOrNullResult()
             ;
     }
