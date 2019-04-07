@@ -9,6 +9,7 @@ use App\Entity\Schemat;
 use App\Entity\Dawka;
 use App\Entity\Szczepionka;
 use App\Ropository\SzczepionkaRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -59,37 +60,8 @@ class CopodanoType extends AbstractType
             ])  
             ;
         };
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($dodajPoleSchemat) {
-                $szczepienie = $event->getData();
-                $dodajPoleSchemat($event->getForm(), $szczepienie->getRodzajSzczepionki());
-                //$park = $event->getData()->getPark();
-                //$park_id = $park ? $park->getId() : null;
-                //$addFacilityForm($event->getForm(), $park_id);
-            }
-        );
-        $saRep = $options['saRep'];
-         $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleSchemat,$saRep) {
-                $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-                $odpowiedz = $event->getData();
-                $szczepionkaId = array_key_exists('rodzajSzczepionki', $odpowiedz) ? $odpowiedz['rodzajSzczepionki'] : null;
-                $logger->warning('PRE_SUBMIT rodzajSzczepionki: '.$szczepionkaId); 
-                $szczepionka = $saRep->find($szczepionkaId);
-                $dodajPoleSchemat($event->getForm(),$szczepionka);
-                
-                /**********tu jeszcze dodać wypełnienie dla pola coPodano*******/
-                
-                //$data = $event->getData();
-                //$park_id = array_key_exists('park', $data) ? $data['park'] : null;
-                //$addFacilityForm($event->getForm(), $park_id);
-            }
-        );
-        $dodajPoleCoPodano = function (FormInterface $formularz,Schemat $schemat = null) {
-            $mozliweDawki = (null == $schemat) ? [] : $schemat->getDawki();
+        $dodajPoleCoPodano = function (FormInterface $formularz,Collection $mozliweDawki = null) {
+            //$mozliweDawki = (null == $schemat) ? [] : $schemat->getDawki();
             $formularz->add('coPodano', EntityType::class, [
                 'class' => Dawka::class,
                 'choices' => $mozliweDawki,
@@ -98,14 +70,33 @@ class CopodanoType extends AbstractType
         };
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($dodajPoleCoPodano) {
+            function (FormEvent $event) use ($dodajPoleSchemat,$dodajPoleCoPodano) {
                 $szczepienie = $event->getData();
-                $dodajPoleCoPodano($event->getForm(),$szczepienie->getSchematTymczasowy());
-                //$facility = $event->getData()->getFacility();
-                //$facility_id = $facility ? $facility->getId() : null;
-                //$addFacilityStatuscodeForm($event->getForm(), $facility_id);
+                $szczepionka = $szczepienie->getRodzajSzczepionki();
+                $dodajPoleSchemat($event->getForm(), $szczepionka);
+                $dodajPoleCoPodano($event->getForm(),$szczepionka->getDostepneDawki());
             }
         );
+        
+        $saRep = $options['saRep'];
+         $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($dodajPoleSchemat,$saRep,$dodajPoleCoPodano) {
+                $logger = new Logger('Mateusz');
+                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+                $odpowiedz = $event->getData();
+                $szczepionkaId = array_key_exists('rodzajSzczepionki', $odpowiedz) ? $odpowiedz['rodzajSzczepionki'] : null;
+                $logger->warning('PRE_SUBMIT rodzajSzczepionki: '.$szczepionkaId); 
+                $szczepionka = $saRep->find($szczepionkaId);
+                $dodajPoleSchemat($event->getForm(),$szczepionka);
+                $dodajPoleCoPodano($event->getForm(),$szczepionka->getDostepneDawki());
+                
+                //$data = $event->getData();
+                //$park_id = array_key_exists('park', $data) ? $data['park'] : null;
+                //$addFacilityForm($event->getForm(), $park_id);
+            }
+        );
+        /*
         $schRep = $options['schRep'];
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -117,13 +108,14 @@ class CopodanoType extends AbstractType
                 $logger->warning('PRE_SUBMIT schematId: '.$schematId); 
                 
                 $schemat = $schRep->find($schematId);
-                $dodajPoleCoPodano($event->getForm(),$schemat);
+                $dodajPoleCoPodano($event->getForm(),$schemat->getDawki());
                 
                 //$data = $event->getData();
                 //$facility_id = array_key_exists('facility', $data) ? $data['facility'] : null;
                 //$addFacilityStatuscodeForm($event->getForm(), $facility_id);
             }
         );
+         * */
         
     }
  
