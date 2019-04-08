@@ -91,6 +91,7 @@ class CopodanoType extends AbstractType
             }
         );
         */
+        /*
         //$schRep = $options['schRep'];
         $builder->get('schematTymczasowy')->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -137,27 +138,38 @@ class CopodanoType extends AbstractType
                  $logger->warning('POST_SUBMIT szczepionkaId: '.$tekst);
             }
         );
+        */
         
-        /*
-        $saRep = $options['saRep'];
+         $saRep = $options['saRep'];
+         $schRep = $options['schRep'];
          $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleSchemat,$saRep,$dodajPoleCoPodano) {
+            function (FormEvent $event) use ($saRep,$schRep,$dodajPoleSchemat,$dodajPoleCoPodano) {//
                 $logger = new Logger('Mateusz');
                 $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
                 $odpowiedz = $event->getData();
                 $szczepionkaId = array_key_exists('rodzajSzczepionki', $odpowiedz) ? $odpowiedz['rodzajSzczepionki'] : null;
-                $logger->warning('PRE_SUBMIT rodzajSzczepionki: '.$szczepionkaId); 
-                $szczepionka = $saRep->find($szczepionkaId);
-                $dodajPoleSchemat($event->getForm(),$szczepionka);
-                $dodajPoleCoPodano($event->getForm(),$szczepionka->getDostepneDawki());
+                $schematId = array_key_exists('schematTymczasowy', $odpowiedz) ? $odpowiedz['schematTymczasowy'] : null;
+                $logger->warning('PRE_SUBMIT rodzajSzczepionki: '.$szczepionkaId.' schemat: '.$schematId); 
+                if($szczepionkaId){
+                    $szczepionka = $saRep->find($szczepionkaId);
+                    $dodajPoleSchemat($event->getForm(),$szczepionka);
+                    $dodajPoleCoPodano($event->getForm(),$szczepionka->getDostepneDawki());
+                    return;
+                }
+                if($schematId){
+                    $schemat = $schRep->find($schematId);
+                    $dodajPoleCoPodano($event->getForm(),$schemat->getDawki());
+                }
+                
+                
                 
                 //$data = $event->getData();
                 //$park_id = array_key_exists('park', $data) ? $data['park'] : null;
                 //$addFacilityForm($event->getForm(), $park_id);
             }
         );
-        */ 
+         
         
         
         /*
