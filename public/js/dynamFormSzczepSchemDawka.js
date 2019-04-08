@@ -1,12 +1,17 @@
-function podmianaSelect($nazwaSelektora,$miejscaZmieniane){
-    console.log($('#'+$nazwaSelektora[0]).val());
-    console.log($('#'+$nazwaSelektora[2]).val());    
+function podmianaSelect($pole,$miejscaZmieniane){
+        var $selektorDaty = [
+        '#copodano_dataZabiegu_year',
+        '#copodano_dataZabiegu_month',
+        '#copodano_dataZabiegu_day'
+        ];
         var $form = $(this).closest('form');
         var daneDoWyslania = {};
-        for (i = 0; i < $nazwaSelektora.length; i++) {
-            var $selektor = $('#'+$nazwaSelektora[i]);
-            daneDoWyslania[$selektor.attr('name')] = $selektor.val();
+        for (i = 0; i < $selektorDaty.length; i++) {
+            var $d = $($selektorDaty[i]);
+            daneDoWyslania[$d.attr('name')] = $d.val();
         }
+            var $zmiana = $($pole);
+            daneDoWyslania[$zmiana.attr('name')] = $zmiana.val();
          $.ajax({
         url : $form.attr('action'),
         type:'POST',
@@ -21,23 +26,15 @@ function podmianaSelect($nazwaSelektora,$miejscaZmieniane){
 }
 
 jQuery(document).ready(function() {
-    //var $przycisk = $('#przycisk');
-    var $nazwaSelektora = [
-    'copodano_rodzajSzczepionki',
-    'copodano_coPodano',
-    'copodano_schematTymczasowy',
-    'copodano_dataZabiegu_year',
-    'copodano_dataZabiegu_month',
-    'copodano_dataZabiegu_day'
-    ];
     
-    $('#'+$nazwaSelektora[0]).change(function() {
-        //console.log($('#copodano_rodzajSzczepionki').val());
-        //console.log($('#copodano_schematTymczasowy').val());
-        podmianaSelect($nazwaSelektora,['#copodano_schematTymczasowy','#copodano_coPodano']);//'#copodano_schematTymczasowy',
+    var $rodzajSzczepionki = '#copodano_rodzajSzczepionki';
+    $($rodzajSzczepionki).change(function() {
+        console.log('zmiana rodzaj szczepionki');
+        podmianaSelect($rodzajSzczepionki,['#copodano_coPodano']);//'#copodano_schematTymczasowy','#copodano_schematTymczasowy',
     });
-    $('#'+$nazwaSelektora[2]).change(function() {
-        podmianaSelect($nazwaSelektora,['#copodano_coPodano']);
+    var $schemat = '#copodano_schematTymczasowy';
+    $($schemat).change(function() {
+        console.log('zmiana schemat');
+        podmianaSelect($schemat,['#copodano_coPodano']);
     });
-    
 });

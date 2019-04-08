@@ -111,7 +111,7 @@ class Szczepienie
        $this->schematTymczasowy = $this->coPodano->getSchemat();
        return $this->schematTymczasowy;
    }
-   public function setSchematTymczasowy(Schemat $schemat): self
+   public function setSchematTymczasowy(?Schemat $schemat): self
    {
        $this->schematTymczasowy = $schemat;
        return $this;
