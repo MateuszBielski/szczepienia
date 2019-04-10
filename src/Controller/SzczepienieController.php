@@ -50,14 +50,15 @@ class SzczepienieController extends AbstractController
     public function new(Request $request): Response
     {
         $szczepienie = new Szczepienie();
+        /**przenosimy do formularza
         $szczepienie->setCoPodano($this->zaproponujDawke());
         $dataZab = new \DateTime;
         $szczepienie->setDataZabiegu($dataZab);
-        
+        */
         $saRep = $this->getDoctrine()->getRepository(Szczepionka::class);
         $schRep = $this->getDoctrine()->getRepository(Schemat::class);
         $form = $this->createForm(CopodanoType::class, $szczepienie,
-                array('saRep' => $saRep,'schRep' => $schRep));
+                array('saRep' => $saRep,'schRep' => $schRep, 'propozycjaDawki' => $this->zaproponujDawke()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() ) 
