@@ -30,10 +30,10 @@ jQuery(document).ready(function() {
     var $rodzajSzczepionki = '#copodano_rodzajSzczepionki';
     $($rodzajSzczepionki).change(function() {
         console.log('zmiana rodzaj szczepionki');
-        podmianaSelect($rodzajSzczepionki,['#copodano_coPodano']);//'#copodano_schematTymczasowy','#copodano_schematTymczasowy',
+        podmianaSelect($rodzajSzczepionki,['#copodano_schematTymczasowy']);//'#copodano_schematTymczasowy',#copodano_coPodano
     });
     var $schemat = '#copodano_schematTymczasowy';
-    $($schemat).change(function() {
+    $($schemat).on('change',function() {
         console.log('zmiana schemat');
         podmianaSelect($schemat,['#copodano_coPodano']);
     });
