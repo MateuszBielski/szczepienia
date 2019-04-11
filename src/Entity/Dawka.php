@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DawkaRepository")
  */
@@ -45,7 +47,7 @@ class Dawka
     public function getSkroconeCechyMojeImojejSzczepionki(): ?string
     {
         $sc_nazwa = $this->getNazwaSzczepionki();
-        return sprintf('%s %d %s %s','dawka nr ',$this->ktora, ' szczepionki: ', $sc_nazwa);
+        return sprintf('%s %d %s %s %s %d','dawka nr ',$this->ktora, ' szczepionki: ', $sc_nazwa, ' nr schem: ',$this->schemat->getId());
         //return sprintf('%d',$this->odstepMax);
     }
     

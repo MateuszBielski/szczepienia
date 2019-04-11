@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Entity;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SzczepienieRepository")
  */
 class Szczepienie
 {
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -98,21 +100,39 @@ class Szczepienie
     
     public function getRodzajSzczepionki(): ?Szczepionka
     {
-        $this->rodzajSzczepionkiTymczasowy = $this->coPodano->getSchemat()->getPodawania();
+        $logger = new Logger('MateuszSzczepienie');
+        $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+        //$logger->warning('getRodzajSzczepionki()');
+        //$this->rodzajSzczepionkiTymczasowy = $this->coPodano->getSchemat()->getPodawania();
+        if($this->rodzajSzczepionkiTymczasowy == null){
+            $this->rodzajSzczepionkiTymczasowy = $this->getSchematTymczasowy()->getPodawania();
+        }
         return $this->rodzajSzczepionkiTymczasowy;
     }
     public function setRodzajSzczepionki(?Szczepionka $szczepionka): self
     {
+        $logger = new Logger('MateuszSzczepienie');
+        $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+        //$logger->warning('setRodzajSzczepionki()');
         $this->rodzajSzczepionkiTymczasowy = $szczepionka;
         return $this;
     }
    public function getSchematTymczasowy(): ?Schemat
    {
-       $this->schematTymczasowy = $this->coPodano->getSchemat();
+       $logger = new Logger('MateuszSzczepienie');
+       $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+       //$logger->warning('getSchematTymczasowy()');
+       //$this->schematTymczasowy = $this->coPodano->getSchemat();
+       if($this->schematTymczasowy == null){
+            $this->schematTymczasowy = $this->getCoPodano()->getSchemat();
+        }
        return $this->schematTymczasowy;
    }
    public function setSchematTymczasowy(?Schemat $schemat): self
    {
+       $logger = new Logger('MateuszSzczepienie');
+       $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+       //$logger->warning('setSchematTymczasowy()');
        $this->schematTymczasowy = $schemat;
        return $this;
    }

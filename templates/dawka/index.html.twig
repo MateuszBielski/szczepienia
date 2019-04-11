@@ -13,6 +13,7 @@
                 <th>OdstepMin</th>
                 <th>OdstepMax</th>
                 <th>nazwaSzczepionki</th>
+                <th>numer schematu</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ dawka.odstepMin }}</td>
                 <td>{{ dawka.odstepMax }}</td>
                 <td>{{ dawka.schemat.podawania.nazwa }}</td>
+                <td>{{ dawka.schemat.id }}</td>
                 <td>
                     <a href="{{ path('dawka_show', {'id': dawka.id}) }}">show</a>
                     <a href="{{ path('dawka_edit', {'id': dawka.id}) }}">edit</a>

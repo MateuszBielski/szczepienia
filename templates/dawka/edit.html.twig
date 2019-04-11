@@ -6,7 +6,7 @@
     <h1>Edit Dawka</h1>
 
     {{ include('dawka/_form.html.twig', {'button_label': 'Update'}) }}
-
+    <a href="{{ path('schemat_edit', {'id': dawka.schemat.id}) }}">edytuj mój schemat (nr {{ dawka.schemat.id }})</a>
     <a href="{{ path('dawka_index') }}">back to list</a>
 
     {{ include('dawka/_delete_form.html.twig') }}
