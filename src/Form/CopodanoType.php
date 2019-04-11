@@ -5,11 +5,8 @@ namespace App\Form;
 use App\Entity\Szczepienie;
 use App\Entity\Pacjent;
 use App\Entity\Szczepiacy;
-use App\Entity\Schemat;
 use App\Entity\Dawka;
 use App\Entity\Szczepionka;
-use App\Ropository\SzczepionkaRepository;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,7 +29,7 @@ class CopodanoType extends AbstractType
     {
            
             $logger = new Logger('Mateusz');
-            $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
+            $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
             $logger->warning('Przed builder ^_^ ');
             
             $builder
@@ -47,115 +44,51 @@ class CopodanoType extends AbstractType
             'class' => Szczepionka::class,
             'choice_label' => 'nazwa'
             ])
-            ->add('schematTymczasowy', EntityType::class, [
-                'class' => Schemat::class,
-                
-                'choice_label' => 'id',
-                'label' => 'schemat',
-            ])
-            
-            ->add('coPodano', EntityType::class, [
-                'class' => Dawka::class,
-                //'choices' => $mozliweDawki,
-                'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
-            ])
         ;
-        
-        $dodajPoleSchemat = function  (FormInterface $formularz,Szczepionka $szczepionka)
-        {
-            $mozliweSchematy = (null == $szczepionka) ? [] : $szczepionka->getSchematy();
-            $formularz->add('schematTymczasowy', EntityType::class, [
-                'class' => Schemat::class,
-                'choices' => $mozliweSchematy,
-                'choice_label' => 'id',
-                'label' => 'schemat',
-            ])  
-            ;
-        };
-        $dodajPoleCoPodano = function (FormInterface $formularz,Collection $mozliweDawki = null) {
-            //$mozliweDawki = (null == $schemat) ? [] : $schemat->getDawki();
-            $formularz->add('coPodano', EntityType::class, [
+        $formModifier = function (FormInterface $form, Szczepionka $szczepionka = null) {
+            $mozliweDawki = null === $szczepionka ? [] : $szczepionka->getDostepneDawki();
+            $form->add('coPodano', EntityType::class, [
                 'class' => Dawka::class,
                 'choices' => $mozliweDawki,
                 'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
-            ]);
+            ])
+            ;
+            
         };
-        
-        //$propozycjaDawki = $options['propozycjaDawki'];
         
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($dodajPoleSchemat,$dodajPoleCoPodano) {//,$propozycjaDawki
+            function (FormEvent $event) use ($formModifier) {
                 $szczepienie = $event->getData();
-                //$szczepienie->setCoPodano($propozycjaDawki);
-                //$dataZab = new \DateTime;
-                //$szczepienie->setDataZabiegu($dataZab);
-                $szczepionka = $szczepienie->getRodzajSzczepionki();
-                $dodajPoleSchemat($event->getForm(), $szczepionka);
-                $schemat = $szczepienie->getSchematTymczasowy();
-                $dodajPoleCoPodano($event->getForm(),$schemat->getDawki());
+                $dataZformularza = $event->getForm()->get('dataZabiegu')->getData();
+                $formModifier($event->getForm(), $szczepienie->getRodzajSzczepionki());
             }
         );
         
-        //$schRep = $options['schRep'];
-        
-        //$saRep = $options['saRep'];
-        /*
          $builder->get('rodzajSzczepionki')->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleSchemat,$dodajPoleCoPodano) {
-                $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-                $szczepionka = $event->getForm()->getData();
-                $formularz = $event->getForm()->getParent();
-                //$szczepienie = $formularz->getData();
-                //$szczepienie->setRodzajSzczepionki($szczepionka);
-                $tekst = 'pusta';
-                if(!($szczepionka == null)){
-                    $tekst = $szczepionka->getId();
-                    //$szczepionka = $saRep->find($szczepionkaId);
-                    $dodajPoleSchemat($formularz,$szczepionka);
-                    //$dodajPoleCoPodano($formularz,$szczepionka->getDostepneDawki());
-                }
-                 $logger->warning('PRE_SUBMIT szczepionkaId: '.$tekst);
-            }
-        );
-        */
-        
-        $builder->get('schematTymczasowy')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleCoPodano) {
-                 $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-                $schemat = $event->getForm()->getData();
-                //$schematId = array_key_exists('schematTymczasowy', $odpowiedz) ? $odpowiedz['schematTymczasowy'] : null;
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $szczepionka = $event->getForm()->getData();
+               
+                $formularzGlowny = $event->getForm()->getParent();
                 
-                $tekst = 'pusta';
-                if(!($schemat == null)){
-                    $tekst = $schemat->getId();
-                    //$schemat = $schRep->find($schematId);
-                    $dodajPoleCoPodano($event->getForm()->getParent(),$schemat->getDawki());
-                }
-                 $logger->warning('POST_SUBMIT schematId: '.$tekst);
+                $formModifier($formularzGlowny, $szczepionka);
+                $logger = new Logger('Mateusz');
+                $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
+                $komunikat = 'brak pola zabiegu';
+                if($formularzGlowny->has('dataZabiegu'))$komunikat = 'pole zabiegu nadal istnieje';
                 
-                //
-                
-                
-                //$data = $event->getData();
-                //$facility_id = array_key_exists('facility', $data) ? $data['facility'] : null;
-                //$addFacilityStatuscodeForm($event->getForm(), $facility_id);
+                $logger->warning('get(rodzajSzczepionki)'.$komunikat);
             }
         );
-        
     }
- 
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Szczepienie::class,
-            'saRep' => null,
-            'schRep' => null,
-            'propozycjaDawki' => null,
         ]);
     }
 }
