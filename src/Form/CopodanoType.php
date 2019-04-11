@@ -6,7 +6,7 @@ use App\Entity\Szczepienie;
 use App\Entity\Pacjent;
 use App\Entity\Szczepiacy;
 use App\Entity\Dawka;
-use App\Entity\Szczepionka;
+use App\Entity\Schemat;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,7 +22,7 @@ use Monolog\Handler\StreamHandler;
 
 class CopodanoType extends AbstractType
 {
-    private $szczepienie;
+    //private $szczepienie;
     
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -40,13 +40,13 @@ class CopodanoType extends AbstractType
             ->add('szczepiacy',EntityType::class,[
             'class' => Szczepiacy::class, 
             'choice_label' => function(Szczepiacy $sc){return $sc->getImieInazwisko();} ])
-            ->add('rodzajSzczepionki',EntityType::class,[
-            'class' => Szczepionka::class,
-            'choice_label' => 'nazwa'
+            ->add('schematTymczasowy',EntityType::class,[
+            'class' => Schemat::class,
+            'choice_label' => 'id'
             ])
         ;
-        $formModifier = function (FormInterface $form, Szczepionka $szczepionka = null) {
-            $mozliweDawki = null === $szczepionka ? [] : $szczepionka->getDostepneDawki();
+        $formModifier = function (FormInterface $form, Schemat $schemat = null) {
+            $mozliweDawki = null === $schemat ? [] : $schemat->getDawki();
             $form->add('coPodano', EntityType::class, [
                 'class' => Dawka::class,
                 'choices' => $mozliweDawki,
@@ -60,27 +60,27 @@ class CopodanoType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($formModifier) {
                 $szczepienie = $event->getData();
-                $dataZformularza = $event->getForm()->get('dataZabiegu')->getData();
-                $formModifier($event->getForm(), $szczepienie->getRodzajSzczepionki());
+                //$dataZformularza = $event->getForm()->get('dataZabiegu')->getData();
+                $formModifier($event->getForm(), $szczepienie->getSchematTymczasowy());
             }
         );
         
-         $builder->get('rodzajSzczepionki')->addEventListener(
+         $builder->get('schematTymczasowy')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 // It's important here to fetch $event->getForm()->getData(), as
                 // $event->getData() will get you the client data (that is, the ID)
-                $szczepionka = $event->getForm()->getData();
+                $schemat = $event->getForm()->getData();
                
                 $formularzGlowny = $event->getForm()->getParent();
                 
-                $formModifier($formularzGlowny, $szczepionka);
-                $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
-                $komunikat = 'brak pola zabiegu';
-                if($formularzGlowny->has('dataZabiegu'))$komunikat = 'pole zabiegu nadal istnieje';
+                $formModifier($formularzGlowny, $schemat);
+                //$logger = new Logger('Mateusz');
+                //$logger->pushHandler(new StreamHandler('../var/log/dev.log', Logger::WARNING));
+                //$komunikat = 'brak pola zabiegu';
+                //if($formularzGlowny->has('dataZabiegu'))$komunikat = 'pole zabiegu nadal istnieje';
                 
-                $logger->warning('get(rodzajSzczepionki)'.$komunikat);
+                //$logger->warning('get(rodzajSzczepionki)'.$komunikat);
             }
         );
     }
