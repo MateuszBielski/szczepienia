@@ -50,7 +50,17 @@ class SzczepienieController extends AbstractController
     public function ajaxDawkaZeSchematu(Request $request)
     {
         
-        $request->query->get("cityid");
+        $schematId = $request->query->get("schematId");
+        $schemat = $this->getDoctrine()->getRepository(Schemat::class)->find($schematId);
+        $dawki = $schemat->getDawki();
+        $responseArray = array();
+        foreach($dawki as $dawka){
+            $responseArray[] = array(
+                "id" => $dawka->getId(),
+                "nazwa" => $dawka->getSkroconeCechyMojeImojejSzczepionki(),
+            );
+        }
+        
         return new JsonResponse($responseArray);
     }
     
@@ -94,7 +104,7 @@ class SzczepienieController extends AbstractController
         
         $saRep = $this->getDoctrine()->getRepository(Szczepionka::class);
         $schRep = $this->getDoctrine()->getRepository(Schemat::class);
-        $form = $this->createForm(CopodanoType::class, $szczepienie);//,array('saRep' => $saRep,'schRep' => $schRep, 'propozycjaDawki' => $propozycjaDawki)
+        $form = $this->createForm(CopodanoType::class, $szczepienie,array('saRep' => $saRep,'schRep' => $schRep));//, 'propozycjaDawki' => $propozycjaDawki)
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() ) 

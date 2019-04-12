@@ -31,4 +31,38 @@ jQuery(document).ready(function() {
                 }
         });
     });
+    
+    var schematTymczasowy = '#copodano_schematTymczasowy';
+    
+    $(schematTymczasowy).change(function(){
+        var schematSelektor = $(this);
+        var szczepionkaSelektor = $('#copodano_rodzajSzczepionki');
+        //$('#kontener').text(szczepionkaSelektor.val());
+        $.ajax({
+                url: "/szczepienie/ajaxDawkaZeSchematu",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    schematId: schematSelektor.val()
+                },
+                success: function (dawki) {
+                     var dawkiSelect = $("#copodano_coPodano");
+
+                    // Remove current options
+                    dawkiSelect.html('');
+                    
+                    // Empty value ...
+                    dawkiSelect.append('<option value> Wybierz dawkę ' + szczepionkaSelektor.find("option:selected").text() 
+                    + ' schemat nr.' + schematSelektor.val() + ' ...</option>');
+                    
+                    
+                    $.each(dawki, function (key, dawka) {
+                        dawkiSelect.append('<option value="' + dawka.id + '">' + dawka.nazwa + '</option>');
+                    });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+        });
+    });
 });

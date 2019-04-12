@@ -80,7 +80,7 @@ class CopodanoType extends AbstractType
                 'choice_label' => function(Dawka $d){return $d->getSkroconeCechyMojeImojejSzczepionki();},
             ]);
         };
-        /*
+        
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($dodajPoleSchemat,$dodajPoleCoPodano) {
@@ -90,55 +90,6 @@ class CopodanoType extends AbstractType
                 $dodajPoleCoPodano($event->getForm(),$szczepionka->getDostepneDawki());
             }
         );
-        */
-        /*
-        //$schRep = $options['schRep'];
-        $builder->get('schematTymczasowy')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleCoPodano) {
-                 $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-                $schemat = $event->getForm()->getData();
-                //$schematId = array_key_exists('schematTymczasowy', $odpowiedz) ? $odpowiedz['schematTymczasowy'] : null;
-                
-                $tekst = 'pusta';
-                if(!($schemat == null)){
-                    $tekst = $schemat->getId();
-                    //$schemat = $schRep->find($schematId);
-                    $dodajPoleCoPodano($event->getForm()->getParent(),$schemat->getDawki());
-                }
-                 $logger->warning('POST_SUBMIT schematId: '.$tekst);
-                
-                //
-                
-                
-                //$data = $event->getData();
-                //$facility_id = array_key_exists('facility', $data) ? $data['facility'] : null;
-                //$addFacilityStatuscodeForm($event->getForm(), $facility_id);
-            }
-        );
-        //$saRep = $options['saRep'];
-         $builder->get('rodzajSzczepionki')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($dodajPoleSchemat,$dodajPoleCoPodano) {
-                $logger = new Logger('Mateusz');
-                $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-                $szczepionka = $event->getForm()->getData();
-                //$szczepionkaId = array_key_exists('rodzajSzczepionki', $odpowiedz) ? $odpowiedz['rodzajSzczepionki'] : null;
-                
-                $formularz = $event->getForm()->getParent();
-                
-                $tekst = 'pusta';
-                if(!($szczepionka == null)){
-                    $tekst = $szczepionka->getId();
-                    //$szczepionka = $saRep->find($szczepionkaId);
-                    $dodajPoleSchemat($formularz,$szczepionka);
-                    $dodajPoleCoPodano($formularz,$szczepionka->getDostepneDawki());
-                }
-                 $logger->warning('POST_SUBMIT szczepionkaId: '.$tekst);
-            }
-        );
-        */
         
          $saRep = $options['saRep'];
          $schRep = $options['schRep'];
