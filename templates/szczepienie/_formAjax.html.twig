@@ -1,0 +1,15 @@
+{% block scripts %}
+            <script type="text/javascript" src="../../js/jquery-2.1.3.min.js"></script>
+            <script type="text/javascript" src="../../js/jquery-ui.js"></script>
+            <script type="text/javascript" src="../../js/coPodanoFiltrujSchematyIdawki.js"></script>
+{% endblock %}
+{{ form_row(form.dataZabiegu) }}
+    {{ form_row(form.pacjent) }}
+    {{ form_row(form.szczepiacy) }}
+    {{ form_row(form.rodzajSzczepionki) }}
+    {{ form_row(form.schematTymczasowy) }}
+        {{ form_row(form.coPodano) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+    <div id="kontener">kontener</div>

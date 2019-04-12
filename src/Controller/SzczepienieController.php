@@ -12,6 +12,7 @@ use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -50,6 +51,26 @@ class SzczepienieController extends AbstractController
     {
         
         $request->query->get("cityid");
+        return new JsonResponse($responseArray);
+    }
+    
+    /**
+     * @Route("/ajaxSchematZeSczepionki", name="ajaxSchematZeSczepionki", methods={"GET"})
+     */
+    public function ajaxSchematZeSczepionki(Request $request)
+    {
+        
+        $szczepionkaId = $request->query->get("szczepionkaId");
+        $szczepionka = $this->getDoctrine()->getRepository(Szczepionka::class)->find($szczepionkaId);
+        $schematy = $szczepionka->getSchematy();
+        $responseArray = array();
+        foreach($schematy as $schemat){
+            $responseArray[] = array(
+                "id" => $schemat->getId(),
+                //"name" => $neighborhood->getName()
+            );
+        }
+        
         return new JsonResponse($responseArray);
     }
     /**
