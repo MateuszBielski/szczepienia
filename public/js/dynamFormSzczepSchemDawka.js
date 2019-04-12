@@ -36,13 +36,22 @@ jQuery(document).ready(function() {
     $($rodzajSzczepionki).change(function() {
         console.log('zmiana rodzaj szczepionki');
         podmianaSelect($rodzajSzczepionki,['#copodano_schematTymczasowy','#copodano_coPodano']);//'#copodano_schematTymczasowy',
-        /*****************/
-        var $schemat = '#copodano_schematTymczasowy';
-        $($schemat).change(function() {
-            console.log('zmiana schemat');
-            podmianaSelect($schemat,['#copodano_coPodano']);
+        
+        //var schemat = ;
+        $('#copodano_schematTymczasowy').on('click',function() {
+            console.log('ponowna zmiana schemat '+ $($schemat).val());
+            /*****************
+            $.ajax({
+                url : ('/szczepienie/ajaxDawkaZeSchematu'),
+                type:'GET',
+                data : {
+                    schematid: $(schemat).val()
+                },
+                success: function(html_odp) {}
+            });
+            ****************/
         });
-        /****************/
+        
     });
     
 });
