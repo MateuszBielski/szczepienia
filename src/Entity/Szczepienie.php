@@ -98,7 +98,9 @@ class Szczepienie
     
     public function getRodzajSzczepionki(): ?Szczepionka
     {
-        $this->rodzajSzczepionkiTymczasowy = $this->coPodano->getSchemat()->getPodawania();
+        if($this->rodzajSzczepionkiTymczasowy == null){
+            $this->rodzajSzczepionkiTymczasowy = $this->getSchematTymczasowy()->getPodawania();
+        }
         return $this->rodzajSzczepionkiTymczasowy;
     }
     public function setRodzajSzczepionki(?Szczepionka $szczepionka): self
@@ -108,7 +110,9 @@ class Szczepienie
     }
    public function getSchematTymczasowy(): ?Schemat
    {
-       $this->schematTymczasowy = $this->coPodano->getSchemat();
+       if($this->schematTymczasowy == null){
+            $this->schematTymczasowy = $this->getCoPodano()->getSchemat();
+        }
        return $this->schematTymczasowy;
    }
    public function setSchematTymczasowy(?Schemat $schemat): self
