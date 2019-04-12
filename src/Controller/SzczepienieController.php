@@ -43,7 +43,15 @@ class SzczepienieController extends AbstractController
         return  $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
         
     }
-
+    /**
+     * @Route("/ajaxDawkaZeSchematu", name="ajaxDawkaZeSchematu", methods={"GET"})
+     */
+    public function ajaxDawkaZeSchematu(Request $request)
+    {
+        
+        $request->query->get("cityid");
+        return new JsonResponse($responseArray);
+    }
     /**
      * @Route("/new", name="szczepienie_new", methods={"GET","POST"})
      */

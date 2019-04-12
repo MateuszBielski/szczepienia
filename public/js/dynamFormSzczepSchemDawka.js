@@ -27,14 +27,31 @@ function podmianaSelect($pole,$miejscaZmieniane){
 
 jQuery(document).ready(function() {
     
-    var $rodzajSzczepionki = '#copodano_rodzajSzczepionki';
-    $($rodzajSzczepionki).change(function() {
-        console.log('zmiana rodzaj szczepionki');
-        podmianaSelect($rodzajSzczepionki,['#copodano_schematTymczasowy']);//'#copodano_schematTymczasowy',#copodano_coPodano
-    });
     var $schemat = '#copodano_schematTymczasowy';
     $($schemat).on('change',function() {
         console.log('zmiana schemat');
         podmianaSelect($schemat,['#copodano_coPodano']);
     });
+    var $rodzajSzczepionki = '#copodano_rodzajSzczepionki';
+    $($rodzajSzczepionki).change(function() {
+        console.log('zmiana rodzaj szczepionki');
+        podmianaSelect($rodzajSzczepionki,['#copodano_schematTymczasowy','#copodano_coPodano']);//'#copodano_schematTymczasowy',
+        
+        //var schemat = ;
+        $('#copodano_schematTymczasowy').on('click',function() {
+            console.log('ponowna zmiana schemat '+ $($schemat).val());
+            /*****************
+            $.ajax({
+                url : ('/szczepienie/ajaxDawkaZeSchematu'),
+                type:'GET',
+                data : {
+                    schematid: $(schemat).val()
+                },
+                success: function(html_odp) {}
+            });
+            ****************/
+        });
+        
+    });
+    
 });

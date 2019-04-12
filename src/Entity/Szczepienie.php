@@ -100,10 +100,7 @@ class Szczepienie
     
     public function getRodzajSzczepionki(): ?Szczepionka
     {
-        $logger = new Logger('MateuszSzczepienie');
-        $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-        //$logger->warning('getRodzajSzczepionki()');
-        //$this->rodzajSzczepionkiTymczasowy = $this->coPodano->getSchemat()->getPodawania();
+
         if($this->rodzajSzczepionkiTymczasowy == null){
             $this->rodzajSzczepionkiTymczasowy = $this->getSchematTymczasowy()->getPodawania();
         }
@@ -119,10 +116,6 @@ class Szczepienie
     }
    public function getSchematTymczasowy(): ?Schemat
    {
-       $logger = new Logger('MateuszSzczepienie');
-       $logger->pushHandler(new StreamHandler("../var/log/dev.log", Logger::WARNING));
-       //$logger->warning('getSchematTymczasowy()');
-       //$this->schematTymczasowy = $this->coPodano->getSchemat();
        if($this->schematTymczasowy == null){
             $this->schematTymczasowy = $this->getCoPodano()->getSchemat();
         }
