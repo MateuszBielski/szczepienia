@@ -19,7 +19,8 @@
             <tr>
                 <td>{{ szczepienie.id }}</td>
                 <td>{{ szczepienie.dataZabiegu ? szczepienie.dataZabiegu|date('Y-m-d') : '' }}</td>
-                <td>{{ szczepienie.pacjent.imie }} {{ szczepienie.pacjent.Nazwisko }}</td>
+                <td><a href="{{ path('pacjent_show', {'id': szczepienie.pacjent.id}) }}">
+                {{ szczepienie.pacjent.imie }} {{ szczepienie.pacjent.Nazwisko }}</a></td>
                 <td>
                     <a href="{{ path('szczepienie_show', {'id': szczepienie.id}) }}">show</a>
                     <a href="{{ path('szczepienie_edit', {'id': szczepienie.id}) }}">edit</a>

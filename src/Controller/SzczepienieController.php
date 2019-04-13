@@ -104,7 +104,7 @@ class SzczepienieController extends AbstractController
         
         $saRep = $this->getDoctrine()->getRepository(Szczepionka::class);
         $schRep = $this->getDoctrine()->getRepository(Schemat::class);
-        $form = $this->createForm(CopodanoType::class, $szczepienie,array('saRep' => $saRep,'schRep' => $schRep));//, 'propozycjaDawki' => $propozycjaDawki)
+        $form = $this->createForm(CopodanoType::class, $szczepienie);//,array('saRep' => $saRep,'schRep' => $schRep, 'propozycjaDawki' => $propozycjaDawki)
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() ) 

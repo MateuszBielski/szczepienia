@@ -3,7 +3,9 @@
             <script type="text/javascript" src="../../js/jquery-ui.js"></script>
             <script type="text/javascript" src="../../js/coPodanoFiltrujSchematyIdawki.js"></script>
 {% endblock %}
-{{ form_row(form.dataZabiegu) }}
+
+{{ form_start(form) }}
+    {{ form_row(form.dataZabiegu) }}
     {{ form_row(form.pacjent) }}
     {{ form_row(form.szczepiacy) }}
     {{ form_row(form.rodzajSzczepionki) }}
