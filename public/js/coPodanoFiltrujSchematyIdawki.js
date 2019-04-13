@@ -23,8 +23,9 @@ jQuery(document).ready(function() {
                     
                     
                     $.each(schematy, function (key, schemat) {
-                        schematySelect.append('<option value="' + schemat.id + '">schemat ' + schemat.id + '</option>');
+                        schematySelect.append('<option value="' + schemat.id + '"> schemat ' + schemat.id + '</option>');//schemat 
                     });
+                    
                 },
                 error: function (err) {
                     alert("An error ocurred while loading data ...");
@@ -59,6 +60,8 @@ jQuery(document).ready(function() {
                     $.each(dawki, function (key, dawka) {
                         dawkiSelect.append('<option value="' + dawka.id + '">' + dawka.nazwa + '</option>');
                     });
+                    //schematSelektor.val(schematSelektor.val());
+                    $("#copodano_schematTymczasowy option[value=1]").attr('selected', 'selected');
                 },
                 error: function (err) {
                     alert("An error ocurred while loading data ...");
