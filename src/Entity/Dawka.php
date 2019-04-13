@@ -38,6 +38,21 @@ class Dawka
      * @ORM\JoinColumn(nullable=false)
      */
     private $schemat;
+
+    /**
+     * @ORM\Column(type="dateinterval", nullable=true)
+     */
+    private $wiekPodaniaMin;
+
+    /**
+     * @ORM\Column(type="dateinterval", nullable=true)
+     */
+    private $wiekPodaniaZglosOpoznienie;
+
+    /**
+     * @ORM\Column(type="dateinterval", nullable=true)
+     */
+    private $wiekPodaniaMax;
     
     public function __construct()
     {
@@ -109,6 +124,42 @@ class Dawka
     public function setSchemat(?Schemat $schemat): self
     {
         $this->schemat = $schemat;
+
+        return $this;
+    }
+
+    public function getWiekPodaniaMin(): ?\DateInterval
+    {
+        return $this->wiekPodaniaMin;
+    }
+
+    public function setWiekPodaniaMin(?\DateInterval $wiekPodaniaMin): self
+    {
+        $this->wiekPodaniaMin = $wiekPodaniaMin;
+
+        return $this;
+    }
+
+    public function getWiekPodaniaZglosOpoznienie(): ?\DateInterval
+    {
+        return $this->wiekPodaniaZglosOpoznienie;
+    }
+
+    public function setWiekPodaniaZglosOpoznienie(?\DateInterval $wiekPodaniaZglosOpoznienie): self
+    {
+        $this->wiekPodaniaZglosOpoznienie = $wiekPodaniaZglosOpoznienie;
+
+        return $this;
+    }
+
+    public function getWiekPodaniaMax(): ?\DateInterval
+    {
+        return $this->wiekPodaniaMax;
+    }
+
+    public function setWiekPodaniaMax(?\DateInterval $wiekPodaniaMax): self
+    {
+        $this->wiekPodaniaMax = $wiekPodaniaMax;
 
         return $this;
     }
