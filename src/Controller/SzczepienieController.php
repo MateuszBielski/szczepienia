@@ -12,6 +12,7 @@ use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -43,7 +44,45 @@ class SzczepienieController extends AbstractController
         return  $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgSzczepionki($szczepionkaOstatniaZlisty);
         
     }
-
+    /**
+     * @Route("/ajaxDawkaZeSchematu", name="ajaxDawkaZeSchematu", methods={"GET"})
+     */
+    public function ajaxDawkaZeSchematu(Request $request)
+    {
+        
+        $schematId = $request->query->get("schematId");
+        $schemat = $this->getDoctrine()->getRepository(Schemat::class)->find($schematId);
+        $dawki = $schemat->getDawki();
+        $responseArray = array();
+        foreach($dawki as $dawka){
+            $responseArray[] = array(
+                "id" => $dawka->getId(),
+                "nazwa" => $dawka->getSkroconeCechyMojeImojejSzczepionki(),
+            );
+        }
+        
+        return new JsonResponse($responseArray);
+    }
+    
+    /**
+     * @Route("/ajaxSchematZeSczepionki", name="ajaxSchematZeSczepionki", methods={"GET"})
+     */
+    public function ajaxSchematZeSczepionki(Request $request)
+    {
+        
+        $szczepionkaId = $request->query->get("szczepionkaId");
+        $szczepionka = $this->getDoctrine()->getRepository(Szczepionka::class)->find($szczepionkaId);
+        $schematy = $szczepionka->getSchematy();
+        $responseArray = array();
+        foreach($schematy as $schemat){
+            $responseArray[] = array(
+                "id" => $schemat->getId(),
+                //"name" => $neighborhood->getName()
+            );
+        }
+        
+        return new JsonResponse($responseArray);
+    }
     /**
      * @Route("/new", name="szczepienie_new", methods={"GET","POST"})
      */
@@ -65,8 +104,7 @@ class SzczepienieController extends AbstractController
         
         $saRep = $this->getDoctrine()->getRepository(Szczepionka::class);
         $schRep = $this->getDoctrine()->getRepository(Schemat::class);
-        $form = $this->createForm(CopodanoType::class, $szczepienie,
-                array('saRep' => $saRep,'schRep' => $schRep, 'propozycjaDawki' => $propozycjaDawki));
+        $form = $this->createForm(CopodanoType::class, $szczepienie,array('saRep' => $saRep,'schRep' => $schRep));//, 'propozycjaDawki' => $propozycjaDawki)
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() ) 
