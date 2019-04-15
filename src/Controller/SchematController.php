@@ -97,4 +97,16 @@ class SchematController extends AbstractController
 
         return $this->redirectToRoute('schemat_index');
     }
+    public function UaktualnijKalendarze(){
+        //zmianę schematu trzeba sprawdzić dla każdego pacjenta
+        $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach($wszyscyPacjenci as $pacjent){
+            if(CzyNieMamKalendarza()){
+                new 
+            }
+            $pacjent->UaktualnijKalendarz();
+            
+        }
+    }
 }

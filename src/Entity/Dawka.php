@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -53,10 +55,15 @@ class Dawka
      * @ORM\Column(type="dateinterval", nullable=true)
      */
     private $wiekPodaniaMax;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="szczepieniaUtrwalone")
+     */
+    private $wKtorychKalendarzachJestem;
     
     public function __construct()
     {
-        
+        $this->wKtorychKalendarzachJestem = new ArrayCollection();
     }
 
     public function getSkroconeCechyMojeImojejSzczepionki(): ?string
@@ -160,6 +167,34 @@ class Dawka
     public function setWiekPodaniaMax(?\DateInterval $wiekPodaniaMax): self
     {
         $this->wiekPodaniaMax = $wiekPodaniaMax;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|KalendarzSzczepien[]
+     */
+    public function getWKtorychKalendarzachJestem(): Collection
+    {
+        return $this->wKtorychKalendarzachJestem;
+    }
+
+    public function addWKtorychKalendarzachJestem(KalendarzSzczepien $wKtorychKalendarzachJestem): self
+    {
+        if (!$this->wKtorychKalendarzachJestem->contains($wKtorychKalendarzachJestem)) {
+            $this->wKtorychKalendarzachJestem[] = $wKtorychKalendarzachJestem;
+            $wKtorychKalendarzachJestem->addSzczepieniaUtrwalone($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWKtorychKalendarzachJestem(KalendarzSzczepien $wKtorychKalendarzachJestem): self
+    {
+        if ($this->wKtorychKalendarzachJestem->contains($wKtorychKalendarzachJestem)) {
+            $this->wKtorychKalendarzachJestem->removeElement($wKtorychKalendarzachJestem);
+            $wKtorychKalendarzachJestem->removeSzczepieniaUtrwalone($this);
+        }
 
         return $this;
     }

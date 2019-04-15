@@ -29,6 +29,11 @@ class Pacjent extends Osoba
      */
     private $szczepienia;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="pacjent", cascade={"persist", "remove"})
+     */
+    private $kalendarzSzczepien;
+
     public function __construct()
     {
         //$logger = new Logger('Mateusz');
@@ -94,4 +99,30 @@ class Pacjent extends Osoba
         $dzien = $peselObiekt->Dzien();
         return sprintf('%d %s %d',$dzien,$miesiac,$rok);
     }
-}
+
+    public function getKalendarzSzczepien(): ?KalendarzSzczepien
+    {
+        return $this->kalendarzSzczepien;
+    }
+
+    public function setKalendarzSzczepien(KalendarzSzczepien $kalendarzSzczepien): self
+    {
+        $this->kalendarzSzczepien = $kalendarzSzczepien;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $kalendarzSzczepien->getPacjent()) {
+            $kalendarzSzczepien->setPacjent($this);
+        }
+
+        return $this;
+    }
+    //przy każdej edycji shematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
+    public function UaktualnijKalendarz(){
+        
+        //if(CzyNieMamKalendarza())UtworzKalendarzDlaMnie();
+    }
+    public function CzyNieMamKalendarza(){
+        $wynik = (null === kalendarzSzczepien) ? true:false;
+        return $wynik;
+    }
+   
