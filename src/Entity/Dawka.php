@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Funkcje;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -234,13 +236,17 @@ class Dawka
     }
     public function PrzeniesOdstepDoInterwalu()
     {
-        if(($this->odstep_max_interval == null) && ($this->wiekPodaniaMax != null))
+        $f = new Funkcje();
+        
+        
+        if(($this->odstep_max_interval == '+P00Y00M00DT00H00M00S') && ($this->wiekPodaniaMax != null))
         {
-            $this->odstep_max_interval = new \DateInterval("P".$this->wiekPodaniaMax."M");
+            
+            $this->setOdstepMaxInterval(new \DateInterval($f->MiesiaceNaDateInterwalString($this->wiekPodaniaMax)));
         }
-        if(($this->odstep_min_interval == null) && ($this->wiekPodaniaMin != null))
+        if(($this->odstep_min_interval == '+P00Y00M00DT00H00M00S') && ($this->wiekPodaniaMin != null))
         {
-            $this->odstep_min_interval = new \DateInterval("P".$this->wiekPodaniaMin."M");
+            $this->setOdstepMinInterval(new \DateInterval($f->MiesiaceNaDateInterwalString($this->wiekPodaniaMin)));
         }
     }
 }
