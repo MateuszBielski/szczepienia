@@ -40,6 +40,7 @@ class Pacjent extends Osoba
         //$logger->pushHandler(new StreamHandler('/home/mateusz/symfonyProjekt/szczepienia/var/log/dev.log', Logger::WARNING));
         //$logger->warning('konstruktor');
         $this->szczepienia = new ArrayCollection();
+        $this->UtworzKalendarzDlaMnie();
     }
 
     public function getPesel(): ?string
@@ -119,10 +120,17 @@ class Pacjent extends Osoba
     //przy każdej edycji shematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
     public function UaktualnijKalendarz(){
         
-        //if(CzyNieMamKalendarza())UtworzKalendarzDlaMnie();
+        if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
     }
-    public function CzyNieMamKalendarza(){
-        $wynik = (null === kalendarzSzczepien) ? true:false;
+    public function CzyNieMamKalendarza()
+    {
+        $wynik = (null === $this->kalendarzSzczepien) ? true:false;
         return $wynik;
     }
-   
+    public function UtworzKalendarzDlaMnie()
+    {
+        $this->kalendarzSzczepien = new KalendarzSzczepien();
+        $this->kalendarzSzczepien->setPacjent($this);
+    }
+    
+}

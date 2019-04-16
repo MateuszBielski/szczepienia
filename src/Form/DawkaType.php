@@ -17,7 +17,7 @@ class DawkaType extends AbstractType
         $builder
             ->add('odstepMin',null,['label' => 'odstęp minimalny'])//
             ->add('odstepMax',null,['label' => 'odstęp maksymalny'])
-            ->add('wiekPodaniaMin')
+            //->add('wiekPodaniaMin')
             //->add('schemat',TextType::class,['data' => 'abcdef',])
             //->add('schemat',EntityType::class,['class' => Schemat::class,
             //'choice_label' => 'id',//zmienić na funkcję (nazwa + choroby + producent)

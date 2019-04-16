@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Schemat;
 use App\Entity\Szczepionka;
+use App\Entity\Pacjent;
+use App\Entity\KalendarzSzczepien;
 use App\Form\SchematType;
 use App\Repository\SchematRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +43,7 @@ class SchematController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($schemat);
             $entityManager->flush();
-
+            $this->UaktualnijKalendarze();
             return $this->redirectToRoute('schemat_show',['id'=> $schemat->getId()]);
         }
 
@@ -72,7 +74,8 @@ class SchematController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $schemat->DlaMoichDawekUstawMnieIponumeruj();
             $this->getDoctrine()->getManager()->flush();
-
+            
+            $this->UaktualnijKalendarze();
             return $this->redirectToRoute('schemat_index', [
                 'id' => $schemat->getId(),
             ]);
@@ -93,6 +96,7 @@ class SchematController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($schemat);
             $entityManager->flush();
+            $this->UaktualnijKalendarze();
         }
 
         return $this->redirectToRoute('schemat_index');
@@ -102,11 +106,9 @@ class SchematController extends AbstractController
         $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
-            if(CzyNieMamKalendarza()){
-                new 
-            }
             $pacjent->UaktualnijKalendarz();
-            
+            $entityManager->persist($pacjent);
         }
+        $entityManager->flush();
     }
 }

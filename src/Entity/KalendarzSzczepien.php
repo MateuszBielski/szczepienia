@@ -19,7 +19,7 @@ class KalendarzSzczepien
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pacjent", inversedBy="kalendarzSzczepien", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Pacjent", inversedBy="kalendarzSzczepien", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $pacjent;
