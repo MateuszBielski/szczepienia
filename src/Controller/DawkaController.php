@@ -20,6 +20,8 @@ class DawkaController extends AbstractController
      */
     public function index(DawkaRepository $dawkaRepository): Response
     {
+        //$dawki = $dawkaRepository->findAll();
+        //foreach($dawki as $dawka)$dawka->PrzeniesOdstepDoInterwalu();
         return $this->render('dawka/index.html.twig', [
             'dawkas' => $dawkaRepository->findAll(),
         ]);

@@ -60,6 +60,16 @@ class Dawka
      * @ORM\ManyToMany(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="szczepieniaUtrwalone")
      */
     private $wKtorychKalendarzachJestem;
+
+    /**
+     * @ORM\Column(type="dateinterval")
+     */
+    private $odstep_min_interval;
+
+    /**
+     * @ORM\Column(type="dateinterval")
+     */
+    private $odstep_max_interval;
     
     public function __construct()
     {
@@ -197,5 +207,40 @@ class Dawka
         }
 
         return $this;
+    }
+
+    public function getOdstepMinInterval(): ?\DateInterval
+    {
+        return $this->odstep_min_interval;
+    }
+
+    public function setOdstepMinInterval(\DateInterval $odstep_min_interval): self
+    {
+        $this->odstep_min_interval = $odstep_min_interval;
+
+        return $this;
+    }
+
+    public function getOdstepMaxInterval(): ?\DateInterval
+    {
+        return $this->odstep_max_interval;
+    }
+
+    public function setOdstepMaxInterval(\DateInterval $odstep_max_interval): self
+    {
+        $this->odstep_max_interval = $odstep_max_interval;
+
+        return $this;
+    }
+    public function PrzeniesOdstepDoInterwalu()
+    {
+        if(($this->odstep_max_interval == null) && ($this->wiekPodaniaMax != null))
+        {
+            $this->odstep_max_interval = new \DateInterval("P".$this->wiekPodaniaMax."M");
+        }
+        if(($this->odstep_min_interval == null) && ($this->wiekPodaniaMin != null))
+        {
+            $this->odstep_min_interval = new \DateInterval("P".$this->wiekPodaniaMin."M");
+        }
     }
 }

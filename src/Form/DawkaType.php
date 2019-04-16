@@ -15,9 +15,20 @@ class DawkaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('odstepMin',null,['label' => 'odstęp minimalny'])//
-            ->add('odstepMax',null,['label' => 'odstęp maksymalny'])
-            //->add('wiekPodaniaMin')
+            ->add('odstep_min_interval',null,['label' => 'odstęp minimalny',
+                    'with_days' => false,'labels' => [
+                    'years' => 'ile lat',
+                    'months' => 'ile miesięcy',]
+            ])//
+            ->add('odstep_max_interval',null,['label' => 'odstęp maksymalny',
+                    'with_days' => false,'labels' => [
+                    'years' => 'ile lat',
+                    'months' => 'ile miesięcy',]
+                    ])
+            ->add('wiekPodaniaMin',null,['with_days' => false,'labels' => [
+                    'years' => 'ile lat',
+                    'months' => 'ile miesięcy',]
+                    ])
             //->add('schemat',TextType::class,['data' => 'abcdef',])
             //->add('schemat',EntityType::class,['class' => Schemat::class,
             //'choice_label' => 'id',//zmienić na funkcję (nazwa + choroby + producent)
