@@ -21,12 +21,6 @@ class DawkaController extends AbstractController
     public function index(DawkaRepository $dawkaRepository): Response
     {
         $dawki = $dawkaRepository->findAll();
-        $entityManager = $this->getDoctrine()->getManager();
-        foreach($dawki as $dawka){
-            $dawka->PrzeniesOdstepDoInterwalu();
-            $entityManager->persist($dawka);
-        }
-        $entityManager->flush();
         return $this->render('dawka/index.html.twig', [
             'dawkas' => $dawki,
         ]);

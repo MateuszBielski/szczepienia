@@ -7,6 +7,11 @@
         {% block scripts %}{% endblock %}
     </head>
     <body>
+        <a href="{{ path('szczepionka_index') }}">Szczepionki</a>
+        <a href="{{ path('choroba_index') }}">Choroby</a>
+        <a href="{{ path('dawka_index') }}">Dawki</a>
+        <a href="{{ path('schemat_index') }}">Schemat</a>
+        <a href="{{ path('pacjent_index') }}">Pacjenci</a>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

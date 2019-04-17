@@ -17,17 +17,23 @@ class DawkaType extends AbstractType
         $builder
             ->add('odstep_min_interval',null,['label' => 'odstęp minimalny',
                     'with_days' => false,'labels' => [
-                    'years' => 'ile lat',
-                    'months' => 'ile miesięcy',]
+                    'years' => 'lata',
+                    'months' => 'miesiące',]
             ])//
             ->add('odstep_max_interval',null,['label' => 'odstęp maksymalny',
                     'with_days' => false,'labels' => [
-                    'years' => 'ile lat',
-                    'months' => 'ile miesięcy',]
+                    'years' => 'lata',
+                    'months' => 'miesiące',]
                     ])
-            ->add('wiekPodaniaMin',null,['with_days' => false,'labels' => [
-                    'years' => 'ile lat',
-                    'months' => 'ile miesięcy',]
+            ->add('wiekPodaniaMin',null,['label' => 'minimalny wiek podania',
+                    'with_days' => false,'labels' => [
+                    'years' => 'lata',
+                    'months' => 'miesiące',]
+                    ])
+            ->add('wiekPodaniaMax',null,['label' => 'maksymalny wiek podania',
+                    'with_days' => false,'labels' => [
+                    'years' => 'lata',
+                    'months' => 'miesiące',]
                     ])
             //->add('schemat',TextType::class,['data' => 'abcdef',])
             //->add('schemat',EntityType::class,['class' => Schemat::class,
