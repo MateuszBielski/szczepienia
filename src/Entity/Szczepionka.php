@@ -267,5 +267,12 @@ class Szczepionka
         }
         return $wynik;
     }
-    
+    public function KtorySchematDlaPacjenta(Pacjent $pacjent): Schemat
+    {
+        $schemat;
+        foreach($schematy as $schemat){
+            
+        }
+        return $schemat;
+    }
 }
