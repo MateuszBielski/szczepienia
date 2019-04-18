@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Szczepiacy{% endblock %}
+
+{% block body %}
+    <h1>Create new Szczepiacy</h1>
+
+    {{ include('szczepiacy/_form.html.twig') }}
+
+    <a href="{{ path('szczepiacy_index') }}">back to list</a>
+{% endblock %}

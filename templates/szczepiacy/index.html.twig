@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepiacy index{% endblock %}
+
+{% block body %}
+    <h1>Szczepiacy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for szczepiacy in szczepiacies %}
+            <tr>
+                <td>{{ szczepiacy.id }}</td>
+                <td>{{ szczepiacy.imie }}</td>
+                <td>{{ szczepiacy.nazwisko }}</td>
+                <td>
+                    <a href="{{ path('szczepiacy_show', {'id': szczepiacy.id}) }}">show</a>
+                    <a href="{{ path('szczepiacy_edit', {'id': szczepiacy.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepiacy_new') }}">Create new</a>
+{% endblock %}

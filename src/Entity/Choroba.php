@@ -19,7 +19,9 @@ class Choroba
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nazwa;
+    private $nazwa = 'nowa choroba';
+
+    
 
     public function getId(): ?int
     {
@@ -37,4 +39,6 @@ class Choroba
 
         return $this;
     }
+
+    
 }

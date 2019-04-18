@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepiacy{% endblock %}
+
+{% block body %}
+    <h1>Szczepiacy</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ szczepiacy.id }}</td>
+            </tr>
+            <tr>
+                <th>Imie</th>
+                <td>{{ szczepiacy.imie }}</td>
+            </tr>
+            <tr>
+                <th>Nazwisko</th>
+                <td>{{ szczepiacy.nazwisko }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepiacy_index') }}">back to list</a>
+
+    <a href="{{ path('szczepiacy_edit', {'id': szczepiacy.id}) }}">edit</a>
+
+    {{ include('szczepiacy/_delete_form.html.twig') }}
+{% endblock %}

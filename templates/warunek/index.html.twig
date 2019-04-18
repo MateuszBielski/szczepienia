@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Warunek index{% endblock %}
+
+{% block body %}
+    <h1>Warunek index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Okreslenie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for warunek in waruneks %}
+            <tr>
+                <td>{{ warunek.id }}</td>
+                <td>{{ warunek.okreslenie }}</td>
+                <td>
+                    <a href="{{ path('warunek_show', {'id': warunek.id}) }}">show</a>
+                    <a href="{{ path('warunek_edit', {'id': warunek.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('warunek_new') }}">Create new</a>
+{% endblock %}

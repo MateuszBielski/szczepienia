@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacjent{% endblock %}
+
+{% block body %}
+    <h1>Pacjent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Imie</th>
+                <td>{{ pacjent.imie }}</td>
+            </tr>
+            <tr>
+                <th>Nazwisko</th>
+                <td>{{ pacjent.nazwisko }}</td>
+            </tr>
+            <tr>
+                <th>Pesel</th>
+                <td>{{ pacjent.pesel }}</td>
+            </tr>
+            <tr>
+                <th>Data urodzenia</th>
+                <td>{{ pacjent.DataUrodzeniaZpeselu }}</td>
+            </tr>
+            {% for szczepienie in pacjent.getSzczepienia %}
+            <tr>
+                <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
+                <td>{{ szczepienie.coPodano.getSkroconeCechyMojeImojejSzczepionki }}</td>
+                <td><a href="{{ path('szczepienie_edit',{'id': szczepienie.id}) }}">popraw</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pacjent_index') }}">back to list</a>
+
+    <a href="{{ path('pacjent_edit', {'id': pacjent.id}) }}">edit</a>
+
+    {{ include('pacjent/_delete_form.html.twig') }}
+{% endblock %}

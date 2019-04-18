@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Warunek{% endblock %}
+
+{% block body %}
+    <h1>Warunek</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ warunek.id }}</td>
+            </tr>
+            <tr>
+                <th>Okreslenie</th>
+                <td>{{ warunek.okreslenie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('warunek_index') }}">back to list</a>
+
+    <a href="{{ path('warunek_edit', {'id': warunek.id}) }}">edit</a>
+
+    {{ include('warunek/_delete_form.html.twig') }}
+{% endblock %}

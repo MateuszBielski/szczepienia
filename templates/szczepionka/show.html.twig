@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczepionka{% endblock %}
+
+{% block body %}
+    <h1>Szczepionka</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ szczepionka.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Nazwa</th>
+                <td>{{ szczepionka.nazwa }}</td>
+            </tr>
+            <tr>
+                <th>Przeciw chorobom: </th>
+                <td>
+                {% for choroba in szczepionka.przeciw %}
+                    <a href="{{ path('choroba_show', {'id': choroba.id}) }}">{{ choroba.nazwa }} </a>
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ szczepionka.czyZywa ? 'Żywa' : 'Martwa' }}</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>{{ szczepionka.czyObowiazkowa ? 'Obowiązkowa' : 'Nieobowiązkowa' }}</th>
+                <td></td>
+            </tr>
+            {% if szczepionka.zastepujeSzczepionke %}
+                <tr>
+                    <th>ZastepujeSzczepionke</th>
+                    <td>{{ szczepionka.zastepujeSzczepionke }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Wiek minimalny</th>
+                <td>{{ szczepionka.wiekMin }}</td>
+            </tr>
+            <tr>
+                <th>Wiek maksymalny</th>
+                <td>{{ szczepionka.wiekMax }}</td>
+            </tr>
+            
+            <tr>
+                <th>Producent</th>
+                <td>{{ szczepionka.producent }}</td>
+            </tr>
+            
+            {% for schemat in szczepionka.schematy %}
+                <tr>
+                <th><a href="{{ path('schemat_show', {'id': schemat.id})  }}">pokaż schemat</a></th>
+                </tr>
+            {% else %}
+                <tr>
+                <th><a href="{{ path('dodaj_schemat', {'id': szczepionka.id}) }}">Dodaj schemat podawania</a></th>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('szczepionka_index') }}">back to list</a>
+
+    <a href="{{ path('szczepionka_edit', {'id': szczepionka.id}) }}">edit</a>
+
+    {{ include('szczepionka/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Schemat index{% endblock %}
+
+{% block body %}
+    <h1>Schemat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa szczepionki</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for schemat in schemats %}
+            <tr>
+                <td>{{ schemat.id }}</td>
+                <td>{{ schemat.podawania.nazwa }}</td>
+                <td>
+                    <a href="{{ path('schemat_show', {'id': schemat.id}) }}">show</a>
+                    <a href="{{ path('schemat_edit', {'id': schemat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('schemat_new', {'id': 1}) }}">Create new</a>
+{% endblock %}
