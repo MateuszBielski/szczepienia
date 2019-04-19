@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\KalendarzSzczepien;
+use App\Entity\Dawka;
 use App\Form\KalendarzSzczepienType;
 use App\Repository\KalendarzSzczepienRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,8 +54,10 @@ class KalendarzSzczepienController extends AbstractController
      */
     public function show(KalendarzSzczepien $kalendarzSzczepien): Response
     {
+        $dawki = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgKalendarza($kalendarzSzczepien);
         return $this->render('kalendarz_szczepien/show.html.twig', [
             'kalendarz_szczepien' => $kalendarzSzczepien,
+            'dawki_posortowane' => $dawki,
         ]);
     }
 

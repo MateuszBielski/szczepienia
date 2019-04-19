@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Dawka;
 use App\Entity\Szczepionka;
+use App\Entity\KalendarzSzczepien;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -68,6 +69,16 @@ class DawkaRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
+            ;
+    }
+    public function znajdzWgKalendarza(KalendarzSzczepien $kalendarz){
+        return $this->createQueryBuilder('daw')
+            ->leftJoin('daw.wKtorychKalendarzachJestem', 'kal')
+            ->andWhere('kal.id = :id')
+            ->setParameter('id', $kalendarz->getId())
+            ->orderBy('daw.odstep_min_interval','ASC')
+            ->getQuery()
+            ->getResult()
             ;
     }
 }

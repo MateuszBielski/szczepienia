@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Osoba;
 use App\Entity\NumerPesel;
+use App\Funkcje;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -144,14 +145,21 @@ class Pacjent extends Osoba
             //$licznik++;
             //echo $licznik;
         }
+        //zastosowanie poniższego sortowania nie wpływa na kolejność dodania do bazy
+        /*
+        $f = new Funkcje();
         $iterator = $wszystkieObowiazujaceDawki->getIterator();
-            $iterator->uasort(function ($a, $b) {
-                $aInt = intval($a->getOdstepMinInterval()->format('%a'));
-                $bInt = intval($b->getOdstepMinInterval()->format('%a'));
-                return ($aInt < $bInt) ? -1 : 1;
+            $iterator->uasort(function ($a, $b) use ($f){
+                //$aInt = $f->MiesiaceDateInterwalNaInt($a->getOdstepMinInterval());
+                //$bInt = $f->MiesiaceDateInterwalNaInt($b->getOdstepMinInterval());;
+                $aInt = $a->getId();
+                $bInt= $b->getId();
+                return ($aInt > $bInt) ? -1 : 1;
             });
             //$collection = new ArrayCollection(iterator_to_array($iterator));
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone(new ArrayCollection(iterator_to_array($iterator)));
+         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
+        */
     }
 }

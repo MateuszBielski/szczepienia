@@ -14,7 +14,7 @@
                 <th>Id</th>
                 <td>{{ kalendarz_szczepien.id }}</td>
             </tr>
-            {% for dawka in kalendarz_szczepien.szczepieniaUtrwalone %}
+            {% for dawka in dawki_posortowane %}
             <tr>
                 <th>dawka id {{ dawka.id }}</th>
                 <td>{{ dawka.getSkroconeCechyMojeImojejSzczepionki() }}</td>
