@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KalendarzSzczepien index{% endblock %}
+
+{% block body %}
+    <h3>KalendarzSzczepien index</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for kalendarz_szczepien in kalendarz_szczepiens %}
+            <tr>
+                <td>{{ kalendarz_szczepien.id }}</td>
+                <td>{{ kalendarz_szczepien.pacjent.imie }}</td>
+                <td>{{ kalendarz_szczepien.pacjent.nazwisko }}</td>
+                <td>
+                    <a href="{{ path('kalendarz_szczepien_show', {'id': kalendarz_szczepien.id}) }}">show</a>
+                    <a href="{{ path('kalendarz_szczepien_edit', {'id': kalendarz_szczepien.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('kalendarz_szczepien_new') }}">Create new</a>
+{% endblock %}

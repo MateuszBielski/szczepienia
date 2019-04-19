@@ -269,9 +269,9 @@ class Szczepionka
     }
     public function KtorySchematDlaPacjenta(Pacjent $pacjent): Schemat
     {
-        $schemat;
-        foreach($schematy as $schemat){
-            
+        
+        foreach($this->schematy as $schemat){
+            $schematWynik = $schemat;
         }
         return $schemat;
     }

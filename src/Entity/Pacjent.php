@@ -117,11 +117,7 @@ class Pacjent extends Osoba
 
         return $this;
     }
-    //przy każdej edycji shematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
-    public function UaktualnijKalendarz(){
-        
-        if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
-    }
+    
     public function CzyNieMamKalendarza()
     {
         $wynik = (null === $this->kalendarzSzczepien) ? true:false;
@@ -132,5 +128,30 @@ class Pacjent extends Osoba
         $this->kalendarzSzczepien = new KalendarzSzczepien();
         $this->kalendarzSzczepien->setPacjent($this);
     }
-    
+    //przy każdej edycji shematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
+    public function UaktualnijKalendarz(Array $wszystkieSzczepionki){
+        
+        if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
+        //$schematyObowiazujace = [];
+        //$licznik = 0;
+        $wszystkieObowiazujaceDawki = new ArrayCollection();
+        foreach($wszystkieSzczepionki as $szczepionka){
+            $dawkiSchmatu = $szczepionka->KtorySchematDlaPacjenta($this)->getDawki();
+            foreach($dawkiSchmatu as $dawka){
+                $wszystkieObowiazujaceDawki[] = $dawka;
+            }
+            //$schematyObowiazujace[] = 
+            //$licznik++;
+            //echo $licznik;
+        }
+        $iterator = $wszystkieObowiazujaceDawki->getIterator();
+            $iterator->uasort(function ($a, $b) {
+                $aInt = intval($a->getOdstepMinInterval()->format('%a'));
+                $bInt = intval($b->getOdstepMinInterval()->format('%a'));
+                return ($aInt < $bInt) ? -1 : 1;
+            });
+            //$collection = new ArrayCollection(iterator_to_array($iterator));
+        
+        $this->kalendarzSzczepien->setSzczepieniaUtrwalone(new ArrayCollection(iterator_to_array($iterator)));
+    }
 }

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KalendarzSzczepien{% endblock %}
+
+{% block body %}
+    <h3>KalendarzSzczepien</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ kalendarz_szczepien.pacjent.imie }}  {{ kalendarz_szczepien.pacjent.nazwisko }}</th>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ kalendarz_szczepien.id }}</td>
+            </tr>
+            {% for dawka in kalendarz_szczepien.szczepieniaUtrwalone %}
+            <tr>
+                <th>dawka id {{ dawka.id }}</th>
+                <td>{{ dawka.getSkroconeCechyMojeImojejSzczepionki() }}</td>
+                <td>{{ dawka.getOdstepMinInterval().format('%y lat, %m miesięcy') }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('kalendarz_szczepien_index') }}">back to list</a>
+
+    <a href="{{ path('kalendarz_szczepien_edit', {'id': kalendarz_szczepien.id}) }}">edit</a>
+
+    {{ include('kalendarz_szczepien/_delete_form.html.twig') }}
+{% endblock %}

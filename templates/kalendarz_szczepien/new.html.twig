@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New KalendarzSzczepien{% endblock %}
+
+{% block body %}
+    <h3>Create new KalendarzSzczepien</h3>
+
+    {{ include('kalendarz_szczepien/_form.html.twig') }}
+
+    <a href="{{ path('kalendarz_szczepien_index') }}">back to list</a>
+{% endblock %}

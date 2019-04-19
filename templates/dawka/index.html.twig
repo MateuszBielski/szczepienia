@@ -3,7 +3,7 @@
 {% block title %}Dawka index{% endblock %}
 
 {% block body %}
-    <h1>Dawka index</h1>
+    <h3>Dawka index</h3>
 
     <table class="table">
         <thead>
@@ -22,8 +22,8 @@
             <tr>
                 <td>{{ dawka.id }}</td>
                 <td>{{ dawka.ktora }}</td>
-                <td>{{ dawka.odstepMin }}</td>
-                <td>{{ dawka.odstepMax }}</td>
+                <td>{{ dawka.odstepMinInterval.format('%y lat, %m miesięcy') }}</td>
+                <td>{{ dawka.odstepMaxInterval.format('%y lat, %m miesięcy') }}</td>
                 <td>{{ dawka.schemat.podawania.nazwa }}</td>
                 <td>{{ dawka.schemat.id }}</td>
                 <td>

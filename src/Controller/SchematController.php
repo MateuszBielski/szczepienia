@@ -102,11 +102,12 @@ class SchematController extends AbstractController
         return $this->redirectToRoute('schemat_index');
     }
     public function UaktualnijKalendarze(){
-        //zmianę schematu trzeba sprawdzić dla każdego pacjenta
+        //zmiana schematu może wpłynąć na kalendarz każdego pacjenta
         $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();
+        $wszystkieSzczepionki = $this->getDoctrine()->getRepository(Szczepionka::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
-            $pacjent->UaktualnijKalendarz();
+            $pacjent->UaktualnijKalendarz($wszystkieSzczepionki);
             $entityManager->persist($pacjent);
         }
         $entityManager->flush();

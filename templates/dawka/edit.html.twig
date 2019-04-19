@@ -3,7 +3,7 @@
 {% block title %}Edit Dawka{% endblock %}
 
 {% block body %}
-    <h1>Edit Dawka</h1>
+    <h3>Edit Dawka</h3>
 
     {{ include('dawka/_form.html.twig', {'button_label': 'Update'}) }}
     <a href="{{ path('schemat_edit', {'id': dawka.schemat.id}) }}">edytuj mój schemat (nr {{ dawka.schemat.id }})</a>

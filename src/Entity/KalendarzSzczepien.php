@@ -58,6 +58,10 @@ class KalendarzSzczepien
     {
         return $this->szczepieniaUtrwalone;
     }
+    public function setSzczepieniaUtrwalone(ArrayCollection $dawki)
+    {
+        $this->szczepieniaUtrwalone = $dawki;
+    }
 
     public function addSzczepieniaUtrwalone(Dawka $szczepieniaUtrwalone): self
     {

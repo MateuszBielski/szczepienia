@@ -3,7 +3,7 @@
 {% block title %}Nowy schemat{% endblock %}
 
 {% block body %}
-    <h1>Utwórz Schemat</h1>
+    <h3>Utwórz Schemat</h1>
     {{ include('schemat/_form.html.twig') }}
     <a href="{{ path('szczepionka_show', {'id': schemat.podawania.id}) }}">powrót do szczepionki</a>
     <br>
