@@ -84,6 +84,22 @@ class Dawka
         return $this->schemat->getPodawania()->getNazwa();
     }
     
+    public function dajParametr($parametr)
+    {
+        switch($parametr)
+        {
+            case 'odst_min' :
+            return $this->odstep_min_interval;
+            case 'odst_max' :
+            return $this->odstep_max_interval;
+            case 'wiek_min' :
+            return $this->wiekPodaniaMin;
+            case 'wiek_max' :
+            return $this->wiekPodaniaMax;
+        }
+        
+    }
+    
     public function getSzczepionka(): ?Szczepionka
     {
         return $this->schemat->getPodawania();
@@ -105,6 +121,7 @@ class Dawka
         return $this;
     }
 
+    /*
     public function getOdstepMin(): ?int
     {
         return $this->odstepMin;
@@ -128,6 +145,7 @@ class Dawka
 
         return $this;
     }
+    */
 
     public function getSchemat(): ?Schemat
     {
@@ -143,6 +161,7 @@ class Dawka
 
     public function getWiekPodaniaMin(): ?\DateInterval
     {
+        if($this->wiekPodaniaMin == null)return new \DateInterval('P11Y');
         return $this->wiekPodaniaMin;
     }
 
@@ -167,6 +186,7 @@ class Dawka
 
     public function getWiekPodaniaMax(): ?\DateInterval
     {
+        if($this->wiekPodaniaMax == null)return new \DateInterval('P11Y');
         return $this->wiekPodaniaMax;
     }
 
@@ -207,6 +227,7 @@ class Dawka
 
     public function getOdstepMinInterval(): ?\DateInterval
     {
+        if($this->odstep_min_interval == null)return new \DateInterval('P11Y');
         return $this->odstep_min_interval;
     }
 
@@ -219,6 +240,7 @@ class Dawka
 
     public function getOdstepMaxInterval(): ?\DateInterval
     {
+        if($this->odstep_max_interval == null)return new \DateInterval('P11Y');
         return $this->odstep_max_interval;
     }
 

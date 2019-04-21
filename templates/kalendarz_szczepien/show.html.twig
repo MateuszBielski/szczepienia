@@ -14,11 +14,14 @@
                 <th>Id</th>
                 <td>{{ kalendarz_szczepien.id }}</td>
             </tr>
-            {% for dawka in dawki_posortowane %}
+            {% for dawka in kalendarz_szczepien.szczepieniaSortujWgIdaj('odst_min') %}
             <tr>
                 <th>dawka id {{ dawka.id }}</th>
                 <td>{{ dawka.getSkroconeCechyMojeImojejSzczepionki() }}</td>
-                <td>{{ dawka.getOdstepMinInterval().format('%y lat, %m miesięcy') }}</td>
+                <td>{{ dawka.getOdstepMinInterval().format('%y lat, %d dni') }}</td>
+                <td>{{ dawka.getOdstepMaxInterval().format('%y lat, %d dni') }}</td>
+                <td>{{ dawka.getWiekPodaniaMin().format('%y lat, %d dni') }}</td>
+                <td>{{ dawka.getWiekPodaniaMax().format('%y lat, %d dni') }}</td>
                 <td></td>
             </tr>
             {% endfor %}

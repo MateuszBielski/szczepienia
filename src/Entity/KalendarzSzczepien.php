@@ -80,4 +80,15 @@ class KalendarzSzczepien
 
         return $this;
     }
+     public function szczepieniaSortujWgIdaj($parametr)
+    {
+        //$f = new Funkcje();
+        $iterator = $this->szczepieniaUtrwalone->getIterator();
+        $iterator->uasort(function ($a, $b) use ($parametr){
+                $aInt = $a->dajParametr($parametr);
+                $bInt= $b->dajParametr($parametr);
+                return ($aInt > $bInt) ? -1 : 1;
+            });
+        return new ArrayCollection(iterator_to_array($iterator));
+    }
 }

@@ -129,12 +129,10 @@ class Pacjent extends Osoba
         $this->kalendarzSzczepien = new KalendarzSzczepien();
         $this->kalendarzSzczepien->setPacjent($this);
     }
-    //przy każdej edycji shematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
+    //przy każdej edycji schematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
     public function UaktualnijKalendarz(Array $wszystkieSzczepionki){
         
         if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
-        //$schematyObowiazujace = [];
-        //$licznik = 0;
         $wszystkieObowiazujaceDawki = new ArrayCollection();
         foreach($wszystkieSzczepionki as $szczepionka){
             $schemat = $szczepionka->KtorySchematDlaPacjenta($this);
@@ -143,9 +141,6 @@ class Pacjent extends Osoba
             foreach($dawkiSchmatu as $dawka){
                 $wszystkieObowiazujaceDawki[] = $dawka;
             }
-            //$schematyObowiazujace[] = 
-            //$licznik++;
-            //echo $licznik;
         }
         //zastosowanie poniższego sortowania nie wpływa na kolejność dodania do bazy
         /*
@@ -165,4 +160,17 @@ class Pacjent extends Osoba
         */
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
+    /*poniższe przeniesione do kalendarza
+    public function SortujKalendarzWg($parametr)
+    {
+        //$f = new Funkcje();
+        $iterator = $this->kalendarzSzczepien->getSzczepieniaUtrwalone()->getIterator();
+        $iterator->uasort(function ($a, $b) use ($parametr){
+                $aInt = $a->dajParametr($parametr);
+                $bInt= $b->dajParametr($parametr);
+                return ($aInt > $bInt) ? -1 : 1;
+            });
+    }
+     **/
+    /*************tak samo zrobić sortowanie szczepień wykonanych**********/
 }
