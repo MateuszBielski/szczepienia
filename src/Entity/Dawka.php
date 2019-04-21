@@ -28,16 +28,6 @@ class Dawka
     private $ktora;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $odstepMin;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $odstepMax;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Schemat", inversedBy="dawki")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -76,6 +66,10 @@ class Dawka
     public function __construct()
     {
         $this->wKtorychKalendarzachJestem = new ArrayCollection();
+        $this->odstep_min_interval = new \DateInterval("P28D");
+        $this->odstep_max_interval = new \DateInterval("P56D");
+        $this->wiekPodaniaMin = new \DateInterval("P42D");
+        $this->wiekPodaniaMax = new \DateInterval("P3Y");
     }
 
     public function getSkroconeCechyMojeImojejSzczepionki(): ?string

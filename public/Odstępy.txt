@@ -1,0 +1,12 @@
+Odstępy w tygodniach:
+Priorix:
+
+DTP:
+w tygodniach zamiast miesiącach.
+
+Wylicz odstępy między dawkami danej szczepionki
+DawkaType domyślnie 0 ustawić, zamiast pustego
+Nowa szczepionka kopiuj dawki z innej szczepionki.
+Schemat interwały wybór miesiące/tygodnie
+Co podanotype inaczej opisać wybierane schematy
+Pacjent show dodaj nowe szczepienie, różne widoki, np grupowanie rodzajami szczepionki.

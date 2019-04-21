@@ -15,6 +15,18 @@ class SchematType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /*
+        $zainicjujDawke = function(){
+            $interwalInicjujacy = new \DateInterval("P89D");
+            $dawkaInicjujaca = new Dawka;
+            $dawkaInicjujaca->setOdstepMinInterval($interwalInicjujacy);
+            $dawkaInicjujaca->setOdstepMaxInterval($interwalInicjujacy);
+            $dawkaInicjujaca->setWiekPodaniaMin($interwalInicjujacy);
+            $dawkaInicjujaca->setWiekPodaniaMax($interwalInicjujacy); 
+            return $dawkaInicjujaca;
+        };
+        */
+        
         $builder
             ->add('podawania',EntityType::class,[
             'class' => Szczepionka::class,
@@ -25,6 +37,7 @@ class SchematType extends AbstractType
             'allow_add' => true,
             'allow_delete' =>true,
             'by_reference' =>true,
+            'prototype_data' => $options['prototype_data_opt'],
             ])
         ;
     }
@@ -33,6 +46,8 @@ class SchematType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Schemat::class,
+            'prototype_data_opt' => null,
         ]);
+        //->setRequired('dawka_inicjujaca');
     }
 }

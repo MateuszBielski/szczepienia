@@ -36,7 +36,7 @@ class CopodanoType extends AbstractType
             $logger->warning('Przed builder ^_^ ');
             
             $builder
-            ->add('dataZabiegu')//
+            ->add('dataZabiegu',null,['years' => range(1901,2030)])//
             ->add('pacjent',EntityType::class,[
             'class' => Pacjent::class, 
             'choice_label' => function(Pacjent $pc){return $pc->getImieInazwisko();} ])

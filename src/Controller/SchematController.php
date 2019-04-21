@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Schemat;
+use App\Entity\Dawka;
 use App\Entity\Szczepionka;
 use App\Entity\Pacjent;
 use App\Entity\KalendarzSzczepien;
@@ -35,7 +36,8 @@ class SchematController extends AbstractController
     {
         $schemat = new Schemat();
         $schemat->setPodawania($szczepionka);
-        $form = $this->createForm(SchematType::class, $schemat);
+        //poniżej Dawka ma w konstruktorze inicjowane przykładowe wartości interwałów
+        $form = $this->createForm(SchematType::class, $schemat, ['prototype_data_opt' => new Dawka(),]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,7 +70,7 @@ class SchematController extends AbstractController
      */
     public function edit(Request $request, Schemat $schemat): Response
     {
-        $form = $this->createForm(SchematType::class, $schemat);
+        $form = $this->createForm(SchematType::class, $schemat, ['prototype_data_opt' => new Dawka(),]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

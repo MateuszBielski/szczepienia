@@ -137,7 +137,9 @@ class Pacjent extends Osoba
         //$licznik = 0;
         $wszystkieObowiazujaceDawki = new ArrayCollection();
         foreach($wszystkieSzczepionki as $szczepionka){
-            $dawkiSchmatu = $szczepionka->KtorySchematDlaPacjenta($this)->getDawki();
+            $schemat = $szczepionka->KtorySchematDlaPacjenta($this);
+            if($schemat == null)continue;
+            $dawkiSchmatu = $schemat->getDawki();
             foreach($dawkiSchmatu as $dawka){
                 $wszystkieObowiazujaceDawki[] = $dawka;
             }
@@ -159,7 +161,8 @@ class Pacjent extends Osoba
             //$collection = new ArrayCollection(iterator_to_array($iterator));
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone(new ArrayCollection(iterator_to_array($iterator)));
-         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
+         
         */
+        $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
 }

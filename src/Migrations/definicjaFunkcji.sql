@@ -1,4 +1,4 @@
-CREATE FUNCTION `integerToInterval` (int miesiaceWszyst)
+CREATE FUNCTION `integerToInterval` (miesiaceWszyst integer)
 RETURNS varchar(25)
 BEGIN
 	DECLARE lata int;

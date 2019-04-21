@@ -14,31 +14,21 @@ class DawkaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+         $opcje = function($etykieta){
+            return ['label' => $etykieta,
+            'with_days' => false,'with_months' => false,
+            'with_weeks' => true,'labels' => [
+            'years' => 'lata',
+            'weeks' => 'tygodnie',]
+            ];
+        };
+                    
+        
         $builder
-            ->add('odstep_min_interval',null,['label' => 'odstęp minimalny',
-                    'with_days' => false,'labels' => [
-                    'years' => 'lata',
-                    'months' => 'miesiące',]
-            ])//
-            ->add('odstep_max_interval',null,['label' => 'odstęp maksymalny',
-                    'with_days' => false,'labels' => [
-                    'years' => 'lata',
-                    'months' => 'miesiące',]
-                    ])
-            ->add('wiekPodaniaMin',null,['label' => 'minimalny wiek podania',
-                    'with_days' => false,'labels' => [
-                    'years' => 'lata',
-                    'months' => 'miesiące',]
-                    ])
-            ->add('wiekPodaniaMax',null,['label' => 'maksymalny wiek podania',
-                    'with_days' => false,'labels' => [
-                    'years' => 'lata',
-                    'months' => 'miesiące',]
-                    ])
-            //->add('schemat',TextType::class,['data' => 'abcdef',])
-            //->add('schemat',EntityType::class,['class' => Schemat::class,
-            //'choice_label' => 'id',//zmienić na funkcję (nazwa + choroby + producent)
-            //])
+            ->add('odstep_min_interval',null,$opcje('odstęp minimalny'))//
+            ->add('odstep_max_interval',null,$opcje('odstęp maksymalny'))
+            ->add('wiekPodaniaMin',null,$opcje('minimalny wiek podania'))
+            ->add('wiekPodaniaMax',null,$opcje('maksymalny wiek podania'))
         ;
     }
 
