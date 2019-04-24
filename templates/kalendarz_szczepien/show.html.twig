@@ -11,10 +11,14 @@
                 <th>{{ kalendarz_szczepien.pacjent.imie }}  {{ kalendarz_szczepien.pacjent.nazwisko }}</th>
             </tr>
             <tr>
-                <th>Id</th>
-                <td>{{ kalendarz_szczepien.id }}</td>
+                <th>Id {{ kalendarz_szczepien.id }}</th>
+                <td>nazwa</td>
+                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getOdstepMinInterval'}) }}">odstęp minimalny</a></td>
+                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getOdstepMaxInterval'}) }}">odstęp maksymalny</a></td>
+                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getWiekPodaniaMin'}) }}">wiek minimalny</a></td>
+                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getWiekPodaniaMax'}) }}">wiek maksymalny</a></td>
             </tr>
-            {% for dawka in kalendarz_szczepien.szczepieniaSortujWgIdaj('odst_min') %}
+            {% for dawka in dawki_posortowane %}
             <tr>
                 <th>dawka id {{ dawka.id }}</th>
                 <td>{{ dawka.getSkroconeCechyMojeImojejSzczepionki() }}</td>

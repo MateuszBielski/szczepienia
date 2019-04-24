@@ -50,15 +50,15 @@ class KalendarzSzczepienController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="kalendarz_szczepien_show", methods={"GET"})
+     * @Route("/{id}/{metoda}", name="kalendarz_szczepien_show", methods={"GET"})
      */
-    public function show(KalendarzSzczepien $kalendarzSzczepien): Response
+    public function show(KalendarzSzczepien $kalendarzSzczepien,$metoda = null): Response
     {
         //$dawki = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgKalendarza($kalendarzSzczepien);
-        $kalendarzSzczepien->szczepieniaSortujWgIdaj('odst_min');
+        if($metoda == null)$metoda = 'getOdstepMinInterval';
         return $this->render('kalendarz_szczepien/show.html.twig', [
             'kalendarz_szczepien' => $kalendarzSzczepien,
-            //'dawki_posortowane' => $dawki,
+            'dawki_posortowane' => $kalendarzSzczepien->szczepieniaSortujWgFunkcjiIdaj($metoda),
         ]);
     }
 
