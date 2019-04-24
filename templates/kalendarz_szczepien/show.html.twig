@@ -13,10 +13,14 @@
             <tr>
                 <th>Id {{ kalendarz_szczepien.id }}</th>
                 <td>nazwa</td>
-                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getOdstepMinInterval'}) }}">odstęp minimalny</a></td>
-                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getOdstepMaxInterval'}) }}">odstęp maksymalny</a></td>
-                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getWiekPodaniaMin'}) }}">wiek minimalny</a></td>
-                <td><a href="{{ path('kalendarz_szczepien_show',{'id': kalendarz_szczepien.id, 'metoda':'getWiekPodaniaMax'}) }}">wiek maksymalny</a></td>
+                {% for n in kalendarz_szczepien.NazwyFunkcjiDawka() %}
+                <td>
+                    <a href="{{ path('kalendarz_szczepien_show',
+                    {'id': kalendarz_szczepien.id, 'metoda':n[0]}) }}">
+                    {{ n[1] }}
+                    </a>
+                </td>
+                {% endfor %}
             </tr>
             {% for dawka in dawki_posortowane %}
             <tr>
@@ -29,6 +33,7 @@
                 <td></td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
 

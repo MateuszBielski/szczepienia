@@ -95,10 +95,15 @@ class KalendarzSzczepien
     {
         $iterator = $this->szczepieniaUtrwalone->getIterator();
         $iterator->uasort(function ($a, $b) use ($funkcja){
-            $af = (call_user_func(array($a, $funkcja)))->format('%Yy%Dd');
-            $bf = (call_user_func(array($b, $funkcja)))->format('%Yy%Dd');
+            $af = call_user_func(array($a, $funkcja));
+            $bf = call_user_func(array($b, $funkcja));
                 return ($af < $bf) ? -1 : 1;   
         });
         return new ArrayCollection(iterator_to_array($iterator));
     }
+    public function NazwyFunkcjiDawka()
+    {
+        return Dawka::NazwyFunkcji();
+    }
+    
 }

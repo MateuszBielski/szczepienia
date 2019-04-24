@@ -84,22 +84,7 @@ class Dawka
         return $this->schemat->getPodawania()->getNazwa();
     }
     
-    public function dajParametr($parametr)
-    {
-        switch($parametr)
-        {
-            case 'odst_min' :
-            return $this->odstep_min_interval;
-            case 'odst_max' :
-            return $this->odstep_max_interval;
-            case 'wiek_min' :
-            return $this->wiekPodaniaMin;
-            case 'wiek_max' :
-            return $this->wiekPodaniaMax;
-        }
-        
-    }
-    
+       
     public function getSzczepionka(): ?Szczepionka
     {
         return $this->schemat->getPodawania();
@@ -121,31 +106,25 @@ class Dawka
         return $this;
     }
 
-    /*
-    public function getOdstepMin(): ?int
+    public static function NazwyFunkcji()
     {
-        return $this->odstepMin;
+        return array(['OdstMinFormat','odstęp minimalny'],
+                     ['OdstMaxFormat','odstęp maksymalny'],
+                     ['WiekMinFormat','wiek minimalny'],
+                     ['WiekMaxFormat','wiek maksymalny']
+                    );
     }
-
-    public function setOdstepMin(int $odstepMin): self
+    public static function IntervalDaysToInt(\DateInterval $interval)
     {
-        $this->odstepMin = $odstepMin;
-
-        return $this;
+        $dni = intval($interval->format('%y'))*365;
+        $dni += intval($interval->format('%d'));
+        return $dni;
     }
-
-    public function getOdstepMax(): ?int
-    {
-        return $this->odstepMax;
-    }
-
-    public function setOdstepMax(int $odstepMax): self
-    {
-        $this->odstepMax = $odstepMax;
-
-        return $this;
-    }
-    */
+    
+    public function OdstMinFormat(){ return $this->IntervalDaysToInt($this->getOdstepMinInterval()); }
+    public function OdstMaxFormat(){ return $this->IntervalDaysToInt($this->getOdstepMaxInterval()); }
+    public function WiekMinFormat(){ return $this->IntervalDaysToInt($this->getWiekPodaniaMin()); }
+    public function WiekMaxFormat(){ return $this->IntervalDaysToInt($this->getWiekPodaniaMax()); }
 
     public function getSchemat(): ?Schemat
     {
