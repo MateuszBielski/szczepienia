@@ -11,7 +11,7 @@ class NumerPesel
     private $numer;
     //private $logger;
     private $rok_raw, $miesiac_raw, $dzien_raw;
-    private $rok_gotowy, $miesiac_gotowy, $dzien_gotowy;
+    private $rok_gotowy, $miesiac_gotowy, $miesiacLiczbowo, $dzien_gotowy;
     
     public function __construct(String $numer)
     {
@@ -46,8 +46,10 @@ class NumerPesel
         $stulecie = $czyPo1999 ? '20' : '19';
         $this->rok_gotowy =  $stulecie.$this->rok_raw;
         $miesiacLiczba = $czyPo1999 ? $miesiacLiczba-20:$miesiacLiczba;
+        $this->miesiacLiczbowo =  $miesiacLiczba;
         $nazwyGenerator = new NazwyDaty();
         $this->miesiac_gotowy = $nazwyGenerator->Miesiac($miesiacLiczba-1);
+        
         //if(preg_match('/0\d/',$this->dzien_raw))
         $this->dzien_gotowy = ltrim($this->dzien_raw, "0");
     }
@@ -63,5 +65,9 @@ class NumerPesel
     {
         return $this->dzien_gotowy;
     }
-    
+    public function DateObject(): \DateTime
+    {
+        $this->ObliczRokDzienMiesiac();
+        return new DateTime("$this->rok_gotowy-$this->miesiacLiczbow-$this->dzien_gotowy");
+    }
 }

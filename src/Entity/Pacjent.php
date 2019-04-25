@@ -99,6 +99,7 @@ class Pacjent extends Osoba
         $rok = $peselObiekt->Rok();
         $miesiac = $peselObiekt->Miesiac();
         $dzien = $peselObiekt->Dzien();
+        $data = new DateTime("$rok-$miesiac-$dzien");
         return sprintf('%d %s %d',$dzien,$miesiac,$rok);
     }
 
@@ -142,35 +143,11 @@ class Pacjent extends Osoba
                 $wszystkieObowiazujaceDawki[] = $dawka;
             }
         }
-        //zastosowanie poniższego sortowania nie wpływa na kolejność dodania do bazy
-        /*
-        $f = new Funkcje();
-        $iterator = $wszystkieObowiazujaceDawki->getIterator();
-            $iterator->uasort(function ($a, $b) use ($f){
-                //$aInt = $f->MiesiaceDateInterwalNaInt($a->getOdstepMinInterval());
-                //$bInt = $f->MiesiaceDateInterwalNaInt($b->getOdstepMinInterval());;
-                $aInt = $a->getId();
-                $bInt= $b->getId();
-                return ($aInt > $bInt) ? -1 : 1;
-            });
-            //$collection = new ArrayCollection(iterator_to_array($iterator));
         
-        $this->kalendarzSzczepien->setSzczepieniaUtrwalone(new ArrayCollection(iterator_to_array($iterator)));
-         
-        */
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
-    /*poniższe przeniesione do kalendarza
-    public function SortujKalendarzWg($parametr)
+    public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): \DateInterval
     {
-        //$f = new Funkcje();
-        $iterator = $this->kalendarzSzczepien->getSzczepieniaUtrwalone()->getIterator();
-        $iterator->uasort(function ($a, $b) use ($parametr){
-                $aInt = $a->dajParametr($parametr);
-                $bInt= $b->dajParametr($parametr);
-                return ($aInt > $bInt) ? -1 : 1;
-            });
+        $da
     }
-     **/
-    /*************tak samo zrobić sortowanie szczepień wykonanych**********/
 }

@@ -23,6 +23,10 @@
                 <th>Data urodzenia</th>
                 <td>{{ pacjent.DataUrodzeniaZpeselu }}</td>
             </tr>
+            <tr>
+                <th>Data zabiegu</th>
+                <th>nazwa szczepionki</th>
+            </tr>
             {% for szczepienie in pacjent.getSzczepienia %}
             <tr>
                 <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
@@ -32,10 +36,11 @@
             {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('szczepienie_new',{'pacjent': pacjent.id}) }}">dodaj szczepienie</a>
 
-    <a href="{{ path('pacjent_index') }}">back to list</a>
+    <a href="{{ path('pacjent_index') }}">powrót do listy</a>
 
-    <a href="{{ path('pacjent_edit', {'id': pacjent.id}) }}">edit</a>
+    <a href="{{ path('pacjent_edit', {'id': pacjent.id}) }}">edytuj</a>
 
     {{ include('pacjent/_delete_form.html.twig') }}
 {% endblock %}

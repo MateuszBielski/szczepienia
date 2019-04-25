@@ -6,6 +6,7 @@ use App\Entity\Szczepienie;
 use App\Entity\Szczepionka;
 use App\Entity\Dawka;
 use App\Entity\Schemat;
+use App\Entity\Pacjent;
 use App\Form\SzczepienieType;
 use App\Form\CopodanoType;
 use App\Repository\SzczepienieRepository;
@@ -84,11 +85,12 @@ class SzczepienieController extends AbstractController
         return new JsonResponse($responseArray);
     }
     /**
-     * @Route("/new", name="szczepienie_new", methods={"GET","POST"})
+     * @Route("/new/{pacjent}", name="szczepienie_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Pacjent $pacjent = null): Response
     {
         $szczepienie = new Szczepienie();
+        if($pacjent != null)$szczepienie->setPacjent($pacjent);
         
         $propozycjaDawki = $this->zaproponujDawke();
         $szczepienie->setCoPodano($propozycjaDawki);
@@ -115,7 +117,13 @@ class SzczepienieController extends AbstractController
             $entityManager->persist($szczepienie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('szczepienie_index');
+            $route = 'szczepienie_index';
+            $routeParam = array();
+            if($pacjent){
+                $route = 'pacjent_show';
+                $routeParam = ['id' => $pacjent->getId(),];
+            }
+            return $this->redirectToRoute($route,$routeParam);
         }
 
         return $this->render('szczepienie/new.html.twig', [
