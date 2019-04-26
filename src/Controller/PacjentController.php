@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pacjent;
 use App\Form\PacjentType;
 use App\Repository\PacjentRepository;
+use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,10 +52,12 @@ class PacjentController extends AbstractController
     /**
      * @Route("/{id}", name="pacjent_show", methods={"GET"})
      */
-    public function show(Pacjent $pacjent): Response
+    public function show(Pacjent $pacjent,SzczepienieRepository $szczepienieRepository): Response
     {
+        
         return $this->render('pacjent/show.html.twig', [
             'pacjent' => $pacjent,
+            'szczepienia' => $szczepienieRepository->findByPacjentId($pacjent->getId()),
         ]);
     }
 

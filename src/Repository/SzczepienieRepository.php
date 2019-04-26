@@ -47,4 +47,14 @@ class SzczepienieRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByPacjentId($id)
+    {
+        return $this->createQueryBuilder('scz')
+            ->andWhere('pac.id = :id')
+            ->leftJoin('scz.pacjent', 'pac')
+            ->setParameter('id', $id)
+            ->orderBy('scz.dataZabiegu', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
 }

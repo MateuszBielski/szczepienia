@@ -154,8 +154,8 @@ class SzczepienieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('szczepienie_index', [
-                'id' => $szczepienie->getId(),
+            return $this->redirectToRoute('pacjent_show', [
+                'id' => $szczepienie->getPacjent()->getId(),
             ]);
         }
 

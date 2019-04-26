@@ -99,7 +99,6 @@ class Pacjent extends Osoba
         $rok = $peselObiekt->Rok();
         $miesiac = $peselObiekt->Miesiac();
         $dzien = $peselObiekt->Dzien();
-        $data = new DateTime("$rok-$miesiac-$dzien");
         return sprintf('%d %s %d',$dzien,$miesiac,$rok);
     }
 
@@ -148,6 +147,8 @@ class Pacjent extends Osoba
     }
     public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): \DateInterval
     {
-        $da
+        $dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
+        return $szczepienie->getDataZabiegu()->diff($dataUrodzenia);
     }
+   
 }

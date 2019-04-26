@@ -80,6 +80,7 @@ class KalendarzSzczepien
 
         return $this;
     }
+    /*
      public function szczepieniaSortujWgIdaj($parametr)
     {
         //$f = new Funkcje();
@@ -91,6 +92,7 @@ class KalendarzSzczepien
             });
         return new ArrayCollection(iterator_to_array($iterator));
     }
+     * */
     public function szczepieniaSortujWgFunkcjiIdaj($funkcja)
     {
         $iterator = $this->szczepieniaUtrwalone->getIterator();

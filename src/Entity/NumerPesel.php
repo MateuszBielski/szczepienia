@@ -68,6 +68,6 @@ class NumerPesel
     public function DateObject(): \DateTime
     {
         $this->ObliczRokDzienMiesiac();
-        return new DateTime("$this->rok_gotowy-$this->miesiacLiczbow-$this->dzien_gotowy");
+        return new \DateTime("$this->rok_gotowy-$this->miesiacLiczbowo-$this->dzien_gotowy");
     }
 }
