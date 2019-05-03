@@ -33,7 +33,7 @@
             <tr>
                 <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
                 <td>{{ szczepienie.coPodano.getSkroconeCechyMojeImojejSzczepionki }}</td>
-                <td>{{ pacjent.WiekPodaniaSzczepienia(szczepienie).format('%y lat %m miesięcy %d dni') }}</td>
+                <td>{{ pacjent.WiekPodaniaSzczepienia(szczepienie) }} {{ pacjent.WiekPorownanieDoWymaganych(szczepienie) }}</td>
                 <td>{{ pacjent.OdstepOdPoprzedniejDawki(szczepienie) }}</td>
                 <td><a href="{{ path('szczepienie_edit',{'id': szczepienie.id}) }}">popraw</a></td>
             </tr>

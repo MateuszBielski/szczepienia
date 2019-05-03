@@ -31,6 +31,8 @@ class Pacjent extends Osoba
     private $szczepienia;
     
     private $szczepieniaPogrupowane;
+    
+    private $dataUrodzenia;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="pacjent", cascade={"persist", "remove"})
@@ -147,10 +149,14 @@ class Pacjent extends Osoba
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
-    public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): \DateInterval
+    public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): string
     {
-        $dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
-        return $szczepienie->getDataZabiegu()->diff($dataUrodzenia);
+        return $szczepienie->getDataZabiegu()->diff($this->dataUrodzenia)->format('%y lat %m miesięcy %d dni');
+    }
+    
+    public function Inicjuj()
+    {
+        $this->dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
     }
     
     public function PogrupujSzczepienia()
@@ -199,6 +205,28 @@ class Pacjent extends Osoba
     {
         $poprzednie = $this->PoprzedniaDawka($biezace);
         $odstep = $biezace->getDataZabiegu()->diff($poprzednie->getDataZabiegu());
-        return $odstep->format('%a dni');
+        return $odstep->format('%y lat %m miesięcy %d dni (%a dni)');
+    }
+    
+    //przenieść do szczepienia
+    public function WiekPorownanieDoWymaganych(Szczepienie $biezace): string
+    {
+        $wiekMin = $biezace->getCoPodano()->getWiekPodaniaMin();
+        $wiekMax = $biezace->getCoPodano()->getWiekPodaniaMax();
+        $dataMinWieku = clone $this->dataUrodzenia;
+        $dataMinWieku->add($wiekMin);
+        $dataMaxWieku =  clone $this->dataUrodzenia;
+        $dataMaxWieku->add($wiekMax);
+        $wynik = 'podano w odpowiednim wieku';
+         
+        if($biezace->getDataZabiegu() > $dataMaxWieku){
+            $zaPozno = $biezace->getDataZabiegu()->diff($dataMaxWieku)->format('%a dni');
+            $wynik = 'podano za późno o '.$zaPozno;//
+        }
+        if($biezace->getDataZabiegu() < $dataMinWieku){
+            $zaWczesnie = $dataMinWieku->diff($biezace->getDataZabiegu())->format('%a dni');
+            $wynik = 'za wcześnie o'.$zaWczesnie;//
+        }
+        return $wynik;
     }
 }

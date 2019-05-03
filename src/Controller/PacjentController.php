@@ -54,6 +54,7 @@ class PacjentController extends AbstractController
      */
     public function show(Pacjent $pacjent,SzczepienieRepository $szczepienieRepository): Response
     {
+        $pacjent->Inicjuj();
         $pacjent->PogrupujSzczepienia();
         return $this->render('pacjent/show.html.twig', [
             'pacjent' => $pacjent,

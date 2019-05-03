@@ -14,21 +14,33 @@ class DawkaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-         $opcje = function($etykieta){
+         $opcjeTygodnie = function($etykieta){
             return ['label' => $etykieta,
-            'with_days' => false,'with_months' => false,
-            'with_weeks' => true,'labels' => [
+            'with_days' => false,
+            'with_months' => false,
+            'with_weeks' => true,
+            'labels' => [
             'years' => 'lata',
             'weeks' => 'tygodnie',]
+            ];
+        };
+        $opcjeMiesiace = function($etykieta){
+            return ['label' => $etykieta,
+            'with_days' => false,
+            'with_months' => true,
+            'with_weeks' => false,
+            'labels' => [
+            'years' => 'lata',
+            'months' => 'miesiące',]
             ];
         };
                     
         
         $builder
-            ->add('odstep_min_interval',null,$opcje('odstęp minimalny'))//
-            ->add('odstep_max_interval',null,$opcje('odstęp maksymalny'))
-            ->add('wiekPodaniaMin',null,$opcje('minimalny wiek podania'))
-            ->add('wiekPodaniaMax',null,$opcje('maksymalny wiek podania'))
+            ->add('odstep_min_interval',null,$opcjeTygodnie('odstęp minimalny'))//
+            ->add('odstep_max_interval',null,$opcjeTygodnie('odstęp maksymalny'))
+            ->add('wiekPodaniaMin',null,$opcjeMiesiace('minimalny wiek podania'))
+            ->add('wiekPodaniaMax',null,$opcjeMiesiace('maksymalny wiek podania'))
         ;
     }
 

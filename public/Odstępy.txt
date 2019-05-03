@@ -10,3 +10,6 @@ Nowa szczepionka kopiuj dawki z innej szczepionki.
 Schemat interwały wybór miesiące/tygodnie
 Co podanotype inaczej opisać wybierane schematy
 Pacjent show różne widoki, np grupowanie(filtrowanie wybranego) rodzajami szczepionki, sortowanie wykonanych szczepień.
+Kolejne kolumny:
+skomentować np. wiek podania ok, za wcześnie/późno o...
+odstęp ok, za krótki/za długi o...
