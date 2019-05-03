@@ -129,4 +129,5 @@ class Szczepienie
        $this->schematTymczasowy = $schemat;
        return $this;
    }
+   
 }

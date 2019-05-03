@@ -29,6 +29,8 @@ class Pacjent extends Osoba
      * @ORM\OrderBy({"dataZabiegu" = "DESC"})
      */
     private $szczepienia;
+    
+    private $szczepieniaPogrupowane;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="pacjent", cascade={"persist", "remove"})
@@ -150,5 +152,53 @@ class Pacjent extends Osoba
         $dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
         return $szczepienie->getDataZabiegu()->diff($dataUrodzenia);
     }
-   
+    
+    public function PogrupujSzczepienia()
+    {
+        $grupowanie = array();
+        $wKtorymSchemacie = array();
+        $ktoraWdanymSchemacie = array();
+        $mojaNumeracja = array();
+        $ktore  = count($this->szczepienia)-1;
+        foreach(array_reverse($this->szczepienia->toArray()) as $szczepienie)
+        {
+            $schematId = $szczepienie->getCoPodano()->getSchemat()->getId();
+            $wKtorymSchemacie[$ktore] = $schematId;
+            $mojaNumeracja[$szczepienie->getId()] = $ktore;
+            $grupowanie[$schematId][] = $ktore;
+            $ktoraWdanymSchemacie[$ktore] = count($grupowanie[$schematId])-1;
+            $ktore--;
+        }
+       $this->szczepieniaPogrupowane = [
+        'grupowanie' => $grupowanie,
+        'wKtorymSchemacie' => $wKtorymSchemacie,
+        'ktoraWdanymSchemacie' => $ktoraWdanymSchemacie,
+        'mojaNumeracja' => $mojaNumeracja,
+       ];
+    }
+    public function SprawdzenieGrupowania(Szczepienie $szczepienie)
+    {
+       $ktore = $this->szczepieniaPogrupowane['mojaNumeracja'][$szczepienie->getId()];
+       $wKtorymSchemacie = $this->szczepieniaPogrupowane['wKtorymSchemacie'][$ktore];
+       $ktoraWdanymSchemacie = $this->szczepieniaPogrupowane['ktoraWdanymSchemacie'][$ktore];
+       if($ktoraWdanymSchemacie == 0)return 0;
+       $numerSzukanegoSzczepienia = $this->szczepieniaPogrupowane['grupowanie'][$wKtorymSchemacie][$ktoraWdanymSchemacie-1];
+       //$ileSchematow = count($this->szczepieniaPogrupowane['grupowanie']); //liczba schematów ok
+        return $numerSzukanegoSzczepienia; 
+    }
+    public function PoprzedniaDawka(Szczepienie $szczepienie)
+    {
+        $ktore = $this->szczepieniaPogrupowane['mojaNumeracja'][$szczepienie->getId()];
+        $wKtorymSchemacie = $this->szczepieniaPogrupowane['wKtorymSchemacie'][$ktore];
+        $ktoraWdanymSchemacie = $this->szczepieniaPogrupowane['ktoraWdanymSchemacie'][$ktore];
+        if($ktoraWdanymSchemacie == 0)return $szczepienie;
+        $numerSzukanegoSzczepienia = $this->szczepieniaPogrupowane['grupowanie'][$wKtorymSchemacie][$ktoraWdanymSchemacie -1];
+        return $this->szczepienia[$numerSzukanegoSzczepienia];
+    }
+    public function OdstepOdPoprzedniejDawki(Szczepienie $biezace): string
+    {
+        $poprzednie = $this->PoprzedniaDawka($biezace);
+        $odstep = $biezace->getDataZabiegu()->diff($poprzednie->getDataZabiegu());
+        return $odstep->format('%a dni');
+    }
 }

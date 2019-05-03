@@ -27,15 +27,18 @@
                 <th>Data zabiegu</th>
                 <th>nazwa szczepionki</th>
                 <th>wiek podania</th>
+                <th>odstęp od poprzedniej dawki</th>
             </tr>
             {% for szczepienie in pacjent.szczepienia %}
             <tr>
                 <td>{{ szczepienie.dataZabiegu|date("d m Y") }}</td>
                 <td>{{ szczepienie.coPodano.getSkroconeCechyMojeImojejSzczepionki }}</td>
                 <td>{{ pacjent.WiekPodaniaSzczepienia(szczepienie).format('%y lat %m miesięcy %d dni') }}</td>
+                <td>{{ pacjent.OdstepOdPoprzedniejDawki(szczepienie) }}</td>
                 <td><a href="{{ path('szczepienie_edit',{'id': szczepienie.id}) }}">popraw</a></td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
     <a href="{{ path('szczepienie_new',{'pacjent': pacjent.id}) }}">dodaj szczepienie</a>

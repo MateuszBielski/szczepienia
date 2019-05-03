@@ -54,10 +54,10 @@ class PacjentController extends AbstractController
      */
     public function show(Pacjent $pacjent,SzczepienieRepository $szczepienieRepository): Response
     {
-        
+        $pacjent->PogrupujSzczepienia();
         return $this->render('pacjent/show.html.twig', [
             'pacjent' => $pacjent,
-            'szczepienia' => $szczepienieRepository->findByPacjentId($pacjent->getId()),
+            //'szczepienia' => $szczepienieRepository->findByPacjentId($pacjent->getId()),
         ]);
     }
 

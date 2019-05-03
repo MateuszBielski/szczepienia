@@ -9,4 +9,4 @@ DawkaType domyślnie 0 ustawić, zamiast pustego
 Nowa szczepionka kopiuj dawki z innej szczepionki.
 Schemat interwały wybór miesiące/tygodnie
 Co podanotype inaczej opisać wybierane schematy
-Pacjent show różne widoki, np grupowanie rodzajami szczepionki, sortowanie wykonanych szczepień.
+Pacjent show różne widoki, np grupowanie(filtrowanie wybranego) rodzajami szczepionki, sortowanie wykonanych szczepień.
