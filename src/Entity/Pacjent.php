@@ -33,6 +33,8 @@ class Pacjent extends Osoba
     private $szczepieniaPogrupowane;
     
     private $dataUrodzenia;
+    
+    private $funkcje;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\KalendarzSzczepien", mappedBy="pacjent", cascade={"persist", "remove"})
@@ -157,6 +159,7 @@ class Pacjent extends Osoba
     public function Inicjuj()
     {
         $this->dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
+        $this->funkcje = new Funkcje();
     }
     
     public function PogrupujSzczepienia()
@@ -216,11 +219,13 @@ class Pacjent extends Osoba
         $wynik = $odstep->format('%y lat %m miesięcy %d dni (%a dni)');
         
         if($biezace->getDataZabiegu() < $dataMinOdst){
-            $zaKrotki = $dataMinOdst->diff($biezace->getDataZabiegu())->format('%a dni');
+            $zaKrotki = $dataMinOdst->diff($biezace->getDataZabiegu());
+            $zaKrotki = $this->funkcje->DateIntervalNaLataTygodnie($zaKrotki);
             $wynik .= ' za krótki o '.$zaKrotki;
         }
         else if($biezace->getDataZabiegu() > $dataMaxOdst){
-            $zaDlugi = $biezace->getDataZabiegu()->diff($dataMaxOdst)->format('%a dni');
+            $zaDlugi = $biezace->getDataZabiegu()->diff($dataMaxOdst);
+            $zaDlugi = $this->funkcje->DateIntervalNaLataTygodnie($zaDlugi);
             $wynik .= ' za długi o '.$zaDlugi;
         }
         else {
@@ -241,11 +246,11 @@ class Pacjent extends Osoba
         $wynik = 'odpowiedni';
          
         if($biezace->getDataZabiegu() > $dataMaxWieku){
-            $zaPozno = $biezace->getDataZabiegu()->diff($dataMaxWieku)->format('%a dni');
+            $zaPozno = $biezace->getDataZabiegu()->diff($dataMaxWieku)->format('%y lat %m miesięcy %d dni');
             $wynik = 'podano za późno o '.$zaPozno;//
         }
         if($biezace->getDataZabiegu() < $dataMinWieku){
-            $zaWczesnie = $dataMinWieku->diff($biezace->getDataZabiegu())->format('%a dni');
+            $zaWczesnie = $dataMinWieku->diff($biezace->getDataZabiegu())->format('%y lat %m miesięcy %d dni');
             $wynik = 'za wcześnie o'.$zaWczesnie;//
         }
         return $wynik;

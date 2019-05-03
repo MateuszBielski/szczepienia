@@ -31,9 +31,11 @@ class SchematType extends AbstractType
             ->add('podawania',EntityType::class,[
             'class' => Szczepionka::class,
             'choice_label' => 'nazwa',//zmienić na funkcję (nazwa + choroby + producent)
+            //'block_name' => 'blockNamePodawania',
             ])
             ->add('dawki',CollectionType::class,[
             'entry_type' => DawkaType::class,
+            //'entry_options' => ['attr' => ['width' => '22%', 'float' => 'left']],
             'allow_add' => true,
             'allow_delete' =>true,
             'by_reference' =>true,

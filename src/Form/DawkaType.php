@@ -21,7 +21,7 @@ class DawkaType extends AbstractType
             'with_weeks' => true,
             'labels' => [
             'years' => 'lata',
-            'weeks' => 'tygodnie',]
+            'weeks' => 'tygodnie',],
             ];
         };
         $opcjeMiesiace = function($etykieta){
@@ -31,7 +31,7 @@ class DawkaType extends AbstractType
             'with_weeks' => false,
             'labels' => [
             'years' => 'lata',
-            'months' => 'miesiące',]
+            'months' => 'miesiące',],
             ];
         };
                     
@@ -39,8 +39,8 @@ class DawkaType extends AbstractType
         $builder
             ->add('odstep_min_interval',null,$opcjeTygodnie('odstęp minimalny'))//
             ->add('odstep_max_interval',null,$opcjeTygodnie('odstęp maksymalny'))
-            ->add('wiekPodaniaMin',null,$opcjeMiesiace('minimalny wiek podania'))
-            ->add('wiekPodaniaMax',null,$opcjeMiesiace('maksymalny wiek podania'))
+            ->add('wiekPodaniaMin',null,$opcjeMiesiace('minimalny wiek (rozpoczęty okres)'))
+            ->add('wiekPodaniaMax',null,$opcjeMiesiace('maksymalny wiek (do ukończenia)'))
         ;
     }
 
@@ -48,6 +48,7 @@ class DawkaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Dawka::class,
+            //'attr' => ['width' => '22%', 'float' => 'left'],
         ]);
     }
 }
