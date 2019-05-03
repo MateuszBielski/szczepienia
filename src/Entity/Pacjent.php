@@ -204,8 +204,29 @@ class Pacjent extends Osoba
     public function OdstepOdPoprzedniejDawki(Szczepienie $biezace): string
     {
         $poprzednie = $this->PoprzedniaDawka($biezace);
+        $odstMin = $biezace->getCoPodano()->getOdstepMinInterval();
+        $odstMax = $biezace->getCoPodano()->getOdstepMaxInterval();
+        $dataMinOdst = clone $poprzednie->getDataZabiegu();
+        $dataMinOdst = $dataMinOdst->add($odstMin);
+        $dataMaxOdst = clone $poprzednie->getDataZabiegu();
+        $dataMaxOdst = $dataMaxOdst->add($odstMax);
+        
         $odstep = $biezace->getDataZabiegu()->diff($poprzednie->getDataZabiegu());
-        return $odstep->format('%y lat %m miesięcy %d dni (%a dni)');
+        
+        $wynik = $odstep->format('%y lat %m miesięcy %d dni (%a dni)');
+        
+        if($biezace->getDataZabiegu() < $dataMinOdst){
+            $zaKrotki = $dataMinOdst->diff($biezace->getDataZabiegu())->format('%a dni');
+            $wynik .= ' za krótki o '.$zaKrotki;
+        }
+        else if($biezace->getDataZabiegu() > $dataMaxOdst){
+            $zaDlugi = $biezace->getDataZabiegu()->diff($dataMaxOdst)->format('%a dni');
+            $wynik .= ' za długi o '.$zaDlugi;
+        }
+        else {
+            $wynik .= ' odpowieni';
+        }
+        return $wynik;
     }
     
     //przenieść do szczepienia
@@ -217,7 +238,7 @@ class Pacjent extends Osoba
         $dataMinWieku->add($wiekMin);
         $dataMaxWieku =  clone $this->dataUrodzenia;
         $dataMaxWieku->add($wiekMax);
-        $wynik = 'podano w odpowiednim wieku';
+        $wynik = 'odpowiedni';
          
         if($biezace->getDataZabiegu() > $dataMaxWieku){
             $zaPozno = $biezace->getDataZabiegu()->diff($dataMaxWieku)->format('%a dni');
@@ -229,4 +250,5 @@ class Pacjent extends Osoba
         }
         return $wynik;
     }
+    
 }

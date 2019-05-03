@@ -11,11 +11,19 @@
                 <th>Id</th>
                 <td>{{ schemat.id }}</td>
             </tr>
+            <tr>
+                <th>odstęp minimalny</th>
+                <th>odstęp maksymalny</th>
+                <th>wiek minimalny</th>
+                <th>wiek maksymalny</th>
+            </tr>
             {% for dawka in schemat.dawki %}
             <tr>
                 <th>dawka {{ dawka.id }}</th>
-                <td>odstęp minimalny {{ dawka.odstepMinInterval.format('%y lat %d dni') }}</td>
-                <td>odstęp maksymalny {{ dawka.odstepMaxInterval.format('%y lat %d dni') }}</td>
+                <td>{{ dawka.odstepMinInterval.format('%y lat %m miesięcy %d dni') }}</td>
+                <td>{{ dawka.odstepMaxInterval.format('%y lat %m miesięcy %d dni') }}</td>
+                <td>{{ dawka.WiekPodaniaMin.format('%y lat %m miesięcy %d dni') }}</td>
+                <td>{{ dawka.WiekPodaniaMax.format('%y lat %m miesięcy %d dni') }}</td>
             </tr>
             {% else %}
             <tr>
