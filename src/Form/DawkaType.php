@@ -17,10 +17,11 @@ class DawkaType extends AbstractType
          $opcjeTygodnie = function($etykieta){
             return ['label' => $etykieta,
             'with_days' => false,
-            'with_months' => false,
+            'with_months' => true,
             'with_weeks' => true,
             'labels' => [
             'years' => 'lata',
+            'months' => 'mięsiące',
             'weeks' => 'tygodnie',],
             ];
         };

@@ -155,10 +155,14 @@ class Pacjent extends Osoba
     {
         return $szczepienie->getDataZabiegu()->diff($this->dataUrodzenia)->format('%y lat %m miesięcy %d dni');
     }
+    public function DataUrodzeniaDateObject()
+    {
+        return (new NumerPesel($this->pesel))->DateObject();
+    }
     
     public function Inicjuj()
     {
-        $this->dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
+        $this->dataUrodzenia = $this->DataUrodzeniaDateObject();
         $this->funkcje = new Funkcje();
     }
     

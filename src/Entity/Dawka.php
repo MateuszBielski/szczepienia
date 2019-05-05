@@ -63,6 +63,8 @@ class Dawka
      */
     private $odstep_max_interval;
     
+    private $przechowanaDataUrodzenia;
+    
     public function __construct()
     {
         $this->wKtorychKalendarzachJestem = new ArrayCollection();
@@ -108,15 +110,18 @@ class Dawka
 
     public static function NazwyFunkcji()
     {
-        return array(['OdstMinFormat','odstęp minimalny'],
+        return array(
+                     ['NajwczesniejszaDataSzczepienia','data szczepienia proponowana'],
+                     ['OdstMinFormat','odstęp minimalny'],
                      ['OdstMaxFormat','odstęp maksymalny'],
                      ['WiekMinFormat','wiek minimalny'],
-                     ['WiekMaxFormat','wiek maksymalny']
+                     ['WiekMaxFormat','wiek maksymalny'],
                     );
     }
     public static function IntervalDaysToInt(\DateInterval $interval)
     {
         $dni = intval($interval->format('%y'))*365;
+        $dni += intval($interval->format('%m')*30);
         $dni += intval($interval->format('%d'));
         return $dni;
     }
@@ -243,5 +248,16 @@ class Dawka
         {
             $this->setOdstepMinInterval(new \DateInterval($f->MiesiaceNaDateInterwalString($this->wiekPodaniaMin)));
         }
+    }
+    public function PrzyjmijDateUrodzenia(\DateTime $dataUrodzenia)
+    {
+        $this->przechowanaDataUrodzenia = $dataUrodzenia;
+    }
+    public function NajwczesniejszaDataSzczepienia()
+    {
+        $kopiaDataUrodzenia = clone $this->przechowanaDataUrodzenia;
+        if($this->wiekPodaniaMin != null)
+        $kopiaDataUrodzenia->add($this->wiekPodaniaMin);
+        return $kopiaDataUrodzenia;
     }
 }

@@ -93,6 +93,14 @@ class KalendarzSzczepien
         return new ArrayCollection(iterator_to_array($iterator));
     }
      * */
+    public function UstawSzczepieniomDateUrodzenia()
+    {
+        $dataUrodzenia = $this->getPacjent()->DataUrodzeniaDateObject();
+        foreach($this->szczepieniaUtrwalone as $szczepienie)
+        {
+            $szczepienie->PrzyjmijDateUrodzenia($dataUrodzenia);
+        }
+    }
     public function szczepieniaSortujWgFunkcjiIdaj($funkcja)
     {
         $iterator = $this->szczepieniaUtrwalone->getIterator();
