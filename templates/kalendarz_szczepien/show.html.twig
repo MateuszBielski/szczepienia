@@ -27,7 +27,8 @@
             <tr>
                 <th>dawka id {{ dawka.id }}</th>
                 <td>{{ dawka.getSkroconeCechyMojeImojejSzczepionki() }}</td>
-                <td>{{ dawka.NajwczesniejszaDataSzczepienia().format('d.m.Y') }}</td>
+                <td>{{ dawka.NajwczesniejszaDataSzczepienia().format('d.m.Y') }} 
+                {% if dawka.czyPodana %} podana {{ dawka.przechowanaDataPodania.format('d.m.Y') }} {% endif %}</td>
                 <td>{{ dawka.getOdstepMinInterval().format('%y lat, %d dni') }}</td>
                 <td>{{ dawka.getOdstepMaxInterval().format('%y lat, %d dni') }}</td>
                 <td>{{ dawka.getWiekPodaniaMin().format('%y lat, %d dni') }}</td>

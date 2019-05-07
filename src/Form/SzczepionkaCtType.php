@@ -40,7 +40,7 @@ class SzczepionkaCtType extends AbstractType
               'entry_options' => [
                 'class' => Choroba::class,
                 'choice_label' => 'nazwa',
-                'placeholder' => '<a href="http://127.0.0.1:8001/choroba/new">dodaj chorobę</a>',
+                //'placeholder' => '<a href="http://127.0.0.1:8001/choroba/new">dodaj chorobę</a>',
                 //'attr' => ['class' => 'klasaPrzeciw'],
                 ],
             'allow_add' => true,

@@ -64,6 +64,9 @@ class Dawka
     private $odstep_max_interval;
     
     private $przechowanaDataUrodzenia;
+    public $przechowanaDataPodania;
+    //Kalendarz szczepień w swoim zasobie przechowuje kolekcję dawek i w razie potrzeby dla niej ustawia poniższą zmiennną;
+    public $czyPodana = false;
     
     public function __construct()
     {
@@ -259,5 +262,9 @@ class Dawka
         if($this->wiekPodaniaMin != null)
         $kopiaDataUrodzenia->add($this->wiekPodaniaMin);
         return $kopiaDataUrodzenia;
+    }
+    public function CzyPodanaDla(Pacjent $pacjent)
+    {
+        
     }
 }

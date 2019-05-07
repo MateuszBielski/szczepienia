@@ -57,6 +57,7 @@ class KalendarzSzczepienController extends AbstractController
         //$dawki = $this->getDoctrine()->getRepository(Dawka::class)->znajdzWgKalendarza($kalendarzSzczepien);
         if($metoda == null)$metoda = 'getOdstepMinInterval';
         $kalendarzSzczepien->UstawSzczepieniomDateUrodzenia();
+        $kalendarzSzczepien->KtoreSczepieniaWykonane();
         return $this->render('kalendarz_szczepien/show.html.twig', [
             'kalendarz_szczepien' => $kalendarzSzczepien,
             'dawki_posortowane' => $kalendarzSzczepien->szczepieniaSortujWgFunkcjiIdaj($metoda),
@@ -98,4 +99,5 @@ class KalendarzSzczepienController extends AbstractController
 
         return $this->redirectToRoute('kalendarz_szczepien_index');
     }
+    
 }

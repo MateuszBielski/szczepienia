@@ -115,5 +115,31 @@ class KalendarzSzczepien
     {
         return Dawka::NazwyFunkcji();
     }
-    
+    public function KtoreSczepieniaWykonane()
+    {
+        //$idPlanowane = array();
+        $porownanieIndeksow = array();
+        // = array();
+        foreach($this->szczepieniaUtrwalone as $planowane)
+        {
+            $porownanieIndeksow[$planowane->getId()] = -1;
+            //$idPlanowane[] = $planowane->getId();
+        }
+        $indeksWykonanych = 0;
+        foreach($this->pacjent->getSzczepienia() as $wyk)
+        {
+            $id = $wyk->getCoPodano()->getId();
+            
+            $porownanieIndeksow[$id] = $indeksWykonanych++;
+        }
+        foreach($this->szczepieniaUtrwalone as $doSprawdzenia)
+        {
+            $i = $porownanieIndeksow[$doSprawdzenia->getId()];
+            if($i > -1){
+                $doSprawdzenia->czyPodana = true;
+                $doSprawdzenia->przechowanaDataPodania = $this->pacjent->getSzczepienia()[$i]->getDataZabiegu();
+            }
+        }
+        
+    }
 }
