@@ -151,6 +151,17 @@ class Pacjent extends Osoba
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
+    public function UaktualnijKalendarzNowe(Array $wszystkieSchematy)
+    {
+        if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
+        $wszystkieObowiazujaceDawki = new ArrayCollection();
+        foreach($wszystkieSchematy as $schemat)
+        {
+            if($schemat->ObowiazujeDla($this))
+              $schemat->DolaczMojeDawkiDo($wszystkieObowiazujaceDawki);
+        }
+        
+    }
     public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): string
     {
         return $szczepienie->getDataZabiegu()->diff($this->dataUrodzenia)->format('%y lat %m miesięcy %d dni');

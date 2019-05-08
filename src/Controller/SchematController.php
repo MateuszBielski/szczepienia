@@ -110,8 +110,9 @@ class SchematController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
             $pacjent->UaktualnijKalendarz($wszystkieSzczepionki);
-            $entityManager->persist($pacjent);
+            $entityManager->persist($pacjent->getKalendarz());
         }
         $entityManager->flush();
+        KalendarzSzczepien::DopasujSchematyDoPacjentow($wszyscyPacjenci,$wszystkieSzczepionki);
     }
 }

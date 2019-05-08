@@ -128,4 +128,12 @@ class Schemat
             $dawka->setSchemat($this);
         }
     }
+    public function DolaczMojeDawkiDo(ArrayCollection $tworzonyZbior)
+    {
+        foreach($this->dawki as $dawka) $tworzonyZbior[] = $dawka; 
+    }
+    public function ObowiazujeDla(Pacjent $pacjent)
+    {
+        return true;
+    }
 }

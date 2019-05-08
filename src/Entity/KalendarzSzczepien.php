@@ -28,7 +28,7 @@ class KalendarzSzczepien
      * @ORM\ManyToMany(targetEntity="App\Entity\Dawka", inversedBy="wKtorychKalendarzachJestem")
      */
     private $szczepieniaUtrwalone;
-
+    
     public function __construct()
     {
         $this->szczepieniaUtrwalone = new ArrayCollection();
@@ -140,6 +140,10 @@ class KalendarzSzczepien
                 $doSprawdzenia->przechowanaDataPodania = $this->pacjent->getSzczepienia()[$i]->getDataZabiegu();
             }
         }
+        
+    }
+    
+    public static function DopasujSchematyDoPacjentow($schematy, $pacjenci){
         
     }
 }
