@@ -34,6 +34,27 @@ class Schemat
      */
     private $podawania;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $startYear;
+
+    /**
+     * @ORM\Column(type="date")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $endYear;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", inversedBy="isSubstitutedBy", cascade={"persist", "remove"})
+     */
+    private $substitute = null;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", mappedBy="substitute", cascade={"persist", "remove"})
+     */
+    private $isSubstitutedBy = null;
+
     public function __construct()
     {
         $this->warunek = new ArrayCollection();
@@ -135,5 +156,63 @@ class Schemat
     public function ObowiazujeDla(Pacjent $pacjent)
     {
         return true;
+    }
+
+    public function getStartYear(): ?\DateTimeInterface
+    {
+        return $this->startYear;
+    }
+
+    public function setStartYear(\DateTimeInterface $startYear): self
+    {
+        $this->startYear = $startYear;
+
+        return $this;
+    }
+
+    public function getEndYear(): ?\DateTimeInterface
+    {
+        return $this->endYear;
+    }
+
+    public function setEndYear(\DateTimeInterface $endYear): self
+    {
+        $this->endYear = $endYear;
+
+        return $this;
+    }
+
+    public function getSubstitute(): ?self
+    {
+        return $this->substitute;
+    }
+
+    public function setSubstitute(?self $substitute): self
+    {
+        $this->substitute = $substitute;
+
+        return $this;
+    }
+
+    public function getIsSubstitutedBy(): ?self
+    {
+        return $this->IsSubstitutedBy;
+    }
+
+    public function setIsSubstitutedBy(?self $IsSubstitutedBy): self
+    {
+        $this->IsSubstitutedBy = $IsSubstitutedBy;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newSubstitute = $IsSubstitutedBy === null ? null : $this;
+        if ($newSubstitute !== $IsSubstitutedBy->getSubstitute()) {
+            $IsSubstitutedBy->setSubstitute($newSubstitute);
+        }
+
+        return $this;
+    }
+    public function getVaccineNameAndStartYear(): string
+    {
+        return $this->podawania->getNazwa().' '.$this->startYear->format('Y');
     }
 }

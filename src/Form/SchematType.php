@@ -33,6 +33,12 @@ class SchematType extends AbstractType
             'choice_label' => 'nazwa',//zmienić na funkcję (nazwa + choroby + producent)
             //'block_name' => 'blockNamePodawania',
             ])
+            ->add('startYear',null,['label' => 'obowiązuje od początku roku'
+            ])
+            ->add('substitute',EntityType::class,['class' => Schemat::class,
+            'label' => 'zastępuje',
+            'choice_label' => function(Schemat $sc){return $sc->getVaccineNameAndStartYear();},
+            ])
             ->add('dawki',CollectionType::class,[
             'entry_type' => DawkaType::class,
             //'entry_options' => ['attr' => ['width' => '22%', 'float' => 'left']],

@@ -15,3 +15,6 @@ skomentować np. wiek podania ok, za wcześnie/późno o...
 odstęp ok, za krótki/za długi o...
 Pacjent wyznacz daty kolejnych szczepień
 Dawka metoda, która wskazuje na poprzednią dawkę.
+Schemat: początek obowiązywania - data (obowiązkowo), czy zastępuje jakiś schemat (lista schematów) -> 
+jeśli tak, to w zastępowanym schemacie ma zostać wpisana data ostatniego dnia obowiązywania (może roku?)
+Czy obowiązuje dla pacjenta: porównać rok urodzenia z end_Year. Drugie kryterium: sprawdzić pozostałe: czy jakąś dawkę jescze można podać
