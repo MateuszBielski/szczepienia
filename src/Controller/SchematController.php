@@ -35,6 +35,8 @@ class SchematController extends AbstractController
     public function new(Request $request, Szczepionka $szczepionka): Response
     {
         $schemat = new Schemat();
+        $yearNow = (new \DateTime('now'))->format('Y');
+        $schemat->setStartYear(new \DateTime("$yearNow-01-01"));
         $schemat->setPodawania($szczepionka);
         //poniżej Dawka ma w konstruktorze inicjowane przykładowe wartości interwałów
         $form = $this->createForm(SchematType::class, $schemat, ['prototype_data_opt' => new Dawka(),]);
@@ -110,7 +112,7 @@ class SchematController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
             $pacjent->UaktualnijKalendarz($wszystkieSzczepionki);
-            $entityManager->persist($pacjent->getKalendarz());
+            $entityManager->persist($pacjent->getKalendarzSzczepien());
         }
         $entityManager->flush();
         KalendarzSzczepien::DopasujSchematyDoPacjentow($wszyscyPacjenci,$wszystkieSzczepionki);

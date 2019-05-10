@@ -12,6 +12,13 @@
                 <td>{{ schemat.id }}</td>
             </tr>
             <tr>
+                <th>Obowiązuje od roku</th>
+                <td>{{ schemat.startYear.format('Y') }}</td>
+            </tr>
+            {% if schemat.substiute %}
+            getVaccineNameAndStartYear()
+            {% endif %}
+            <tr>
                 <td>  </td>
                 <td>odstęp minimalny</td>
                 <td>odstęp maksymalny</td>
