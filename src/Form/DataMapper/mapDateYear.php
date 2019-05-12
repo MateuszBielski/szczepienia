@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 final class mapDateYear implements DataMapperInterface
 {
     /**
-     * @param \Date|null $data
+     * @param Schemat|null $data
      */
     public function mapDataToForms($data, $forms)
     {
