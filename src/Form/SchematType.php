@@ -5,11 +5,10 @@ namespace App\Form;
 use App\Entity\Schemat;
 use App\Entity\Szczepionka;
 use App\Entity\Dawka;
-use App\Form\DataMapper\mapDateYear;
+//use App\Form\SchematYearType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,11 +24,9 @@ class SchematType extends AbstractType
             //'block_name' => 'blockNamePodawania',
             ])
 
-            ->add('startYear',TextType::class,['label' => 'obowiązuje od początku roku',//BirthdayType::class
-            //'format' => 'd-M-yyyy'
-            //'widget' => 'single_text'
+            ->add('startYear',SchematYearType::class,[
             ])
-            ->setDataMapper(new mapDateYear())
+            //->setDataMapper(new mapDateYear())
             ->add('substitute',EntityType::class,['class' => Schemat::class,
             'label' => 'zastępuje',
             'choice_label' => function(Schemat $sc){return $sc->getVaccineNameAndStartYear();},
