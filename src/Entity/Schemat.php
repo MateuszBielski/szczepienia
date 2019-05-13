@@ -47,9 +47,8 @@ class Schemat
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Schemat", inversedBy="isSubstitutedBy", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $substitute;
+    private $substitute = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Schemat", mappedBy="substitute", cascade={"persist", "remove"})

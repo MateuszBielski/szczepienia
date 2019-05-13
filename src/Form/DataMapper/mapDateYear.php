@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 final class mapDateYear implements DataMapperInterface
 {
     /**
-     * @param Schemat|null $data
+     * @param \Date|null $data
      */
     public function mapDataToForms($data, $forms)
     {
@@ -28,6 +28,7 @@ final class mapDateYear implements DataMapperInterface
         $forms = iterator_to_array($forms);
         $forms['startYear']->setData($data->getStartYear()->format('Y'));
         
+        $forms['podawania']->setData($data->getPodawania());
         /*
         // initialize form field values
         $forms['red']->setData($data->getRed());
@@ -47,6 +48,7 @@ final class mapDateYear implements DataMapperInterface
         //$data = new Choroba();
         $year = $forms['startYear']->getData();
         $data->setStartYear(new \DateTime("$year-01-01"));
+        $data->setPodawania($forms['podawania']->getData());
         /*
          $data = new Color(
             $forms['red']->getData(),
