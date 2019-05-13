@@ -12,7 +12,7 @@ class KalendarzSzczepienType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pacjent')
+            //->add('pacjent')
             ->add('szczepieniaUtrwalone')
         ;
     }

@@ -41,14 +41,15 @@ class Schemat
 
     /**
      * @ORM\Column(type="date")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $endYear;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Schemat", inversedBy="isSubstitutedBy", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $substitute = null;
+    private $substitute;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Schemat", mappedBy="substitute", cascade={"persist", "remove"})

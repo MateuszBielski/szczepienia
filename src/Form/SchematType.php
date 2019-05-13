@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Schemat;
 use App\Entity\Szczepionka;
 use App\Entity\Dawka;
+use App\Repository\SchematRepository;
 //use App\Form\SchematYearType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,7 +18,10 @@ class SchematType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        
+          $idVaccine =  $builder->getData()->getPodawania()->getId();
+          $idSchemat = $builder->getData()->getId();
+          $builder
             ->add('podawania',EntityType::class,[
             'class' => Szczepionka::class,
             'choice_label' => 'nazwa',//zmienić na funkcję (nazwa + choroby + producent)
@@ -30,7 +34,17 @@ class SchematType extends AbstractType
             ->add('substitute',EntityType::class,['class' => Schemat::class,
             'label' => 'zastępuje',
             'choice_label' => function(Schemat $sc){return $sc->getVaccineNameAndStartYear();},
+            'required' => false,
             'placeholder' => ' - ',
+            'query_builder' => function (SchematRepository $sr) use ($idVaccine,$idSchemat) {
+                    return $sr->createQueryBuilder('sch')
+                        ->leftJoin('sch.podawania', 'scz')
+                        ->andWhere('scz.id = :idVaccine')
+                        ->andWhere('sch.id != :idSchemat')
+                        ->setParameter('idVaccine', $idVaccine )
+                        ->setParameter('idSchemat', $idSchemat);
+                        
+                },
             ])
             ->add('dawki',CollectionType::class,[
             'entry_type' => DawkaType::class,
@@ -48,6 +62,7 @@ class SchematType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Schemat::class,
             'prototype_data_opt' => null,
+            //'schematId' => null,
         ]);
         //->setRequired('dawka_inicjujaca');
     }

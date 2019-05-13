@@ -50,7 +50,7 @@ class KalendarzSzczepienController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{metoda}", name="kalendarz_szczepien_show", methods={"GET"})
+     * @Route("/show/{id}/{metoda}", name="kalendarz_szczepien_show", methods={"GET"})
      */
     public function show(KalendarzSzczepien $kalendarzSzczepien,$metoda = null): Response
     {
@@ -80,10 +80,13 @@ class KalendarzSzczepienController extends AbstractController
             ]);
         }
 
+        /*
         return $this->render('kalendarz_szczepien/edit.html.twig', [
             'kalendarz_szczepien' => $kalendarzSzczepien,
             'form' => $form->createView(),
         ]);
+         */
+         return $this->render('kalendarz_szczepien/notedit.html.twig');
     }
 
     /**

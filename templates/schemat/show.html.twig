@@ -15,8 +15,9 @@
                 <th>Obowiązuje od roku</th>
                 <td>{{ schemat.startYear.format('Y') }}</td>
             </tr>
-            {% if schemat.substiute %}
-            getVaccineNameAndStartYear()
+            {% if schemat.substitute %}
+             <th>zastępuje</th>
+             <td>{{ schemat.substitute.getVaccineNameAndStartYear() }}</td>
             {% endif %}
             <tr>
                 <td>  </td>
