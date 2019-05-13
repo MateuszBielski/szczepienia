@@ -191,8 +191,16 @@ class Schemat
     public function setSubstitute(?self $substitute): self
     {
         $this->substitute = $substitute;
-
+        $substitute->setIsSubstitutedBy($this);
+        $lastDayValid = clone $this->startYear;
+        $lastDayValid = $lastDayValid->modify('-1 days');
+        $substitute->setEndYear($lastDayValid);
         return $this;
+    }
+    public function IsSubstituted()
+    {
+        $wynik = $this->isSubstitutedBy ? true : false ;
+        return $wynik;
     }
 
     public function getIsSubstitutedBy(): ?self
@@ -205,11 +213,12 @@ class Schemat
         $this->IsSubstitutedBy = $IsSubstitutedBy;
 
         // set (or unset) the owning side of the relation if necessary
+        /*
         $newSubstitute = $IsSubstitutedBy === null ? null : $this;
         if ($newSubstitute !== $IsSubstitutedBy->getSubstitute()) {
             $IsSubstitutedBy->setSubstitute($newSubstitute);
         }
-
+        */
         return $this;
     }
     public function getVaccineNameAndStartYear(): string

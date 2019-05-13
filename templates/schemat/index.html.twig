@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Nazwa szczepionki</th>
                 <th>Obowiązuje od</th>
+                <th>do</th>
                 <th>Zastępuje</th>
                 <th>actions</th>
             </tr>
@@ -19,8 +20,9 @@
         {% for schemat in schemats %}
             <tr>
                 <td>{{ schemat.id }}</td>
-                <td>{{ schemat.podawania.nazwa }}</td>
+                <td>{{ schemat.podawania.nazwa }}{% if schemat.IsSubstituted() %} zastąpiony{% endif %}</td>
                 <td>{{ schemat.startYear.format('Y') }}</td>
+                <td>{% if schemat.endYear %}{{ schemat.endYear.format('Y') }}{% endif %}</td>
                 <td>{% if schemat.substitute %}{{ schemat.substitute.getVaccineNameAndStartYear() }}  {% endif %}</td>
                 <td>
                     <a href="{{ path('schemat_show', {'id': schemat.id}) }}">show</a>
