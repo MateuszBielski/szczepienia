@@ -80,7 +80,8 @@ class Dawka
     public function getSkroconeCechyMojeImojejSzczepionki(): ?string
     {
         $sc_nazwa = $this->getNazwaSzczepionki();
-        return sprintf('%s %d %s %s %s %d','dawka nr ',$this->ktora, ' szczepionki: ', $sc_nazwa, ' nr schem: ',$this->schemat->getId());
+        $schem_year = $this->schemat->getStartYear()->format('Y');
+        return sprintf('%s %d %s %s %s ','dawka nr ',$this->ktora, $sc_nazwa, ' schemat rok : ',$schem_year);
         //return sprintf('%d',$this->odstepMax);
     }
     

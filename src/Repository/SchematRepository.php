@@ -50,15 +50,7 @@ class SchematRepository extends ServiceEntityRepository
     */
     public function znajdzIleDlaSzczepionki(integer $ile, Szczepionka $szczep)
     {
-                /*return $this->createQueryBuilder('cat')
-            ->andWhere('cat.name LIKE :searchTerm
-                OR cat.iconKey LIKE :searchTerm
-                OR fc.fortune LIKE :searchTerm')
-            ->leftJoin('cat.fortuneCookies', 'fc')
-            ->setParameter('searchTerm', '%'.$term.'%')
-            ->getQuery()
-            ->execute();*/
-        
+                   
         return $this->createQueryBuilder('sch')
             ->andWhere('ska.id = :id')
             ->leftJoin('sch.podawania', 'ska')
@@ -66,4 +58,17 @@ class SchematRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+    
+    public function findAllOrderByStartYearSzczepionkaNazwa(){
+         return $this->createQueryBuilder('sch')
+            //->andWhere('ska.id = :id')
+            ->leftJoin('sch.podawania', 'ska')
+            //->setParameter('id', $szczep->getId())
+            ->addOrderBy('ska.nazwa', 'ASC')
+            ->addOrderBy('sch.startYear', 'ASC')
+            
+            ->getQuery()
+            ->execute();
+    }
+    
 }

@@ -28,7 +28,7 @@ class SchematYearType extends AbstractType
         $resolver->setDefaults([
             //'invalid_message' => 'The selected issue does not exist',
             'label' => 'obowiązuje od początku roku',//BirthdayType::class
-            'choices' => range(1991,2020),
+            'choices' => range(1980,2020),
             'choice_label' => function ($choice, $key, $value){ return $value; },
         ]);
     }

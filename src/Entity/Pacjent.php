@@ -136,7 +136,7 @@ class Pacjent extends Osoba
         $this->kalendarzSzczepien->setPacjent($this);
     }
     //przy każdej edycji schematu (dodaniu i usunięciu) należy wywołać dla każdego pacjenta poniższą funkcję
-    public function UaktualnijKalendarz(Array $wszystkieSzczepionki){
+    public function UaktualnijKalendarzStare(Array $wszystkieSzczepionki){
         
         if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
         $wszystkieObowiazujaceDawki = new ArrayCollection();
@@ -151,16 +151,25 @@ class Pacjent extends Osoba
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
-    public function UaktualnijKalendarzNowe(Array $wszystkieSchematy)
+    public function UaktualnijKalendarz(Array $wszystkieSchematy)
     {
         if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
         $wszystkieObowiazujaceDawki = new ArrayCollection();
+        $schemasNotMatching = array();
         foreach($wszystkieSchematy as $schemat)
         {
-            if($schemat->ObowiazujeDla($this))
-              $schemat->DolaczMojeDawkiDo($wszystkieObowiazujaceDawki);
+            if($schemat->ObowiazujeDla($this)){
+                $schemat->DolaczMojeDawkiDo($wszystkieObowiazujaceDawki);
+            }
+            else{
+                //$schemat->DolaczMojeDawkiDo
+                //niepasujące schematy wrzucić do drugiej grupy i w oddzielnej pętli sprawdzić, czy są jakieś dawki które można jeszcze zastosować
+                $schemasNotMatching[] = $schemat;
+                //jeśli jakieś jeszcze dawki można zastosować 
+            } 
+              
         }
-        
+        $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
     public function WiekPodaniaSzczepienia(Szczepienie $szczepienie): string
     {
@@ -168,7 +177,8 @@ class Pacjent extends Osoba
     }
     public function DataUrodzeniaDateObject()
     {
-        return (new NumerPesel($this->pesel))->DateObject();
+        if($this->dataUrodzenia == null)$this->dataUrodzenia = (new NumerPesel($this->pesel))->DateObject();
+        return $this->dataUrodzenia;
     }
     
     public function Inicjuj()

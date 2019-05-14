@@ -156,7 +156,9 @@ class Schemat
     }
     public function ObowiazujeDla(Pacjent $pacjent)
     {
-        return true;
+        if( $this->endYear == null) return true;
+        if ($pacjent->DataUrodzeniaDateObject() < $this->endYear) return true;
+        return false;
     }
 
     public function getStartYear(): ?\DateTimeInterface
@@ -191,10 +193,16 @@ class Schemat
     public function setSubstitute(?self $substitute): self
     {
         $this->substitute = $substitute;
-        $substitute->setIsSubstitutedBy($this);
+        if($substitute != null){
+            $substitute->setIsSubstitutedBy($this);
         $lastDayValid = clone $this->startYear;
         $lastDayValid = $lastDayValid->modify('-1 days');
         $substitute->setEndYear($lastDayValid);
+        }
+        else if($this->substitute != null){
+            $this->substitute->setIsSubstitutedBy(null);
+            $this->substitute->setEndYear(null);
+        }
         return $this;
     }
     public function IsSubstituted()

@@ -25,7 +25,8 @@ class SchematController extends AbstractController
     public function index(SchematRepository $schematRepository): Response
     {
         return $this->render('schemat/index.html.twig', [
-            'schemats' => $schematRepository->findAll(),
+            //->findAll(),
+            'schemats' => $schematRepository->findAllOrderByStartYearSzczepionkaNazwa(),
         ]);
     }
 
@@ -108,13 +109,14 @@ class SchematController extends AbstractController
     public function UaktualnijKalendarze(){
         //zmiana schematu może wpłynąć na kalendarz każdego pacjenta
         $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();
-        $wszystkieSzczepionki = $this->getDoctrine()->getRepository(Szczepionka::class)->findAll();
+        //$wszystkieSzczepionki = $this->getDoctrine()->getRepository(Szczepionka::class)->findAll();
+        $wszystkieSchematy = $this->getDoctrine()->getRepository(Schemat::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
-            $pacjent->UaktualnijKalendarz($wszystkieSzczepionki);
+            $pacjent->UaktualnijKalendarz($wszystkieSchematy);
             $entityManager->persist($pacjent->getKalendarzSzczepien());
         }
         $entityManager->flush();
-        KalendarzSzczepien::DopasujSchematyDoPacjentow($wszyscyPacjenci,$wszystkieSzczepionki);
+        //KalendarzSzczepien::DopasujSchematyDoPacjentow($wszystkieSchematy,$wszyscyPacjenci);
     }
 }
