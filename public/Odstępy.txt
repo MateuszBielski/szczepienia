@@ -7,6 +7,7 @@ w tygodniach zamiast miesiącach.
 Wylicz odstępy między dawkami danej szczepionki
 DawkaType domyślnie 0 ustawić, zamiast pustego
 Nowa szczepionka kopiuj dawki z innej szczepionki.
+Tak samo schemat.
 Schemat interwały wybór miesiące/tygodnie
 Co podanotype inaczej opisać wybierane schematy
 Pacjent show różne widoki, np grupowanie(filtrowanie wybranego) rodzajami szczepionki, sortowanie wykonanych szczepień.
@@ -18,3 +19,5 @@ Dawka metoda, która wskazuje na poprzednią dawkę.
 Schemat: początek obowiązywania - data (obowiązkowo), czy zastępuje jakiś schemat (lista schematów) -> 
 jeśli tak, to w zastępowanym schemacie ma zostać wpisana data ostatniego dnia obowiązywania (może roku?)
 Czy obowiązuje dla pacjenta: porównać rok urodzenia z end_Year. Drugie kryterium: sprawdzić pozostałe: czy jakąś dawkę jescze można podać
+Najnowszy możliwy do zastosowania schemat. Jak to sprawdzić? sprawdzamy dla każdej szczepionki wszystkie schematy od najnowszego.
+Liczymy zrobione dawki szczepienia. Dla każdego schematu sprawdzamy, czy możliwe jest jeszcze podanie kolejnej dawki.

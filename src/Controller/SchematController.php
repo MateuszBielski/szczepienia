@@ -31,14 +31,32 @@ class SchematController extends AbstractController
     }
 
     /**
-     * @Route("/new{id}", name="schemat_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="schemat_new_for_vaccine", methods={"GET","POST"})
      */
     public function new(Request $request, Szczepionka $szczepionka): Response
     {
         $schemat = new Schemat();
-        $yearNow = (new \DateTime('now'))->format('Y');
-        $schemat->setStartYear(new \DateTime("$yearNow-01-01"));
         $schemat->setPodawania($szczepionka);
+        
+        return $this->commonForNew($request,$schemat);
+        
+    }
+    
+    /**
+     * @Route("/newFromCopy/{id}", name="schemat_new_from_copy", methods={"GET","POST"})
+     */
+    public function newFromCopy(Request $request,Schemat $schemat): Response
+    {
+        $newSchemat = new Schemat;
+        $newSchemat->copyDosesAndVaccineFrom($schemat);
+        $newSchemat->setSubstitute($schemat);
+        return $this->commonForNew($request,$newSchemat);
+    }
+    
+    
+    private function commonForNew(Request $request,Schemat $schemat)
+    {
+        
         //poniżej Dawka ma w konstruktorze inicjowane przykładowe wartości interwałów
         $form = $this->createForm(SchematType::class, $schemat, ['prototype_data_opt' => new Dawka(),]);
         $form->handleRequest($request);
@@ -106,6 +124,7 @@ class SchematController extends AbstractController
 
         return $this->redirectToRoute('schemat_index');
     }
+    
     public function UaktualnijKalendarze(){
         //zmiana schematu może wpłynąć na kalendarz każdego pacjenta
         $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();

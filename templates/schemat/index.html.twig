@@ -25,8 +25,11 @@
                 <td>{% if schemat.endYear %}{{ schemat.endYear.format('Y') }}{% endif %}</td>
                 <td>{% if schemat.substitute %}{{ schemat.substitute.getVaccineNameAndStartYear() }}  {% endif %}</td>
                 <td>
-                    <a href="{{ path('schemat_show', {'id': schemat.id}) }}">show</a>
-                    <a href="{{ path('schemat_edit', {'id': schemat.id}) }}">edit</a>
+                    <a href="{{ path('schemat_show', {'id': schemat.id}) }}">pokaż</a>
+                    <a href="{{ path('schemat_edit', {'id': schemat.id}) }}">edytuj</a>
+                    {% if not schemat.IsSubstituted() %}
+                    <a href="{{ path('schemat_new_from_copy', {'id': schemat.id}) }}">zastąp nowym</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -37,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('schemat_new', {'id': 1}) }}">Create new</a>
+    {# <a href="{{ path('schemat_new', {'id': 1}) }}">Create new</a> #}
 {% endblock %}

@@ -37,12 +37,19 @@ class SchematType extends AbstractType
             'required' => false,
             'placeholder' => ' - ',
             'query_builder' => function (SchematRepository $sr) use ($idVaccine,$idSchemat) {
-                    return $sr->createQueryBuilder('sch')
+                    
+                $queryBuilder = $sr->createQueryBuilder('sch')
                         ->leftJoin('sch.podawania', 'scz')
                         ->andWhere('scz.id = :idVaccine')
-                        ->andWhere('sch.id != :idSchemat')
-                        ->setParameter('idVaccine', $idVaccine )
-                        ->setParameter('idSchemat', $idSchemat);
+                        ->setParameter('idVaccine', $idVaccine );
+                        
+                if($idSchemat != null)
+                    {
+                        $queryBuilder
+                        ->setParameter('idSchemat', $idSchemat)
+                        ->andWhere('sch.id != :idSchemat');
+                    }
+                return $queryBuilder;
                         
                 },
             ])

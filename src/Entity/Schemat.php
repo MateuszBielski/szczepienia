@@ -60,6 +60,9 @@ class Schemat
     {
         $this->warunek = new ArrayCollection();
         $this->dawki = new ArrayCollection();
+        //poniższe utworzone na potrzeby SchematController::newFromCopy i ::new
+        $yearNow = (new \DateTime('now'))->format('Y');
+        $this->startYear = new \DateTime("$yearNow-01-01");
     }
 
     public function getId(): ?int
@@ -232,5 +235,16 @@ class Schemat
     public function getVaccineNameAndStartYear(): string
     {
         return $this->podawania->getNazwa().' '.$this->startYear->format('Y');
+    }
+    public function copyDosesAndVaccineFrom(?self $schemat)
+    {
+        foreach($schemat->getDawki() as $dose)
+        {
+            $newDose = new Dawka;
+            $newDose->copyFrom($dose);
+            $newDose->setSchemat($this);
+            $this->dawki[] = $newDose;
+        }
+        $this->podawania = $schemat->getPodawania();
     }
 }

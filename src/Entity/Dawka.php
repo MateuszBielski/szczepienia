@@ -268,4 +268,16 @@ class Dawka
     {
         
     }
+    public function copyFrom(Dawka $dawka)
+    {
+        $this->ktora = $dawka->getKtora();
+        //$this->schemat = $dawka->getSchemat();
+        $this->wiekPodaniaMin = $dawka->getWiekPodaniaMin();
+        $this->wiekPodaniaMax = $dawka->getWiekPodaniaMax();
+        $this->wiekPodaniaZglosOpoznienie = $dawka->getWiekPodaniaZglosOpoznienie();
+        //$this->wKtorychKalendarzachJestem = $dawka->get;
+        $this->odstep_min_interval = $dawka->getOdstepMinInterval();
+        $this->odstep_max_interval = $dawka->getOdstepMaxInterval();
+    }
+    
 }

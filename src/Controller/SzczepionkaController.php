@@ -101,6 +101,6 @@ class SzczepionkaController extends AbstractController
      */
     public function dodajSchemat(Request $request, Szczepionka $szczepionka): Response
     {
-        return $this->redirectToRoute('schemat_new',['id'=> $szczepionka->getId()]);
+        return $this->redirectToRoute('schemat_new_for_vaccine',['id'=> $szczepionka->getId()]);
     }
 }
