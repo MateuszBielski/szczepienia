@@ -282,6 +282,6 @@ class Schemat
     }
     public function CheckAbilityApplyMyNextDoses($pacjent)
     {
-        
+        $pacjent->getVaccinationsOfVaccine($this->podawania);
     }
 }

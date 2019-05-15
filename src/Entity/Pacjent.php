@@ -286,5 +286,14 @@ class Pacjent extends Osoba
         }
         return $wynik;
     }
-    
+    public function getVaccinationOfVaccine(Szczepionka $vaccine): ?Array
+    {
+        $result = array();
+        foreach($szczepienia as $vacc)
+        {
+            if($vacc->getCoPodano()->getSchemat()->getPodawania() === $vaccine)
+            $result[] = $vacc;
+        }
+        return $result;
+    }
 }
