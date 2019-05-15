@@ -96,6 +96,7 @@ class SchematController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $schemat->DlaMoichDawekUstawMnieIponumeruj();
+            $schemat->updateCorrectEndDateSubstituted();
             $this->getDoctrine()->getManager()->flush();
             
             $this->UaktualnijKalendarze();

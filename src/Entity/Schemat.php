@@ -159,8 +159,10 @@ class Schemat
     }
     public function ObowiazujeDla(Pacjent $pacjent)
     {
+        $dateOfBirth = $pacjent->DataUrodzeniaDateObject();
+        if( $this->startYear > $dateOfBirth) return false;
         if( $this->endYear == null) return true;
-        if ($pacjent->DataUrodzeniaDateObject() < $this->endYear) return true;
+        if ($dateOfBirth < $this->endYear) return true;
         return false;
     }
 
@@ -187,25 +189,35 @@ class Schemat
 
         return $this;
     }
-
+    public function setEndYearToNull()
+    {
+        $this->endYear = null;
+    }
     public function getSubstitute(): ?self
     {
         return $this->substitute;
     }
-
-    public function setSubstitute(?self $substitute): self
+    public function updateCorrectEndDateSubstituted()
     {
-        $this->substitute = $substitute;
-        if($substitute != null){
-            $substitute->setIsSubstitutedBy($this);
+        if($this->substitute == null)return;
+        $this->substitute->setIsSubstitutedBy($this);
         $lastDayValid = clone $this->startYear;
         $lastDayValid = $lastDayValid->modify('-1 days');
-        $substitute->setEndYear($lastDayValid);
+        $this->substitute->setEndYear($lastDayValid);
+    }
+    public function setSubstitute(?self $substitute): self
+    {
+        
+        if($substitute != null){
+            $this->substitute = $substitute;
+            $this->updateCorrectEndDateSubstituted();
         }
         else if($this->substitute != null){
             $this->substitute->setIsSubstitutedBy(null);
-            $this->substitute->setEndYear(null);
+            $this->substitute->setEndYearToNull();
+            $this->substitute = $substitute;
         }
+        
         return $this;
     }
     public function IsSubstituted()
