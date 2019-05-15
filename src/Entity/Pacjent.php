@@ -155,11 +155,13 @@ class Pacjent extends Osoba
     {
         if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
         $wszystkieObowiazujaceDawki = new ArrayCollection();
+        $schemasMatching = array();
         $schemasNotMatching = array();
         foreach($wszystkieSchematy as $schemat)
         {
             if($schemat->ObowiazujeDla($this)){
                 $schemat->DolaczMojeDawkiDo($wszystkieObowiazujaceDawki);
+                $schemasMatching[] = $schemat;
             }
             else{
                 //$schemat->DolaczMojeDawkiDo
@@ -168,6 +170,10 @@ class Pacjent extends Osoba
                 //jeśli jakieś jeszcze dawki można zastosować 
             } 
               
+        }
+        foreach($schemasMatching as $schMatch)
+        {
+            //$schMatch->FromMySubstituting();
         }
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }

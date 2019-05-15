@@ -14,6 +14,7 @@
                 <th>do</th>
                 <th>Zastępuje</th>
                 <th>actions</th>
+                <th>ile mnie zastępuje</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                     <a href="{{ path('schemat_new_from_copy', {'id': schemat.id}) }}">zastąp nowym</a>
                     {% endif %}
                 </td>
+                <td>{{ schemat.FromMySubstituting() }}</td>
             </tr>
         {% else %}
             <tr>

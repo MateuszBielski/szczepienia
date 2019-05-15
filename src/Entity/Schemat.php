@@ -228,12 +228,12 @@ class Schemat
 
     public function getIsSubstitutedBy(): ?self
     {
-        return $this->IsSubstitutedBy;
+        return $this->isSubstitutedBy;
     }
 
-    public function setIsSubstitutedBy(?self $IsSubstitutedBy): self
+    public function setIsSubstitutedBy(?self $isSubstitutedBy): self
     {
-        $this->IsSubstitutedBy = $IsSubstitutedBy;
+        $this->isSubstitutedBy = $isSubstitutedBy;
 
         // set (or unset) the owning side of the relation if necessary
         /*
@@ -258,5 +258,30 @@ class Schemat
             $this->dawki[] = $newDose;
         }
         $this->podawania = $schemat->getPodawania();
+    }
+    
+    public function FromMySubstituting()
+    {
+        $haveNext = true;//($this->isSubstitutedBy != null) ? true : false;
+        $subsequentSupersession = Array();
+        $currentSchema = $this;
+        while($haveNext){
+            $nextSupersession = $currentSchema->getIsSubstitutedBy();
+            if($nextSupersession == null){
+                $haveNext = false;
+                break;
+            }
+            $subsequentSupersession[] =$nextSupersession; 
+            $currentSchema = $nextSupersession;
+        }
+        foreach($subsequentSupersession as $ss)
+        {
+            $ss->CheckAbilityApplyMyNextDoses($pacjent);
+        }
+        return count($subsequentSupersession);
+    }
+    public function CheckAbilityApplyMyNextDoses($pacjent)
+    {
+        
     }
 }
