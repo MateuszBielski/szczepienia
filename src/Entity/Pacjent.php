@@ -286,7 +286,7 @@ class Pacjent extends Osoba
         }
         return $wynik;
     }
-    public function getVaccinationOfVaccine(Szczepionka $vaccine): ?Array
+    public function getVaccinationsOfVaccine(Szczepionka $vaccine): ?Array
     {
         $result = array();
         foreach($szczepienia as $vacc)
