@@ -259,8 +259,8 @@ class Schemat
         }
         $this->podawania = $schemat->getPodawania();
     }
-    
-    public function FromMySubstituting()
+    //nazwa powinna się zmienić na CompleteDosesFromMySubstituting($wszystkieObowiazujaceDawki);
+    public function CompleteDosesFromMySubstituting($doses,$patient)
     {
         $haveNext = true;//($this->isSubstitutedBy != null) ? true : false;
         $subsequentSupersession = Array();
@@ -274,15 +274,37 @@ class Schemat
             $subsequentSupersession[] =$nextSupersession; 
             $currentSchema = $nextSupersession;
         }
-        foreach($subsequentSupersession as $ss)
+        $newestPossibile = null;
+        foreach(array_reverse($subsequentSupersession) as $ss)
         {
-            $ss->CheckAbilityApplyMyNextDoses($pacjent);
+            //checking from last 
+            $buffer = array();
+            $numberOfPossibleDoses = $ss->PossibleNextDoses($patient,$buffer);
+            if ($numberOfPossibleDoses) {
+                foreach ($buffer as $nextDose) {
+                    $doses[]  = $nextDose;
+                }
+                break;
+            }
         }
-        return count($subsequentSupersession);
+        //return count($subsequentSupersession);
     }
-    public function CheckAbilityApplyMyNextDoses($pacjent)
+    //previous name CheckAbilityApplyMyNextDoses
+    public function PossibleNextDoses(Pacjent $pacjent, array $buffer)
     {
-        $pacjent->getVaccinationsOfVaccine($this->podawania);
-            
+        //bierze dawki już wykonane szczepionki, której dotyczy ten schemat
+        //są one zapewne z innego schematu, ale to nie jest ważne.
+        //liczy je 
+        $countMadeVaccines = count($pacjent->getMadeVaccinationsOfVaccine($this->podawania));
+        //z tego schematu wskazuje dawkę, która mogłaby być kolejną dla danego pacjenta
+        $numberMyVaccines = count($this->dawki);
+        if ($countMadeVaccines >= $numberMyVaccines) return;
+        $nextDose = $this->dawki[$countMadeVaccines];
+        if (!$nextDose->ifServeMeIsInAgeFor($pacjent)) return 0;
+        $i = $countMadeVaccines;
+        while($i < $numberMyVaccines -1) {
+            $buffer[] = $this->dawki[$i++];
+        }
+        //można dodać warunek sprawdzający ze względu na maxymalny odstęp
     }
 }

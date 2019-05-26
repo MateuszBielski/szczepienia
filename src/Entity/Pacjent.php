@@ -173,7 +173,7 @@ class Pacjent extends Osoba
         }
         foreach($schemasMatching as $schMatch)
         {
-            //$schMatch->FromMySubstituting();
+            $schMatch->CompleteDosesFromMySubstituting($wszystkieObowiazujaceDawki,$this);
         }
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
@@ -286,10 +286,10 @@ class Pacjent extends Osoba
         }
         return $wynik;
     }
-    public function getVaccinationsOfVaccine(Szczepionka $vaccine): ?Array
+    public function getMadeVaccinationsOfVaccine(Szczepionka $vaccine): ?Array
     {
         $result = array();
-        foreach($szczepienia as $vacc)
+        foreach($this->szczepienia as $vacc)
         {
             if($vacc->getCoPodano()->getSchemat()->getPodawania() === $vaccine)
             $result[] = $vacc;

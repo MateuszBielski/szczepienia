@@ -33,7 +33,8 @@ class SzczepienieController extends AbstractController
     public function index(SzczepienieRepository $szczepienieRepository): Response
     {
         return $this->render('szczepienie/index.html.twig', [
-            'szczepienies' => $szczepienieRepository->findAll(),
+            //'szczepienies' => $szczepienieRepository->findAll(),
+            'szczepienies' => $szczepienieRepository->findBy([], ['dataZabiegu' => 'DESC'])
         ]);
     }
     

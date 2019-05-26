@@ -279,5 +279,14 @@ class Dawka
         $this->odstep_min_interval = $dawka->getOdstepMinInterval();
         $this->odstep_max_interval = $dawka->getOdstepMaxInterval();
     }
-    
+    public function ifServeMeIsInAgeFor(Pacjent $patient)
+    {
+        //trzeba spełnić następujący warunek:
+        //$ageOfPatientNow < $wiekPodaniaMax;
+        $PatientMaxAgeServeMe = clone $patient->DataUrodzeniaDateObject();
+        $PatientMaxAgeServeMe->add($this->wiekPodaniaMax);
+        $timeNow = \Date('now');
+        return $PatientMaxAgeServeMe >= $timeNow;
+        
+    }
 }
