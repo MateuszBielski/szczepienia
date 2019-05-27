@@ -9,6 +9,7 @@
         <tbody>
             <tr>
                 <th>{{ kalendarz_szczepien.pacjent.imie }}  {{ kalendarz_szczepien.pacjent.nazwisko }}</th>
+                <th>{{ kalendarz_szczepien.pacjent.getAgeDateInterval().format('%y lat, %m miesięcy, %d dni') }}</th>
             </tr>
             <tr>
                 <th>Id {{ kalendarz_szczepien.id }}</th>

@@ -296,4 +296,9 @@ class Pacjent extends Osoba
         }
         return $result;
     }
+    public function getAgeDateInterval()
+    {
+        $now = new \DateTime('now');
+        return $now->diff($this->DataUrodzeniaDateObject());
+    }
 }

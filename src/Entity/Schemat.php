@@ -24,7 +24,7 @@ class Schemat
     private $warunek;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dawka",cascade="persist", mappedBy="schemat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Dawka",cascade={"persist", "remove"}, mappedBy="schemat")
      */
     private $dawki;
 
@@ -46,13 +46,13 @@ class Schemat
     private $endYear;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", inversedBy="isSubstitutedBy", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", inversedBy="isSubstitutedBy"), cascade={"persist", "remove"}
      * @ORM\JoinColumn(nullable=true)
      */
     private $substitute;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", mappedBy="substitute", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Schemat", mappedBy="substitute"), cascade={"persist", "remove"}
      */
     private $isSubstitutedBy = null;
 
@@ -243,6 +243,24 @@ class Schemat
         }
         */
         return $this;
+    }
+    public function revertForSubstitute()
+    {
+        if ($this->substitute != null) {
+            if ($this->isSubstitutedBy != null) {
+                $substitute = $this->substitute;
+                $this->substitute = null;
+                $this->isSubstitutedBy->setSubstitute($substitute);
+
+                $substitute->setIsSubstitutedBy($this->isSubstitutedBy);
+                $lastDayValid = clone $this->isSubstitutedBy->startYear;
+                $lastDayValid = $lastDayValid->modify('-1 days');
+                $substitute->setEndYear($lastDayValid);
+            } else {
+                $this->substitute->setIsSubstitutedBy(null);
+                $this->substitute->setEndYearToNull();
+            }
+        }
     }
     public function getVaccineNameAndStartYear(): string
     {

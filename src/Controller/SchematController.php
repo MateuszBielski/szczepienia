@@ -63,11 +63,12 @@ class SchematController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $schemat->DlaMoichDawekUstawMnieIponumeruj();
+            $schemat->updateCorrectEndDateSubstituted();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($schemat);
             $entityManager->flush();
             $this->UaktualnijKalendarze();
-            return $this->redirectToRoute('schemat_show',['id'=> $schemat->getId()]);
+            return $this->redirectToRoute('schemat_index');
         }
 
         return $this->render('schemat/new.html.twig', [
@@ -119,6 +120,7 @@ class SchematController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$schemat->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($schemat);
+            $schemat->revertForSubstitute();
             $entityManager->flush();
             $this->UaktualnijKalendarze();
         }
