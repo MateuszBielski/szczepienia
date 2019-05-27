@@ -9,6 +9,7 @@ use App\Entity\Pacjent;
 use App\Entity\KalendarzSzczepien;
 use App\Form\SchematType;
 use App\Repository\SchematRepository;
+use App\Repository\SzczepienieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,7 @@ class SchematController extends AbstractController
     {
         $newSchemat = new Schemat;
         $newSchemat->copyDosesAndVaccineFrom($schemat);
-        $newSchemat->setSubstitute($schemat);
+        $newSchemat->setSubstitute($schemat,$newSchemat);
         return $this->commonForNew($request,$newSchemat);
     }
     
@@ -80,10 +81,11 @@ class SchematController extends AbstractController
     /**
      * @Route("/{id}", name="schemat_show", methods={"GET"})
      */
-    public function show(Schemat $schemat): Response
+    public function show(Schemat $schemat,SzczepienieRepository $sr): Response
     {
         return $this->render('schemat/show.html.twig', [
             'schemat' => $schemat,
+            'vaccines' => $sr->findBySchema($schemat->getId()),
         ]);
     }
 
@@ -119,9 +121,14 @@ class SchematController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$schemat->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($schemat);
+            // $schemat->setSubstituteToNull();
+            // $schemat->setIsSubstitutedByToNull();
+            // $entityManager->flush();
             $schemat->revertForSubstitute();
+            $entityManager->remove($schemat);
             $entityManager->flush();
+            //$entityManager->flush();
+            
             $this->UaktualnijKalendarze();
         }
 

@@ -57,5 +57,16 @@ class SzczepienieRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+    public function findBySchema($id)
+    {
+        return $this->createQueryBuilder('scz')
+        ->andWhere('sch.id = :id')
+        ->leftJoin('scz.coPodano','daw')
+        ->leftJoin('daw.schemat','sch')
+        ->setParameter('id', $id)
+        ->orderBy('scz.dataZabiegu', 'DESC')
+        ->getQuery()
+        ->execute();
+    }
    
 }

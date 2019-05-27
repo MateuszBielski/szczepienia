@@ -39,6 +39,23 @@
                 <th>Dawki nieokreślone</th>
             </tr>
             {% endfor %}
+            <tr>
+                <th>Szczepienia w tym schemacie</th>
+            </tr>
+            <tr>
+                <th>id szczepienia</th>
+                <th>id dawki</th>
+                <th>nazwa</th>
+                <th>pacjent</th>
+            </tr>
+            {% for vacc in vaccines %}
+            <tr>
+                <td><a href="{{ path('szczepienie_edit', {'id': vacc.id}) }}">{{ vacc.id }}<a></td>
+                <td>{{ vacc.coPodano.id }}</td>
+                <td>nazwa</td>
+                <td>{{ vacc.pacjent.imie }} {{ vacc.pacjent.nazwisko }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 

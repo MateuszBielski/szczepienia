@@ -246,6 +246,7 @@ class Schemat
     }
     public function revertForSubstitute()
     {
+        /*
         if ($this->substitute != null) {
             if ($this->isSubstitutedBy != null) {
                 $substitute = $this->substitute;
@@ -260,6 +261,30 @@ class Schemat
                 $this->substitute->setIsSubstitutedBy(null);
                 $this->substitute->setEndYearToNull();
             }
+        }
+        */
+        $prev = $this->substitute;
+        $next = $this->isSubstitutedBy;
+        $this->substitute = null;
+        $this->isSubstitutedBy->setSubstitute(null);
+        $hasPrev = false;
+        $hasNext = false;
+        if ($prev != null) {
+            $prev->setIsSubstitutedBy(null);
+            $prev->setEndYearToNull();
+            $hasPrev = true;
+        }
+        if ($next != null) {
+            $next->setSubstitute(null,null);
+            $hasNext = true;
+        }
+        if ($hasPrev && $hasNext) {
+            $prev->setIsSubstitutedBy($next);
+            $lastDayValid = clone $next->startYear;
+            $lastDayValid = $lastDayValid->modify('-1 days');
+            $prev->setEndYear($lastDayValid);
+
+            $next->setSubstitute($prev,$next);
         }
     }
     public function getVaccineNameAndStartYear(): string
