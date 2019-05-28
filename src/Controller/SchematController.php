@@ -50,7 +50,8 @@ class SchematController extends AbstractController
     {
         $newSchemat = new Schemat;
         $newSchemat->copyDosesAndVaccineFrom($schemat);
-        $newSchemat->setSubstitute($schemat,$newSchemat);
+        //$newSchemat->setSubstitute($schemat);
+        $schemat->setIsSubstitutedBy($newSchemat);
         return $this->commonForNew($request,$newSchemat);
     }
     
@@ -121,13 +122,9 @@ class SchematController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$schemat->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $schemat->setSubstituteToNull();
-            // $schemat->setIsSubstitutedByToNull();
-            // $entityManager->flush();
             $schemat->revertForSubstitute();
             $entityManager->remove($schemat);
             $entityManager->flush();
-            //$entityManager->flush();
             
             $this->UaktualnijKalendarze();
         }

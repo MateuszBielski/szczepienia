@@ -65,6 +65,11 @@ class Schemat
         $this->startYear = new \DateTime("$yearNow-01-01");
     }
 
+    public function __toString()
+    {
+        return "schemat id ".$this->getId();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -200,14 +205,15 @@ class Schemat
     public function updateCorrectEndDateSubstituted()
     {
         if($this->substitute == null)return;
-        $this->substitute->setIsSubstitutedBy($this);
+        //$this->substitute->setIsSubstitutedBy($this);
         $lastDayValid = clone $this->startYear;
         $lastDayValid = $lastDayValid->modify('-1 days');
         $this->substitute->setEndYear($lastDayValid);
     }
     public function setSubstitute(?self $substitute): self
     {
-        
+        $this->substitute = $substitute;
+        /*
         if($substitute != null){
             $this->substitute = $substitute;
             $this->updateCorrectEndDateSubstituted();
@@ -217,6 +223,23 @@ class Schemat
             $this->substitute->setEndYearToNull();
             $this->substitute = $substitute;
         }
+        */
+        return $this;
+    }
+    
+    public function setIsSubstitutedBy(?self $isSubstitutedBy): self
+    {
+        $this->isSubstitutedBy = $isSubstitutedBy;
+        
+        // set (or unset) the owning side of the relation if necessary
+        /*
+        $newSubstitute = $isSubstitutedBy === null ? null : $this;
+
+    
+        if ($newSubstitute !== $isSubstitutedBy->getSubstitute()) {
+            $isSubstitutedBy->setSubstitute($newSubstitute);
+        }
+        */
         
         return $this;
     }
@@ -230,43 +253,13 @@ class Schemat
     {
         return $this->isSubstitutedBy;
     }
-
-    public function setIsSubstitutedBy(?self $isSubstitutedBy): self
-    {
-        $this->isSubstitutedBy = $isSubstitutedBy;
-
-        // set (or unset) the owning side of the relation if necessary
-        /*
-        $newSubstitute = $IsSubstitutedBy === null ? null : $this;
-        if ($newSubstitute !== $IsSubstitutedBy->getSubstitute()) {
-            $IsSubstitutedBy->setSubstitute($newSubstitute);
-        }
-        */
-        return $this;
-    }
     public function revertForSubstitute()
     {
-        /*
-        if ($this->substitute != null) {
-            if ($this->isSubstitutedBy != null) {
-                $substitute = $this->substitute;
-                $this->substitute = null;
-                $this->isSubstitutedBy->setSubstitute($substitute);
-
-                $substitute->setIsSubstitutedBy($this->isSubstitutedBy);
-                $lastDayValid = clone $this->isSubstitutedBy->startYear;
-                $lastDayValid = $lastDayValid->modify('-1 days');
-                $substitute->setEndYear($lastDayValid);
-            } else {
-                $this->substitute->setIsSubstitutedBy(null);
-                $this->substitute->setEndYearToNull();
-            }
-        }
-        */
+        
         $prev = $this->substitute;
         $next = $this->isSubstitutedBy;
         $this->substitute = null;
-        $this->isSubstitutedBy->setSubstitute(null);
+        $this->isSubstitutedBy = null;
         $hasPrev = false;
         $hasNext = false;
         if ($prev != null) {
@@ -275,9 +268,10 @@ class Schemat
             $hasPrev = true;
         }
         if ($next != null) {
-            $next->setSubstitute(null,null);
+            $next->setSubstitute(null);
             $hasNext = true;
         }
+        /*
         if ($hasPrev && $hasNext) {
             $prev->setIsSubstitutedBy($next);
             $lastDayValid = clone $next->startYear;
@@ -286,6 +280,7 @@ class Schemat
 
             $next->setSubstitute($prev,$next);
         }
+        */
     }
     public function getVaccineNameAndStartYear(): string
     {
