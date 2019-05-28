@@ -122,7 +122,10 @@ class SchematController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$schemat->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $schemat->revertForSubstitute();
+            $schemat->setSubstToPrevNextAndResetToNull();
+            $entityManager->persist($schemat);
+            $entityManager->flush();//jest niezbędne, żeby zwolnić ograniczenia foreign key
+            $schemat->weldPrevWithNext();
             $entityManager->remove($schemat);
             $entityManager->flush();
             

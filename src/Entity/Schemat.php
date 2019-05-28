@@ -56,6 +56,8 @@ class Schemat
      */
     private $isSubstitutedBy = null;
 
+    private $prev, $next;
+
     public function __construct()
     {
         $this->warunek = new ArrayCollection();
@@ -253,34 +255,36 @@ class Schemat
     {
         return $this->isSubstitutedBy;
     }
-    public function revertForSubstitute()
+    public function setSubstToPrevNextAndResetToNull()
     {
-        
-        $prev = $this->substitute;
-        $next = $this->isSubstitutedBy;
+        $this->prev = $this->substitute;
+        $this->next = $this->isSubstitutedBy;
         $this->substitute = null;
         $this->isSubstitutedBy = null;
+    }
+    public function weldPrevWithNext()
+    {
         $hasPrev = false;
         $hasNext = false;
-        if ($prev != null) {
-            $prev->setIsSubstitutedBy(null);
-            $prev->setEndYearToNull();
+        if ($this->prev != null) {
+            $this->prev->setIsSubstitutedBy(null);
+            $this->prev->setEndYearToNull();
             $hasPrev = true;
         }
-        if ($next != null) {
-            $next->setSubstitute(null);
+        if ($this->next != null) {
+            $this->next->setSubstitute(null);
             $hasNext = true;
         }
-        /*
+        
         if ($hasPrev && $hasNext) {
-            $prev->setIsSubstitutedBy($next);
-            $lastDayValid = clone $next->startYear;
+            $this->prev->setIsSubstitutedBy($this->next);
+            $lastDayValid = clone $this->next->startYear;
             $lastDayValid = $lastDayValid->modify('-1 days');
-            $prev->setEndYear($lastDayValid);
+            $this->prev->setEndYear($lastDayValid);
 
-            $next->setSubstitute($prev,$next);
+            $this->next->setSubstitute($this->prev);
         }
-        */
+        
     }
     public function getVaccineNameAndStartYear(): string
     {
