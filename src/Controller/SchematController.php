@@ -124,7 +124,7 @@ class SchematController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $schemat->setSubstToPrevNextAndResetToNull();
             $entityManager->persist($schemat);
-            $entityManager->flush();//jest niezbędne, żeby zwolnić ograniczenia foreign key
+            $entityManager->flush();//jest niezbędne, żeby zwolnić ograniczenia foreign
             $schemat->weldPrevWithNext();
             $entityManager->remove($schemat);
             $entityManager->flush();

@@ -173,7 +173,7 @@ class Pacjent extends Osoba
         }
         foreach($schemasMatching as $schMatch)
         {
-            $schMatch->CompleteDosesFromMySubstituting($wszystkieObowiazujaceDawki,$this);
+            $schMatch->ReplaceDosesFromMySubstituting($wszystkieObowiazujaceDawki,$this);
         }
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }

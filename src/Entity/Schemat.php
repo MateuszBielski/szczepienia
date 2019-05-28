@@ -301,8 +301,7 @@ class Schemat
         }
         $this->podawania = $schemat->getPodawania();
     }
-    //nazwa powinna się zmienić na CompleteDosesFromMySubstituting($wszystkieObowiazujaceDawki);
-    public function CompleteDosesFromMySubstituting($doses,$patient)
+    public function ReplaceDosesFromMySubstituting($doses,$patient)
     {
         $haveNext = true;//($this->isSubstitutedBy != null) ? true : false;
         $subsequentSupersession = Array();
@@ -321,23 +320,27 @@ class Schemat
         {
             //checking from last 
             $buffer = array();
-            $numberOfPossibleDoses = $ss->PossibleNextDoses($patient,$buffer);
+            $madeVaccinationsOfVaccine = $patient->getMadeVaccinationsOfVaccine($this->podawania);
+            $numberOfPossibleDoses = $ss->PossibleNextDoses($patient,$buffer,$madeVaccinationsOfVaccine);
             if ($numberOfPossibleDoses) {
                 foreach ($buffer as $nextDose) {
                     $doses[]  = $nextDose;
                 }
+                //usunąć z wykazu dawki przyszłe ze schematu this, ponieważ będą zastąpione.
+                //w tablicy doses[] znaleźć indeksy dawek do usunięcia
+                $dosesToReplace = $this->FindUnmadeDosesOfMe($doses, $patient, $madeVaccinationsOfVaccine);
                 break;
             }
         }
         //return count($subsequentSupersession);
     }
     //previous name CheckAbilityApplyMyNextDoses
-    public function PossibleNextDoses(Pacjent $pacjent, array $buffer)
+    public function PossibleNextDoses(Pacjent $pacjent, array $buffer, array $madeVacc)
     {
         //bierze dawki już wykonane szczepionki, której dotyczy ten schemat
         //są one zapewne z innego schematu, ale to nie jest ważne.
         //liczy je 
-        $countMadeVaccines = count($pacjent->getMadeVaccinationsOfVaccine($this->podawania));
+        $countMadeVaccines = count($madeVacc);
         //z tego schematu wskazuje dawkę, która mogłaby być kolejną dla danego pacjenta
         $numberMyVaccines = count($this->dawki);
         if ($countMadeVaccines >= $numberMyVaccines) return;
@@ -348,5 +351,26 @@ class Schemat
             $buffer[] = $this->dawki[$i++];
         }
         //można dodać warunek sprawdzający ze względu na maxymalny odstęp
+    }
+    public function FindUnmadeDosesOfMe($doses,$patient, array $madeVacc)
+    {
+        $indexes = array();
+        $i = 0;
+        //ze wszystkich szukamy tych, które należą do schematu this
+        foreach($doses as $dose){
+            if ($dose->getSchemat->getId() == $this->id) {
+                $indexes[] = $i++;
+            }
+        }
+        //tablica, gdzie kluczami są podane pacjentowi szczepienia tej szczepionki
+        $madeVaccKeys = array();
+        foreach($madeVacc as $vac) {
+            $madeVaccKeys[$vac->getCoPodano()->getId()] = 'true';
+        }
+        
+        //usunąć indeksy, które odpowiadają za szczepienie już wykonane na danym pacjencie
+        foreach($indexes as $ind) {
+            
+        }
     }
 }
