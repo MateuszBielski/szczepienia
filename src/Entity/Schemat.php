@@ -328,7 +328,10 @@ class Schemat
                 }
                 //usunąć z wykazu dawki przyszłe ze schematu this, ponieważ będą zastąpione.
                 //w tablicy doses[] znaleźć indeksy dawek do usunięcia
-                $dosesToReplace = $this->FindUnmadeDosesOfMe($doses, $patient, $madeVaccinationsOfVaccine);
+                $dosesToReplace = $this->FindUnmadeDosesOfMe($doses, $madeVaccinationsOfVaccine);
+                foreach($dosesToReplace as $dtr) {
+                    unset($doses[$dtr]);
+                }
                 break;
             }
         }
@@ -352,25 +355,43 @@ class Schemat
         }
         //można dodać warunek sprawdzający ze względu na maxymalny odstęp
     }
-    public function FindUnmadeDosesOfMe($doses,$patient, array $madeVacc)
+    public function FindUnmadeDosesOfMe(&$doses, array $madeVacc)
     {
+        //doses muszą mieć numerowane indeksy, bo później część będzie usuwana
+        $newDoses  = array();
+        $j = 0;
+        foreach($doses as $d) {
+            $newDoses[$j++] = $d;
+        }
+        $doses = $newDoses;
         $indexes = array();
         $i = 0;
+        $k = 0;
         //ze wszystkich szukamy tych, które należą do schematu this
         foreach($doses as $dose){
             if ($dose->getSchemat->getId() == $this->id) {
-                $indexes[] = $i++;
+                $indexes[$k++] = $i;
             }
+            $i++;
         }
         //tablica, gdzie kluczami są podane pacjentowi szczepienia tej szczepionki
         $madeVaccKeys = array();
         foreach($madeVacc as $vac) {
             $madeVaccKeys[$vac->getCoPodano()->getId()] = 'true';
         }
-        
-        //usunąć indeksy, które odpowiadają za szczepienie już wykonane na danym pacjencie
+        $markToRemove = array();
+        $l = 0;
+        //oznaczyć indeksy, które odpowiadają za szczepienie już wykonane na danym pacjencie
         foreach($indexes as $ind) {
-            
+            $key = $doses[$ind]->getId();
+            if ($madeVaccKeys[$key]) {
+                $markToRemove[] = $l;
+            }
+            $l++;
         }
+        foreach($markToRemove as $mtr) {
+            unset($indexes[$mtr]);
+        }
+        return $indexes;
     }
 }

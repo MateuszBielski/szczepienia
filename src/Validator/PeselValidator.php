@@ -44,7 +44,21 @@ class PeselValidator extends ConstraintValidator
                 ->setParameter('{{ wart }}', $value)
                 ->addViolation();
         }
-        
+        if(strlen($value) == 11) {
+            $arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3);
+            $intSum = 0;
+            for ($i = 0; $i < 10; $i++) {
+                $intSum += $arrSteps[$i] * $value[$i];
+            }
+            $int = 10 - $intSum % 10;
+            $intControlNr = ($int == 10)?0:$int;
+            if ($intControlNr != $value[10]) //sprawdzamy czy taka sama suma kontrolna jest w ciągu
+            {
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('{{ wart }}', $value)
+                    ->addViolation();
+            }
+        }
         /*
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $value)

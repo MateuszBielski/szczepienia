@@ -50,7 +50,7 @@ class SchematController extends AbstractController
     {
         $newSchemat = new Schemat;
         $newSchemat->copyDosesAndVaccineFrom($schemat);
-        //$newSchemat->setSubstitute($schemat);
+        $newSchemat->setSubstitute($schemat);
         $schemat->setIsSubstitutedBy($newSchemat);
         return $this->commonForNew($request,$newSchemat);
     }
