@@ -142,7 +142,7 @@ class SchematController extends AbstractController
         //$wszystkieSchematy = $this->getDoctrine()->getRepository(Schemat::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
-            $pacjent->UaktualnijKalendarz($this->getDoctrine());
+            $pacjent->UaktualnijKalendarz($this->getDoctrine());//$wszystkieSchematy
             $entityManager->persist($pacjent->getKalendarzSzczepien());
         }
         $entityManager->flush();

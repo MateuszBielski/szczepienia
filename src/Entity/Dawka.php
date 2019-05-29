@@ -81,7 +81,7 @@ class Dawka
     {
         $sc_nazwa = $this->getNazwaSzczepionki();
         $schem_year = $this->schemat->getStartYear()->format('Y');
-        return sprintf('%s %d %s %s %s ','dawka nr ',$this->ktora, $sc_nazwa, ' schemat rok : ',$schem_year);
+        return sprintf('%s %s %s %s %d', $sc_nazwa, ' ',$schem_year,'dawka nr ',$this->ktora);
         //return sprintf('%d',$this->odstepMax);
     }
     
@@ -115,6 +115,7 @@ class Dawka
     public static function NazwyFunkcji()
     {
         return array(
+                     ['NazwaSzczepRokNrdawkiToSort','nazwa'],
                      ['NajwczesniejszaDataSzczepienia','data szczepienia proponowana'],
                      ['OdstMinFormat','odstęp minimalny'],
                      ['OdstMaxFormat','odstęp maksymalny'],
@@ -256,6 +257,14 @@ class Dawka
     public function PrzyjmijDateUrodzenia(\DateTime $dataUrodzenia)
     {
         $this->przechowanaDataUrodzenia = $dataUrodzenia;
+    }
+    public function NazwaSzczepRokNrdawkiToSort()
+    {
+        $sch = $this->schemat;
+        $nameOfVaccine = $sch->getPodawania()->getNazwa();
+        $year = $sch->getStartYear()->format('Y');
+
+        return $nameOfVaccine.$year.$this->ktora;
     }
     public function NajwczesniejszaDataSzczepienia()
     {

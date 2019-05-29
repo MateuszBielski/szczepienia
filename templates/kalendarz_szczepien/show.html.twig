@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Id {{ kalendarz_szczepien.id }}</th>
-                <td>nazwa</td>
+                {# <td>nazwa</td> #}
                 {% for n in kalendarz_szczepien.NazwyFunkcjiDawka() %}
                 <td>
                     <a href="{{ path('kalendarz_szczepien_show',
