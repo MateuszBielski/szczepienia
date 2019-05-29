@@ -139,10 +139,10 @@ class SchematController extends AbstractController
         //zmiana schematu może wpłynąć na kalendarz każdego pacjenta
         $wszyscyPacjenci = $this->getDoctrine()->getRepository(Pacjent::class)->findAll();
         //$wszystkieSzczepionki = $this->getDoctrine()->getRepository(Szczepionka::class)->findAll();
-        $wszystkieSchematy = $this->getDoctrine()->getRepository(Schemat::class)->findAll();
+        //$wszystkieSchematy = $this->getDoctrine()->getRepository(Schemat::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
         foreach($wszyscyPacjenci as $pacjent){
-            $pacjent->UaktualnijKalendarz($wszystkieSchematy);
+            $pacjent->UaktualnijKalendarz($this->getDoctrine());
             $entityManager->persist($pacjent->getKalendarzSzczepien());
         }
         $entityManager->flush();

@@ -151,8 +151,9 @@ class Pacjent extends Osoba
         
         $this->kalendarzSzczepien->setSzczepieniaUtrwalone($wszystkieObowiazujaceDawki);
     }
-    public function UaktualnijKalendarz(Array $wszystkieSchematy)
+    public function UaktualnijKalendarz($doctrine)//Array $wszystkieSchematy
     {
+        $wszystkieSchematy = $doctrine->getRepository(Schemat::class)->findAll();
         if($this->CzyNieMamKalendarza())$this->UtworzKalendarzDlaMnie();
         $wszystkieObowiazujaceDawki = new ArrayCollection();
         $schemasMatching = array();
